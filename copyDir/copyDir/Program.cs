@@ -12,7 +12,8 @@ namespace copyDir
 {
     class Program
     {
-        static List<string> mFilterDir = new List<string>();
+        static List<string> mFilter = new List<string>();
+        static private bool filterOrRemoveIf = true;
         static string mSrc;
         static string mDst;
         static List<string> mAllDir = new List<string>();
@@ -31,7 +32,7 @@ namespace copyDir
         static public void GetAllFileList(string strBaseDir)
         {
             DirectoryInfo di = new DirectoryInfo(strBaseDir);
-            if (mFilterDir.Contains(di.Name.ToLower() ))
+            if (mFilter.Contains(di.Name.ToLower() ))
             {
                 isInDir.Add(true);
             }
@@ -42,16 +43,28 @@ namespace copyDir
                 GetAllFileList(diA[i].FullName);
             }
 
-            if (isInDir.Last())
+            if (filterOrRemoveIf)
             {
-                var fiA = di.GetFiles();
-                
-                fiA.ToList().ForEach(fi =>
+                if (isInDir.Last())
                 {
-                    mAllFiles.Add(fi.FullName);
-                });
+                    var fiA = di.GetFiles();
+
+                    fiA.ToList().ForEach(fi =>
+                    {
+                        mAllFiles.Add(fi.FullName);
+                    });
+                }
             }
-            if (mFilterDir.Contains(di.Name.ToLower() ))
+            else
+            {
+                    FileInfo[] fiA = di.GetFiles();
+                    fiA.Where(fi=>mFilter.Contains(fi.Extension.ToLower())).ToList().ForEach(fi =>
+                    {
+                        mAllFiles.Add(fi.FullName);
+                    });
+            }
+            
+            if (mFilter.Contains(di.Name.ToLower() ))
             {
                 isInDir.RemoveAt(isInDir.Count - 1);
             }
@@ -60,24 +73,44 @@ namespace copyDir
         {
             if (args.Length < 2)
             {
-                Console.WriteLine(@"usage: copyDir src dst dir1 dir2...");
+                Console.WriteLine(@"usage: copyDir [filter] src dst dir1 dir2...");
                 return;
             }
-            mSrc = args[0];
-            mDst = args[1];
-
-            if (args.Length > 2)
+            int filterIdx = 2;
+            if (args[0].ToLower() == "filter")
             {
-                for (int i = 2; i < args.Length; ++i)
+                filterOrRemoveIf = true;
+                if (args.Length < 3)
                 {
-                    mFilterDir.Add(args[i].ToLower());
+                    Console.WriteLine(@"usage: copyDir [filter] src dst dir1 dir2...");
+                    return;
+                }
+                mSrc = args[1];
+                mDst = args[2];
+                filterIdx = 3;
+            }
+            else
+            {
+                filterOrRemoveIf = false;
+                mSrc = args[0];
+                mDst = args[1];
+                filterIdx = 2;
+            }
+
+            if (args.Length > filterIdx)
+            {
+                for (int i = filterIdx; i < args.Length; ++i)
+                {
+                    mFilter.Add(args[i].ToLower());
                 }
             }
 
             GetAllFileList(mSrc);
             DirectoryInfo srcDi = new DirectoryInfo(mSrc);
-            DirectoryInfo dstDi = new DirectoryInfo(mDst);
-            
+
+            var strNow = DateTime.Now.ToString("yyMMddHHmm");
+            DirectoryInfo dstDi = new DirectoryInfo(mDst + strNow);
+
             foreach(var item in mAllFiles)
             {
                 FileInfo f = new FileInfo(item);
