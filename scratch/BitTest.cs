@@ -44,6 +44,27 @@ public static class BitTest64
     {
         return (val & (~mask));
     }
+
+    public static UInt64 nextClosePower(this UInt64 val)
+    {
+        var old = val;
+        val = val | val >> 1;
+        val = val | val >> 2;
+        val = val | val >> 4;
+        val = val | val >> 8;
+        val = val | val >> 16;
+        val = val | val >> 32;
+        val++;
+
+        if (old == val >> 1)
+        {
+            return old;
+        }
+        else
+        {
+            return val;
+        }
+    }
 }
 
 public static class BitTest32
@@ -84,6 +105,26 @@ public static class BitTest32
     public static UInt32 clearBit(this UInt32 val, UInt32 mask)
     {
         return (val & (~mask));
+    }
+
+    public static UInt32 nextClosePower(this UInt32 val)
+    {
+        var old = val;
+        val = val | val >> 1;
+        val = val | val >> 2;
+        val = val | val >> 4;
+        val = val | val >> 8;
+        val = val | val >> 16;
+        val++;
+
+        if (old == val >> 1)
+        {
+            return old;
+        }
+        else
+        {
+            return val;
+        }
     }
 }
 
@@ -127,6 +168,13 @@ public static class BitTest16
     {
         return (UInt16)(val & (~mask));
     }
+
+    public static UInt16 nextClosePower(this UInt16 val)
+    {
+        UInt32 tmp = val;
+        tmp = tmp.nextClosePower();
+        return (UInt16)tmp;
+    }
 }
 
 
@@ -168,5 +216,12 @@ public static class BitTest8
     public static byte clearBit(this byte val, byte mask)
     {
         return (byte)(val & (~mask));
+    }
+
+    public static byte nextClosePower(this byte val)
+    {
+        UInt32 tmp = val;
+        tmp = tmp.nextClosePower();
+        return (byte)tmp;
     }
 }
