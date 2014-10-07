@@ -47,7 +47,7 @@ public static class BitTest64
 
     public static UInt64 nextClosePower(this UInt64 val)
     {
-        var old = val;
+        val--;
         val = val | val >> 1;
         val = val | val >> 2;
         val = val | val >> 4;
@@ -55,15 +55,7 @@ public static class BitTest64
         val = val | val >> 16;
         val = val | val >> 32;
         val++;
-
-        if (old == val >> 1)
-        {
-            return old;
-        }
-        else
-        {
-            return val;
-        }
+        return val;
     }
 }
 
@@ -109,22 +101,14 @@ public static class BitTest32
 
     public static UInt32 nextClosePower(this UInt32 val)
     {
-        var old = val;
+        val--;
         val = val | val >> 1;
         val = val | val >> 2;
         val = val | val >> 4;
         val = val | val >> 8;
         val = val | val >> 16;
         val++;
-
-        if (old == val >> 1)
-        {
-            return old;
-        }
-        else
-        {
-            return val;
-        }
+        return val;
     }
 }
 
@@ -169,11 +153,16 @@ public static class BitTest16
         return (UInt16)(val & (~mask));
     }
 
-    public static UInt16 nextClosePower(this UInt16 val)
+    public static UInt16 nextClosePower(this UInt16 val16)
     {
-        UInt32 tmp = val;
-        tmp = tmp.nextClosePower();
-        return (UInt16)tmp;
+        UInt32 val = val16;
+        val--;
+        val = val | val >> 1;
+        val = val | val >> 2;
+        val = val | val >> 4;
+        val = val | val >> 8;
+        val++;
+        return (UInt16)val;
     }
 }
 
@@ -218,10 +207,14 @@ public static class BitTest8
         return (byte)(val & (~mask));
     }
 
-    public static byte nextClosePower(this byte val)
+    public static byte nextClosePower(this byte val8)
     {
-        UInt32 tmp = val;
-        tmp = tmp.nextClosePower();
-        return (byte)tmp;
+        UInt32 val = val8;
+        val--;
+        val = val | val >> 1;
+        val = val | val >> 2;
+        val = val | val >> 4;
+        val++;
+        return (byte)val;
     }
 }
