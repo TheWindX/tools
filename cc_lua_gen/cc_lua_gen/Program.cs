@@ -25,12 +25,15 @@ namespace ns_CodeGen
             if (args.Length == 0)
             {
                 Console.WriteLine(@"usage: 
+    cc_lua_gen.exe -xml <xmlfile> -resource <resource_dir>
+    cc_lua_gen.exe -x <xmlfile> -rd <resource_dir>
+
+    <xmlfile>     : xml 路径(coco2dx *.csd)
+    <resource_dir>: resource_dir 资源路径
+
 example : 
     cc_lua_gen.exe -xml sample.csd -resource new_ui/
     cc_lua_gen.exe -x sample.csd -r new_ui/
-
-xml 路径：[-xml | -x] xml(.csd) file
-资源路径: [-resource | -r] resource path
 
 ");
                 return false;
@@ -108,12 +111,22 @@ xml 路径：[-xml | -x] xml(.csd) file
         {
             if (!init(args)) return;
 
-            ControlTree ct = new ControlTree();
-            ct.loadXML(xmlPath, resourcePath);
-            var className = System.IO.Path.GetFileNameWithoutExtension(xmlPath);
-            ExportXML.saveSimple(ct, className + ".xml");
-            string strlua = ExportLua.exportLua(ct, className);
-            System.IO.File.WriteAllText(className + ".lua", strlua);
+            try
+            {
+                ControlTree ct = new ControlTree();
+                ct.loadXML(xmlPath, resourcePath);
+                var className = System.IO.Path.GetFileNameWithoutExtension(xmlPath);
+                ExportXML.saveSimple(ct, className + "_simple.xml");
+                Console.WriteLine("输出到" + System.IO.Directory.GetCurrentDirectory() + System.IO.Path.DirectorySeparatorChar + className + "_simple.xml");
+                string strlua = ExportLua.exportLua(ct, className);
+                Console.WriteLine("输出到" + System.IO.Directory.GetCurrentDirectory() + System.IO.Path.DirectorySeparatorChar + className + ".lua");
+                System.IO.File.WriteAllText(className + ".lua", strlua);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("发生错误:\n    "+e.Message);
+            }
+            
         }
     }
 }

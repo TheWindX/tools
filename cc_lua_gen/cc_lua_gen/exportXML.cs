@@ -53,7 +53,6 @@ namespace ns_CodeGen
                 ln += "\n" + lstart + string.Format(@" text=""{0}"" ", node.text);
                 ln += "\n" + lstart + string.Format(@" fontSize=""{0}"" ", node.fontSz);
             }
-            
             ln += ">\n";
             foreach (var elem in node.mChildren)
             {

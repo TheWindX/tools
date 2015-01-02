@@ -73,11 +73,30 @@ function UITemplate:addFrameButton(paresentCtrl, filePath, pressFilePath, posx, 
 end
 
 --创建lable
-function UITemplate:addLable(paresentCtrl, text, fontsz, colorR, colorG, colorB, posx, posy, anchorx, anchory)
+function UITemplate:addLabel(paresentCtrl, text, fontsz, colorR, colorG, colorB, posx, posy, anchorx, anchory)
     return Control.addSysFont( paresentCtrl, text, ""Microsoft Yahei"", fontsz, {colorR, colorG, colorB}, {posx, posy} , 1, 0, {anchorx, anchory});
 end
 
+--创建edit
+function UITemplate:addEdit(paresentCtrl, fontsz, colorR, colorG, colorB, posx, posy, anchorx, anchory, sizex, sizey)
+    local editText = CEditBoxEx:create();
+	editText:InitEditBox( cc.size( sizex, sizey), ""common/common_input.png"");
+	editText:setPosition( posx+(0.5-anchorx)*sizex, posy+(0.5-anchory)*sizey);
+	editText:setFontName( ""Microsoft Yahei"" );
+	editText:setFontSize( fontsz );
+	editText:setFontColor( ccc3( colorR,colorG,colorB ) );
+	editText:setMaxLength( 32 );
+	paresentCtrl:addChild( editText, 10);
+    return editText
+end
 ";
+
+        const string spritePrefix = "sprite_";
+        const string buttonPrefix = "button_";
+        const string labelPrefix = "label_";
+        const string editPrefix = "edit_";
+        
+
         static string ctorPiece = "";
         static string preloadPiece;
         static string initPiece;
@@ -171,13 +190,21 @@ end
             var names = new List<string>();
             System.Action<CCNodeInfo> act = (info) =>
             {
-                if (info.typeName.StartsWith("Sprite"))//精灵控件
+                if (info.typeName == "SpriteObjectData")//精灵控件
                 {
-                    names.Add("sprite_" + info.name.ToLower());
+                    names.Add(spritePrefix + info.name.ToLower());
                 }
-                else if (info.typeName.StartsWith("Button"))//按钮控件
+                else if (info.typeName == "ButtonObjectData")//按钮控件
                 {
-                    names.Add("button_" + info.name.ToLower());
+                    names.Add(buttonPrefix + info.name.ToLower());
+                }
+                else if (info.typeName == "TextObjectData")//文字控件
+                {
+                    names.Add(labelPrefix + info.name.ToLower());
+                }
+                else if (info.typeName == "TextFieldObjectData")//编辑框控件
+                {
+                    names.Add(editPrefix + info.name.ToLower());
                 }
             };
             tree.walkTree(tree.mRoot, act);
@@ -199,9 +226,9 @@ end
             string currentControll = "self";
             System.Action<CCNodeInfo> onNode = info =>
                 {
-                    if (info.typeName.StartsWith("Sprite"))//精灵控件
+                    if (info.typeName == "SpriteObjectData")//精灵控件
                     {
-                        currentControll = "self.sprite_" + info.name.ToLower();
+                        currentControll = "self."+ spritePrefix + info.name.ToLower();
                         if(info.frame)
                         {
                             ret += string.Format("    {0} = self:AddFrameSprite({1}, \"{2}\", {3}, {4}, {5}, {6})\n",
@@ -213,9 +240,9 @@ end
                                 currentControll, paresentCtrl.Peek(), info.fpath, info.px, info.py, info.anchorX, info.anchorY);
                         }
                     }
-                    else if (info.typeName.StartsWith("Button"))//按钮控件
+                    else if (info.typeName == "ButtonObjectData")//按钮控件
                     {
-                        currentControll = "self.button_" + info.name.ToLower();
+                        currentControll = "self." + buttonPrefix + info.name.ToLower();
                         if (info.frame)
                         {
                             ret += string.Format("    {7} = self:addFrameButton({0}, \"{1}\", \"{2}\", {3}, {4}, {5}, {6})\n", 
@@ -227,12 +254,20 @@ end
                                 paresentCtrl.Peek(), info.fpath, info.pressFpath, info.px, info.py, info.anchorX, info.anchorY, currentControll);
                         }
                     }
-                    else if (info.typeName.StartsWith("Text"))//字体控件
+                    else if (info.typeName == "TextObjectData")//字体控件
                     {
-                        currentControll = "self.text_" + info.name.ToLower();
-                        ret += string.Format("    {0} = self:addLable({1}, \"{2}\", {3}, {4}, {5}, {6}, {7}, {8}, {9}, {10})\n",
-                                currentControll, paresentCtrl.Peek(), info.text, info.fontSz, info.colorR, info.colorG, info.colorB, info.px, info.py, info.anchorX, info.anchorY, currentControll);
+                        currentControll = "self." + labelPrefix + info.name.ToLower();
+                        ret += string.Format("    {0} = self:addLabel({1}, \"{2}\", {3}, {4}, {5}, {6}, {7}, {8}, {9}, {10})\n",
+                                currentControll, paresentCtrl.Peek(), info.text, info.fontSz, info.colorR, info.colorG, info.colorB, info.px, info.py, info.anchorX, info.anchorY);
                         
+                    }
+                    else if (info.typeName == "TextFieldObjectData")//编辑框控件
+                    {
+                        currentControll = "self." + editPrefix + info.name.ToLower();
+                        ret += string.Format("    {0} = self:addEdit({1}, {2}, {3}, {4}, {5}, {6}, {7}, {8}, {9}, {10}, {11})\n",
+                                currentControll, paresentCtrl.Peek(), info.fontSz, info.colorR, info.colorG, info.colorB,
+                                info.px, info.py, info.anchorX, info.anchorY, info.sx, info.sy);
+
                     }
                 };
             System.Action<CCNodeInfo> onEnterChildren = info =>
