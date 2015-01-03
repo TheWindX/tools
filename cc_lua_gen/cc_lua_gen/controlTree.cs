@@ -144,28 +144,45 @@ namespace ns_CodeGen
                 if (strFontSize != "")
                 {
                     mCurrent.fontSz = int.Parse(strFontSize);
-                    mCurrent.text = labelText;
                 }
+                mCurrent.text = labelText;
             }
             else if (elem.Name == "Position")
             {
                 string strx = elem.GetAttribute("X");
                 string stry = elem.GetAttribute("Y");
-                setPosition((int)float.Parse(strx), (int)float.Parse(stry));
+                int px = 0;
+                int py = 0;
+                if (strx != "")
+                    px = (int)float.Parse(strx);
+                if (stry != "")
+                    py = (int)float.Parse(stry);
+                setPosition(px, py);
             }
             else if (elem.Name == "AnchorPoint")
             {
                 string strx = elem.GetAttribute("ScaleX");
                 string stry = elem.GetAttribute("ScaleY");
+                float ax = 0;
+                float ay = 0;
                 if (strx != "")
-                    setAnchor(float.Parse(strx), float.Parse(stry));
+                    ax = float.Parse(strx);
+                if (stry != "")
+                    ay = float.Parse(stry);
+                setAnchor(ax, ay);
             }
             else if (elem.Name == "Size")
             {
                 string strx = elem.GetAttribute("X");
                 string stry = elem.GetAttribute("Y");
+                int sx = 64;
+                int sy = 64;
                 if (strx != "")
-                    setSize((int)float.Parse(strx), (int)float.Parse(stry));
+                    sx = (int)float.Parse(strx);
+                if (stry != "")
+                    sy = (int)float.Parse(stry);
+                if (strx != "")
+                    setSize(sx, sy);
             }
             else if (elem.Name == "FileData")
             {

@@ -35,6 +35,13 @@ function UITemplate:release()
 	
 end
 
+--创建 node
+function UITemplate:addSingleNode(paresentCtrl, posx, posy)
+    local node = cc.Node:create()
+    node:setPosition(posx, posy)
+    paresentCtrl:addChild(node)
+    return node
+end
 
 --创建sprite
 function UITemplate:AddSprite(paresentCtrl, filePath, posx, posy, anchorx, anchory)
@@ -90,7 +97,7 @@ function UITemplate:addEdit(paresentCtrl, fontsz, colorR, colorG, colorB, posx, 
     return editText
 end
 ";
-
+        const string nodePrefix = "node_";
         const string spritePrefix = "sprite_";
         const string buttonPrefix = "button_";
         const string labelPrefix = "label_";
@@ -190,7 +197,11 @@ end
             var names = new List<string>();
             System.Action<CCNodeInfo> act = (info) =>
             {
-                if (info.typeName == "SpriteObjectData")//精灵控件
+                if (info.typeName == "SingleNodeObjectData")//精灵控件
+                {
+                    names.Add(nodePrefix + info.name.ToLower());
+                }
+                else if (info.typeName == "SpriteObjectData")//精灵控件
                 {
                     names.Add(spritePrefix + info.name.ToLower());
                 }
@@ -228,17 +239,25 @@ end
                 {
                     if (info.typeName == "SpriteObjectData")//精灵控件
                     {
-                        currentControll = "self."+ spritePrefix + info.name.ToLower();
-                        if(info.frame)
+                        currentControll = "self." + spritePrefix + info.name.ToLower();
+                        if (info.frame)
                         {
                             ret += string.Format("    {0} = self:AddFrameSprite({1}, \"{2}\", {3}, {4}, {5}, {6})\n",
                                 currentControll, paresentCtrl.Peek(), info.fpath, info.px, info.py, info.anchorX, info.anchorY);
                         }
                         else
                         {
-                            ret += string.Format("    {0} = self:AddSprite({1}, \"{2}\", {3}, {4}, {5}, {6})\n", 
+                            ret += string.Format("    {0} = self:AddSprite({1}, \"{2}\", {3}, {4}, {5}, {6})\n",
                                 currentControll, paresentCtrl.Peek(), info.fpath, info.px, info.py, info.anchorX, info.anchorY);
                         }
+                    }
+                    else if (info.typeName == "SingleNodeObjectData")//精灵控件
+                    {
+                        currentControll = "self."+ nodePrefix + info.name.ToLower();
+                        
+                            ret += string.Format("    {0} = self:addSingleNode({1}, {2}, {3})\n",
+                                currentControll, paresentCtrl.Peek(), info.px, info.py);
+                        
                     }
                     else if (info.typeName == "ButtonObjectData")//按钮控件
                     {

@@ -20,19 +20,22 @@ namespace ns_CodeGen
 
         static string xmlPath = "";
         static string resourcePath = "";
+        static string outPath = "";
         static bool init(string[] args)
         {
             if (args.Length == 0)
             {
                 Console.WriteLine(@"usage: 
-    cc_lua_gen.exe -xml <xmlfile> -resource <resource_dir>
-    cc_lua_gen.exe -x <xmlfile> -rd <resource_dir>
+    cc_lua_gen.exe -xml <xmlfile> -resource <resource_dir> [-out <out_path>]
+    cc_lua_gen.exe -x <xmlfile> -rd <resource_dir> [-o <out_path>]
 
     <xmlfile>     : xml 路径(coco2dx *.csd)
     <resource_dir>: resource_dir 资源路径
+    <out_path>    : 输出文件路径
 
 example : 
     cc_lua_gen.exe -xml sample.csd -resource new_ui/
+    cc_lua_gen.exe -x sample.csd -r new_ui/
     cc_lua_gen.exe -x sample.csd -r new_ui/
 
 ");
@@ -80,6 +83,22 @@ example :
             };
             executors.Add(resourceOption);
 
+            var outOption = new COption();
+            outOption.name = "-out";
+            outOption.short_name = "-o";
+            outOption.exec = list =>
+            {
+                if (list.Count < 1)
+                {
+                    Console.WriteLine("没有out参数");
+                    return false;
+                }
+
+                outPath = list[0];
+                return true;
+            };
+            executors.Add(outOption);
+
             COption op = xmlOption;
             List<string> paras = new List<string>();
             for (int i = 0; i < args.Length; ++i)
@@ -115,12 +134,26 @@ example :
             {
                 ControlTree ct = new ControlTree();
                 ct.loadXML(xmlPath, resourcePath);
-                var className = System.IO.Path.GetFileNameWithoutExtension(xmlPath);
-                ExportXML.saveSimple(ct, className + "_simple.xml");
-                Console.WriteLine("输出到" + System.IO.Directory.GetCurrentDirectory() + System.IO.Path.DirectorySeparatorChar + className + "_simple.xml");
-                string strlua = ExportLua.exportLua(ct, className);
-                Console.WriteLine("输出到" + System.IO.Directory.GetCurrentDirectory() + System.IO.Path.DirectorySeparatorChar + className + ".lua");
-                System.IO.File.WriteAllText(className + ".lua", strlua);
+                if (outPath == "")
+                {
+                    var className = System.IO.Path.GetFileNameWithoutExtension(xmlPath);
+                    ExportXML.saveSimple(ct, className + "_simple.xml");
+                    Console.WriteLine("输出到" + System.IO.Directory.GetCurrentDirectory() + System.IO.Path.DirectorySeparatorChar + className + "_simple.xml");
+                    string strlua = ExportLua.exportLua(ct, className);
+                    System.IO.File.WriteAllText(className + ".lua", strlua);
+                    Console.WriteLine("输出到" + System.IO.Directory.GetCurrentDirectory() + System.IO.Path.DirectorySeparatorChar + className + ".lua");
+                    
+                }
+                else
+                {
+                    var className = System.IO.Path.GetFileNameWithoutExtension(outPath);
+                    ExportXML.saveSimple(ct, className + "_simple.xml");
+                    Console.WriteLine("输出到" + System.IO.Directory.GetCurrentDirectory() + System.IO.Path.DirectorySeparatorChar + className + "_simple.xml");
+                    string strlua = ExportLua.exportLua(ct, className);
+                    System.IO.File.WriteAllText(outPath, strlua);
+                    Console.WriteLine("输出到" + System.IO.Path.GetFullPath(outPath));
+                }
+                
             }
             catch (Exception e)
             {
