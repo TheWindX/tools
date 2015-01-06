@@ -10,42 +10,50 @@ namespace ns_CodeGen
         public const string luaTemplate = @"
 require ""extern""
 require ""Include/LuaCtrl""
+require ""Logic/base/scene_base""
 
-UITemplate = class( ""UITemplate"", function()
-	return cc.Node:create()
+UITemplateToReplace = class( ""UITemplateToReplace"", function()
+	return layout:createScene()
 end)
 
-function UITemplate:ctor()
+function UITemplateToReplace:ctor()
+	
+    self:_Myptr( self )
+end
+
+function UITemplateToReplace:preload()
+    
+end
+
+function UITemplateToReplace:initScene()
+    self:preload()
+    local mainlayer = self:resetLayout()
+end
+
+
+
+function UITemplateToReplace:resetLayout()
 	
 end
 
-function UITemplate:preload()
 
-end
-
-function UITemplate:init()
-end
-
-function UITemplate:resetLayout()
-	
-end
-
-
-function UITemplate:release()
+function UITemplateToReplace:exitScene()
 	
 end
 
 --创建 node
-function UITemplate:addSingleNode(paresentCtrl, posx, posy)
-    local node = cc.Node:create()
+function UITemplateToReplace:addSingleNode(name, paresentCtrl, posx, posy)
+    local node = ccui.Widget:create()
+    node:setName(name)
     node:setPosition(posx, posy)
     paresentCtrl:addChild(node)
     return node
 end
 
 --创建sprite
-function UITemplate:AddSprite(paresentCtrl, filePath, posx, posy, anchorx, anchory)
-    local image = cc.Sprite:create( filePath );
+function UITemplateToReplace:AddSprite(name, paresentCtrl, filePath, posx, posy, anchorx, anchory)
+    local image = ccui.ImageView:create( filePath, 0);
+    image:setName(name)
     image:setPosition(posx, posy)
     image:setAnchorPoint(anchorx, anchory)
     paresentCtrl:addChild(image)
@@ -53,8 +61,9 @@ function UITemplate:AddSprite(paresentCtrl, filePath, posx, posy, anchorx, ancho
 end
 
 --从 image frame 创建sprite
-function UITemplate:AddFrameSprite(paresentCtrl, filePath, posx, posy, anchorx, anchory)
-    local image = cc.Sprite:createWithSpriteFrameName( filePath );
+function UITemplateToReplace:AddFrameSprite(name, paresentCtrl, filePath, posx, posy, anchorx, anchory)
+    local image = ccui.ImageView:create( filePath, 1);
+    image:setName(name)
     image:setPosition(posx, posy)
     image:setAnchorPoint(anchorx, anchory)
     paresentCtrl:addChild(image)
@@ -62,30 +71,26 @@ function UITemplate:AddFrameSprite(paresentCtrl, filePath, posx, posy, anchorx, 
 end
 
 --创建sprite
-function UITemplate:addButton(paresentCtrl, filePath, pressFilePath, posx, posy, anchorx, anchory)
-    local button = ccui.Button:create( filePath, pressFilePath, nil, 0)
-    button:setPosition(posx, posy)
-    button:setAnchorPoint(anchorx, anchory)
-    paresentCtrl:addChild(button)
-    return button
+function UITemplateToReplace:addButton(name, paresentCtrl, filePath, pressFilePath, posx, posy, anchorx, anchory)
+    local r = Control.addButton2(paresentCtrl, filePath, pressFilePath, nil, nil, {posx, posy}, 0, 0, 0)
+    r:setName(name)
+    return r
 end
 
 --从 image frame 创建button
-function UITemplate:addFrameButton(paresentCtrl, filePath, pressFilePath, posx, posy, anchorx, anchory)
-    local button = ccui.Button:create( filePath, pressFilePath, nil, 1)
-    button:setPosition(posx, posy)
-    button:setAnchorPoint(anchorx, anchory)
-    paresentCtrl:addChild(button)
-    return button
+function UITemplateToReplace:addFrameButton(name, paresentCtrl, filePath, pressFilePath, posx, posy, anchorx, anchory)
+    local r = Control.addButton2(paresentCtrl, filePath, pressFilePath, nil, nil, {posx, posy}, 0, 0, 1)
+    r:setName(name)
+    return r
 end
 
 --创建lable
-function UITemplate:addLabel(paresentCtrl, text, fontsz, colorR, colorG, colorB, posx, posy, anchorx, anchory)
+function UITemplateToReplace:addLabel(name, paresentCtrl, text, fontsz, colorR, colorG, colorB, posx, posy, anchorx, anchory)
     return Control.addSysFont( paresentCtrl, text, ""Microsoft Yahei"", fontsz, {colorR, colorG, colorB}, {posx, posy} , 1, 0, {anchorx, anchory});
 end
 
 --创建edit
-function UITemplate:addEdit(paresentCtrl, fontsz, colorR, colorG, colorB, posx, posy, anchorx, anchory, sizex, sizey)
+function UITemplateToReplace:addEdit(name, paresentCtrl, fontsz, colorR, colorG, colorB, posx, posy, anchorx, anchory, sizex, sizey)
     local editText = CEditBoxEx:create();
 	editText:InitEditBox( cc.size( sizex, sizey), ""common/common_input.png"");
 	editText:setPosition( posx+(0.5-anchorx)*sizex, posy+(0.5-anchory)*sizey);
@@ -130,26 +135,26 @@ end
             string str = luaTemplate;
             splitByString(str, "ctor()\r\n", out ctorPiece, out str);
             splitByString(str, "preload()\r\n", out preloadPiece, out str);
-            splitByString(str, "init()\r\n", out initPiece, out str);
-            splitByString(str, "resetLayout()\r\n", out resetLayoutPiece, out str);
-            splitByString(str, "release()\r\n", out releasePiece, out endPiece);
+            splitByString(str, "initScene()\r\n", out initPiece, out str);
+            splitByString(str, "UITemplateToReplace:resetLayout()\r\n", out resetLayoutPiece, out str);
+            splitByString(str, "exitScene()\r\n", out releasePiece, out endPiece);
         }
 
         public static string exportLua(ControlTree tree, string className)
         {
             split();
             string ret = "";
-            ret += ctorPiece.Replace("UITemplate", className);
+            ret += ctorPiece.Replace("UITemplateToReplace", className);
             ret += constructCor(tree);
-            ret += preloadPiece.Replace("UITemplate", className);
+            ret += preloadPiece.Replace("UITemplateToReplace", className);
             //preload piece
             ret += constructPreload(tree);
-            ret += initPiece.Replace("UITemplate", className);
-            ret += resetLayoutPiece.Replace("UITemplate", className);
+            ret += initPiece.Replace("UITemplateToReplace", className);
+            ret += resetLayoutPiece.Replace("UITemplateToReplace", className);
             ret += constructBuilder(tree);
-            ret += releasePiece.Replace("UITemplate", className);
+            ret += releasePiece.Replace("UITemplateToReplace", className);
             ret += constructRelease(tree);
-            ret += endPiece.Replace("UITemplate", className);
+            ret += endPiece.Replace("UITemplateToReplace", className);
             return ret;
         }
 
@@ -242,21 +247,21 @@ end
                         currentControll = "self." + spritePrefix + info.name.ToLower();
                         if (info.frame)
                         {
-                            ret += string.Format("    {0} = self:AddFrameSprite({1}, \"{2}\", {3}, {4}, {5}, {6})\n",
-                                currentControll, paresentCtrl.Peek(), info.fpath, info.px, info.py, info.anchorX, info.anchorY);
+                            ret += string.Format("    {0} = self:AddFrameSprite(\"{7}\", {1}, \"{2}\", {3}, {4}, {5}, {6})\n",
+                                currentControll, paresentCtrl.Peek(), info.fpath, info.px, info.py, info.anchorX, info.anchorY, info.name.ToLower());
                         }
                         else
                         {
-                            ret += string.Format("    {0} = self:AddSprite({1}, \"{2}\", {3}, {4}, {5}, {6})\n",
-                                currentControll, paresentCtrl.Peek(), info.fpath, info.px, info.py, info.anchorX, info.anchorY);
+                            ret += string.Format("    {0} = self:AddSprite(\"{7}\", {1}, \"{2}\", {3}, {4}, {5}, {6})\n",
+                                currentControll, paresentCtrl.Peek(), info.fpath, info.px, info.py, info.anchorX, info.anchorY, info.name.ToLower());
                         }
                     }
                     else if (info.typeName == "SingleNodeObjectData")//精灵控件
                     {
                         currentControll = "self."+ nodePrefix + info.name.ToLower();
                         
-                            ret += string.Format("    {0} = self:addSingleNode({1}, {2}, {3})\n",
-                                currentControll, paresentCtrl.Peek(), info.px, info.py);
+                            ret += string.Format("    {0} = self:addSingleNode(\"{4}\", {1}, {2}, {3})\n",
+                                currentControll, paresentCtrl.Peek(), info.px, info.py, info.name.ToLower());
                         
                     }
                     else if (info.typeName == "ButtonObjectData")//按钮控件
@@ -264,28 +269,28 @@ end
                         currentControll = "self." + buttonPrefix + info.name.ToLower();
                         if (info.frame)
                         {
-                            ret += string.Format("    {7} = self:addFrameButton({0}, \"{1}\", \"{2}\", {3}, {4}, {5}, {6})\n", 
-                                paresentCtrl.Peek(), info.fpath, info.pressFpath, info.px, info.py, info.anchorX, info.anchorY, currentControll);
+                            ret += string.Format("    {7} = self:addFrameButton(\"{8}\", {0}, \"{1}\", \"{2}\", {3}, {4}, {5}, {6})\n",
+                                paresentCtrl.Peek(), info.fpath, info.pressFpath, info.px, info.py, info.anchorX, info.anchorY, currentControll, info.name.ToLower());
                         }
                         else
                         {
-                            ret += string.Format("    {7} = self:addButton({0}, \"{1}\", \"{2}\", {3}, {4}, {5}, {6})\n", 
-                                paresentCtrl.Peek(), info.fpath, info.pressFpath, info.px, info.py, info.anchorX, info.anchorY, currentControll);
+                            ret += string.Format("    {7} = self:addButton(\"{8}\", {0}, \"{1}\", \"{2}\", {3}, {4}, {5}, {6})\n",
+                                paresentCtrl.Peek(), info.fpath, info.pressFpath, info.px, info.py, info.anchorX, info.anchorY, currentControll, info.name.ToLower());
                         }
                     }
                     else if (info.typeName == "TextObjectData")//字体控件
                     {
                         currentControll = "self." + labelPrefix + info.name.ToLower();
-                        ret += string.Format("    {0} = self:addLabel({1}, \"{2}\", {3}, {4}, {5}, {6}, {7}, {8}, {9}, {10})\n",
-                                currentControll, paresentCtrl.Peek(), info.text, info.fontSz, info.colorR, info.colorG, info.colorB, info.px, info.py, info.anchorX, info.anchorY);
+                        ret += string.Format("    {0} = self:addLabel(\"{11}\", {1}, \"{2}\", {3}, {4}, {5}, {6}, {7}, {8}, {9}, {10})\n",
+                                currentControll, paresentCtrl.Peek(), info.text, info.fontSz, info.colorR, info.colorG, info.colorB, info.px, info.py, info.anchorX, info.anchorY, info.name.ToLower());
                         
                     }
                     else if (info.typeName == "TextFieldObjectData")//编辑框控件
                     {
                         currentControll = "self." + editPrefix + info.name.ToLower();
-                        ret += string.Format("    {0} = self:addEdit({1}, {2}, {3}, {4}, {5}, {6}, {7}, {8}, {9}, {10}, {11})\n",
+                        ret += string.Format("    {0} = self:addEdit(\"{12}\", {1}, {2}, {3}, {4}, {5}, {6}, {7}, {8}, {9}, {10}, {11})\n",
                                 currentControll, paresentCtrl.Peek(), info.fontSz, info.colorR, info.colorG, info.colorB,
-                                info.px, info.py, info.anchorX, info.anchorY, info.sx, info.sy);
+                                info.px, info.py, info.anchorX, info.anchorY, info.sx, info.sy, info.name.ToLower());
 
                     }
                 };
