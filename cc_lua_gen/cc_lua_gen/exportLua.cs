@@ -73,6 +73,7 @@ end
 --创建sprite
 function UITemplateToReplace:addButton(name, paresentCtrl, filePath, pressFilePath, posx, posy, anchorx, anchory)
     local r = Control.addButton2(paresentCtrl, filePath, pressFilePath, nil, nil, {posx, posy}, 0, 0, 0)
+    r:setAnchorPoint(anchorx, anchory)
     r:setName(name)
     return r
 end
@@ -80,6 +81,7 @@ end
 --从 image frame 创建button
 function UITemplateToReplace:addFrameButton(name, paresentCtrl, filePath, pressFilePath, posx, posy, anchorx, anchory)
     local r = Control.addButton2(paresentCtrl, filePath, pressFilePath, nil, nil, {posx, posy}, 0, 0, 1)
+    r:setAnchorPoint(anchorx, anchory)
     r:setName(name)
     return r
 end
@@ -98,8 +100,22 @@ function UITemplateToReplace:addEdit(name, paresentCtrl, fontsz, colorR, colorG,
 	editText:setFontSize( fontsz );
 	editText:setFontColor( ccc3( colorR,colorG,colorB ) );
 	editText:setMaxLength( 32 );
-	paresentCtrl:addChild( editText, 10);
+	paresentCtrl:addChild( editText);
     return editText
+end
+
+--创建scroll view
+function UITemplateToReplace:addScrollView(name, paresentCtrl, posx, posy, anchorx, anchory, sx, sy, innersx, innersy)
+    local ScrollView = ccui.ScrollView:create();
+    ScrollView:setName(name)
+    ScrollView:setPosition(posx, posy)
+    ScrollView:setAnchorPoint(anchorx, anchory)
+    ScrollView:setSize (cc.size(sx, sy) )
+    ScrollView:setInnerContainerSize (cc.size(innersx, innersy) )
+    ScrollView:setBounceEnabled(true);
+    ScrollView:setTouchEnabled(true);
+    paresentCtrl:addChild(ScrollView)
+    return ScrollView
 end
 ";
         const string nodePrefix = "node_";
@@ -107,6 +123,7 @@ end
         const string buttonPrefix = "button_";
         const string labelPrefix = "label_";
         const string editPrefix = "edit_";
+        const string scrollPrefix = "scroll_";
         
 
         static string ctorPiece = "";
@@ -222,6 +239,10 @@ end
                 {
                     names.Add(editPrefix + info.name.ToLower());
                 }
+                else if (info.typeName == "ScrollViewObjectData")//编辑框控件
+                {
+                    names.Add(scrollPrefix + info.name.ToLower());
+                }
             };
             tree.walkTree(tree.mRoot, act);
 
@@ -293,6 +314,23 @@ end
                                 info.px, info.py, info.anchorX, info.anchorY, info.sx, info.sy, info.name.ToLower());
 
                     }
+                    else if (info.typeName == "ScrollViewObjectData")//滚动控件
+                    {
+                        currentControll = "self." + scrollPrefix + info.name.ToLower();
+                        ret += string.Format("    {0} = self:addScrollView(\"{10}\", {1}, {2}, {3}, {4}, {5}, {6}, {7}, {8}, {9})\n",
+                                currentControll, paresentCtrl.Peek(), info.px, info.py, info.anchorX, info.anchorY, info.sx, info.sy,
+                                info.innerSx, info.innerSy, info.name.ToLower());
+
+                    }
+
+                    if (ret != "")
+                    {
+                        if (!info.visible)
+                        {
+                            ret += string.Format("    {0}:setVisible(false)\n", currentControll);
+                        }
+                    }
+                    
                 };
             System.Action<CCNodeInfo> onEnterChildren = info =>
                 {

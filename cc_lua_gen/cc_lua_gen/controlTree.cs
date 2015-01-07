@@ -19,6 +19,8 @@ namespace ns_CodeGen
         public int py = 0;
         public int sx = 64;
         public int sy = 64;
+        public int innerSx = 64;
+        public int innerSy = 64;
         public float anchorX = 0;
         public float anchorY = 0;
         public string fpath = "";
@@ -34,6 +36,7 @@ namespace ns_CodeGen
         public int colorG = 255;
         public int colorB = 255;
 
+        public bool visible = true;
         public List<CCNodeInfo> mChildren = new List<CCNodeInfo>();
     }
 
@@ -92,6 +95,12 @@ namespace ns_CodeGen
             mCurrent.sy = y;
         }
 
+        void setInnerSize(int x, int y)
+        {
+            mCurrent.innerSx = x;
+            mCurrent.innerSy = y;
+        }
+
         void fileInfo(bool frame, string flist, string fname)
         {
             mCurrent.frame = frame;
@@ -104,6 +113,11 @@ namespace ns_CodeGen
             mCurrent.frame = frame;
             mCurrent.pressFlistFile = flist;
             mCurrent.pressFpath = fname;
+        }
+
+        void setVisible(bool visible)
+        {
+            mCurrent.visible = visible;
         }
 
         void setColor(int a, int r, int g, int b)
@@ -138,6 +152,12 @@ namespace ns_CodeGen
                 string name = elem.GetAttribute("Name");
                 string ctype = elem.GetAttribute("ctype");
                 newNode(name, ctype);
+
+                string strVisible = elem.GetAttribute("Visible");
+                if (strVisible != "")
+                {
+                    setVisible(bool.Parse(strVisible));
+                }
 
                 string labelText = elem.GetAttribute("LabelText");
                 string strFontSize = elem.GetAttribute("FontSize");
@@ -181,8 +201,19 @@ namespace ns_CodeGen
                     sx = (int)float.Parse(strx);
                 if (stry != "")
                     sy = (int)float.Parse(stry);
+                setSize(sx, sy);
+            }
+            else if (elem.Name == "InnerNodeSize")
+            {
+                string strx = elem.GetAttribute("Width");
+                string stry = elem.GetAttribute("Height");
+                int sx = 64;
+                int sy = 64;
                 if (strx != "")
-                    setSize(sx, sy);
+                    sx = (int)float.Parse(strx);
+                if (stry != "")
+                    sy = (int)float.Parse(stry);
+                setInnerSize(sx, sy);
             }
             else if (elem.Name == "FileData")
             {
