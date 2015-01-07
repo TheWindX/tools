@@ -30,13 +30,6 @@ function UITemplateToReplace:initScene()
     local mainlayer = self:resetLayout()
 end
 
-
-
-function UITemplateToReplace:resetLayout()
-	
-end
-
-
 function UITemplateToReplace:exitScene()
 	
 end
@@ -88,7 +81,12 @@ end
 
 --创建lable
 function UITemplateToReplace:addLabel(name, paresentCtrl, text, fontsz, colorR, colorG, colorB, posx, posy, anchorx, anchory)
-    return Control.addSysFont( paresentCtrl, text, ""Microsoft Yahei"", fontsz, {colorR, colorG, colorB}, {posx, posy} , 1, 0, {anchorx, anchory});
+    local l = ccui.Text:create(text, ""Microsoft Yahei"", fontsz)
+    l:setName(name)
+    l:setPosition(posx, posy)
+    l:setAnchorPoint(anchorx, anchory)
+    l:setColor( ccc3( colorR, colorG, colorB ) )
+    paresentCtrl:addChild(l)
 end
 
 --创建edit
@@ -116,6 +114,11 @@ function UITemplateToReplace:addScrollView(name, paresentCtrl, posx, posy, ancho
     ScrollView:setTouchEnabled(true);
     paresentCtrl:addChild(ScrollView)
     return ScrollView
+end
+
+
+function UITemplateToReplace:resetLayout()
+	
 end
 ";
         const string nodePrefix = "node_";
@@ -153,8 +156,8 @@ end
             splitByString(str, "ctor()\r\n", out ctorPiece, out str);
             splitByString(str, "preload()\r\n", out preloadPiece, out str);
             splitByString(str, "initScene()\r\n", out initPiece, out str);
-            splitByString(str, "UITemplateToReplace:resetLayout()\r\n", out resetLayoutPiece, out str);
-            splitByString(str, "exitScene()\r\n", out releasePiece, out endPiece);
+            splitByString(str, "exitScene()\r\n", out releasePiece, out str);
+            splitByString(str, "UITemplateToReplace:resetLayout()\r\n", out resetLayoutPiece, out endPiece);
         }
 
         public static string exportLua(ControlTree tree, string className)
@@ -167,10 +170,10 @@ end
             //preload piece
             ret += constructPreload(tree);
             ret += initPiece.Replace("UITemplateToReplace", className);
-            ret += resetLayoutPiece.Replace("UITemplateToReplace", className);
-            ret += constructBuilder(tree);
             ret += releasePiece.Replace("UITemplateToReplace", className);
             ret += constructRelease(tree);
+            ret += resetLayoutPiece.Replace("UITemplateToReplace", className);
+            ret += constructBuilder(tree);
             ret += endPiece.Replace("UITemplateToReplace", className);
             return ret;
         }
