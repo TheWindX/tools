@@ -10,6 +10,12 @@ using System.IO;
 
 namespace ns_CodeGen
 {
+    public enum scrollViewType
+    {
+        Vertical, //default
+        Horizontal,
+        Vertical_Horizontal,//both
+    }
     //控件信息
     public class CCNodeInfo
     {
@@ -19,6 +25,8 @@ namespace ns_CodeGen
         public int py = 0;
         public int sx = 64;
         public int sy = 64;
+        public float scaleX = 1;
+        public float scaleY = 1;
         public int innerSx = 64;
         public int innerSy = 64;
         public float anchorX = 0;
@@ -27,6 +35,9 @@ namespace ns_CodeGen
         public string flistPath = "";
         public string pressFpath = "";
         public string pressFlistFile = "";
+        public string disableFpath = "";
+        public string disableFlistFile = "";
+        
         public bool frame = false;
 
         public string text = "";
@@ -37,6 +48,9 @@ namespace ns_CodeGen
         public int colorB = 255;
 
         public bool visible = true;
+
+        public scrollViewType ScrollDirectionType = scrollViewType.Vertical;//ScrollDirectionType="Horizontal"
+
         public List<CCNodeInfo> mChildren = new List<CCNodeInfo>();
     }
 
@@ -83,6 +97,12 @@ namespace ns_CodeGen
             mCurrent.py = y;
         }
 
+        void setScale(float sx, float sy)
+        {
+            mCurrent.scaleX = sx;
+            mCurrent.scaleY = sy;
+        }
+
         void setAnchor(float x, float y)
         {
             mCurrent.anchorX = x;
@@ -113,6 +133,13 @@ namespace ns_CodeGen
             mCurrent.frame = frame;
             mCurrent.pressFlistFile = flist;
             mCurrent.pressFpath = fname;
+        }
+
+        void disableFileInfo(bool frame, string flist, string fname)
+        {
+            mCurrent.frame = frame;
+            mCurrent.disableFlistFile = flist;
+            mCurrent.disableFpath = fname;
         }
 
         void setVisible(bool visible)
@@ -165,6 +192,20 @@ namespace ns_CodeGen
                 {
                     mCurrent.fontSz = int.Parse(strFontSize);
                 }
+
+                string strScrollDirectionType = elem.GetAttribute("ScrollDirectionType");
+                if (strScrollDirectionType == "Vertical")
+                {
+                    mCurrent.ScrollDirectionType = scrollViewType.Vertical;
+                }
+                else if (strScrollDirectionType == "Horizontal")
+                {
+                    mCurrent.ScrollDirectionType = scrollViewType.Horizontal;
+                }
+                else if (strScrollDirectionType == "Vertical_Horizontal")
+                {
+                    mCurrent.ScrollDirectionType = scrollViewType.Vertical_Horizontal;
+                }
                 mCurrent.text = labelText;
             }
             else if (elem.Name == "Position")
@@ -178,6 +219,18 @@ namespace ns_CodeGen
                 if (stry != "")
                     py = (int)float.Parse(stry);
                 setPosition(px, py);
+            }
+            else if (elem.Name == "Scale")
+            {
+                string strx = elem.GetAttribute("ScaleX");
+                string stry = elem.GetAttribute("ScaleY");
+                float sx = 0;
+                float sy = 0;
+                if (strx != "")
+                    sx = float.Parse(strx);
+                if (stry != "")
+                    sy = float.Parse(stry);
+                setScale(sx, sy);
             }
             else if (elem.Name == "AnchorPoint")
             {
@@ -230,6 +283,10 @@ namespace ns_CodeGen
                 {
                     plist = plist.Substring(mResourceStartWith.Length);
                 }
+                if (path.Contains("Default/"))
+                {
+                    path = "";
+                }
                 fileInfo(frame, plist, path);
             }
             else if (elem.Name == "PressedFileData")
@@ -246,7 +303,31 @@ namespace ns_CodeGen
                 {
                     plist = plist.Substring(mResourceStartWith.Length);
                 }
+                if (path.Contains("Default/"))
+                {
+                    path = "";
+                }
                 pressFileInfo(frame, plist, path);
+            }
+            else if (elem.Name == "DisabledFileData")
+            {
+                var strType = elem.GetAttribute("Type");
+                bool frame = !(strType == "Normal");
+                string path = elem.GetAttribute("Path");
+                string plist = elem.GetAttribute("Plist");
+                if (path.StartsWith(mResourceStartWith))
+                {
+                    path = path.Substring(mResourceStartWith.Length);
+                }
+                if (plist.StartsWith(mResourceStartWith))
+                {
+                    plist = plist.Substring(mResourceStartWith.Length);
+                }
+                if (path.Contains("Default/"))
+                {
+                    path = "";
+                }
+                disableFileInfo(frame, plist, path);
             }
             else if (elem.Name == "NormalFileData")
             {
@@ -261,6 +342,10 @@ namespace ns_CodeGen
                 if (plist.StartsWith(mResourceStartWith))
                 {
                     plist = plist.Substring(mResourceStartWith.Length);
+                }
+                if (path.Contains("Default/"))
+                {
+                    path = "";
                 }
                 fileInfo(frame, plist, path);
             }

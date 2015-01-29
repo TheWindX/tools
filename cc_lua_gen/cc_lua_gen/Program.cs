@@ -137,8 +137,8 @@ example :
                 if (outPath == "")
                 {
                     var className = System.IO.Path.GetFileNameWithoutExtension(xmlPath);
-                    ExportXML.saveSimple(ct, className + "_simple.xml");
-                    Console.WriteLine("输出到" + System.IO.Directory.GetCurrentDirectory() + System.IO.Path.DirectorySeparatorChar + className + "_simple.xml");
+                    //ExportXML.saveSimple(ct, className + "_simple.xml");
+                    //Console.WriteLine("输出到" + System.IO.Directory.GetCurrentDirectory() + System.IO.Path.DirectorySeparatorChar + className + "_simple.xml");
                     string strlua = ExportLua.exportLua(ct, className);
                     System.IO.File.WriteAllText(className + ".lua", strlua);
                     Console.WriteLine("输出到" + System.IO.Directory.GetCurrentDirectory() + System.IO.Path.DirectorySeparatorChar + className + ".lua");
@@ -147,8 +147,8 @@ example :
                 else
                 {
                     var className = System.IO.Path.GetFileNameWithoutExtension(outPath);
-                    ExportXML.saveSimple(ct, className + "_simple.xml");
-                    Console.WriteLine("输出到" + System.IO.Directory.GetCurrentDirectory() + System.IO.Path.DirectorySeparatorChar + className + "_simple.xml");
+                    //ExportXML.saveSimple(ct, className + "_simple.xml");
+                    //Console.WriteLine("输出到" + System.IO.Directory.GetCurrentDirectory() + System.IO.Path.DirectorySeparatorChar + className + "_simple.xml");
                     string strlua = ExportLua.exportLua(ct, className);
                     System.IO.File.WriteAllText(outPath, strlua);
                     Console.WriteLine("输出到" + System.IO.Path.GetFullPath(outPath));

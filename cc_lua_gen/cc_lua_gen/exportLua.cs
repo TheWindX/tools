@@ -64,7 +64,7 @@ function UITemplateToReplace:AddFrameSprite(name, paresentCtrl, filePath, posx, 
 end
 
 --创建sprite
-function UITemplateToReplace:addButton(name, paresentCtrl, filePath, pressFilePath, posx, posy, anchorx, anchory)
+function UITemplateToReplace:addButton(name, paresentCtrl, filePath, pressFilePath, disableFilePath, posx, posy, anchorx, anchory)
     local r = Control.addButton2(paresentCtrl, filePath, pressFilePath, nil, nil, {posx, posy}, 0, 0, 0)
     r:setAnchorPoint(anchorx, anchory)
     r:setName(name)
@@ -72,7 +72,7 @@ function UITemplateToReplace:addButton(name, paresentCtrl, filePath, pressFilePa
 end
 
 --从 image frame 创建button
-function UITemplateToReplace:addFrameButton(name, paresentCtrl, filePath, pressFilePath, posx, posy, anchorx, anchory)
+function UITemplateToReplace:addFrameButton(name, paresentCtrl, filePath, pressFilePath, disableFilePath, posx, posy, anchorx, anchory)
     local r = Control.addButton2(paresentCtrl, filePath, pressFilePath, nil, nil, {posx, posy}, 0, 0, 1)
     r:setAnchorPoint(anchorx, anchory)
     r:setName(name)
@@ -85,8 +85,9 @@ function UITemplateToReplace:addLabel(name, paresentCtrl, text, fontsz, colorR, 
     l:setName(name)
     l:setPosition(posx, posy)
     l:setAnchorPoint(anchorx, anchory)
-    l:setColor( ccc3( colorR, colorG, colorB ) )
+    l:setColor( cc.c3b( colorR, colorG, colorB ) )
     paresentCtrl:addChild(l)
+    return l
 end
 
 --创建edit
@@ -96,7 +97,7 @@ function UITemplateToReplace:addEdit(name, paresentCtrl, fontsz, colorR, colorG,
 	editText:setPosition( posx+(0.5-anchorx)*sizex, posy+(0.5-anchory)*sizey);
 	editText:setFontName( ""Microsoft Yahei"" );
 	editText:setFontSize( fontsz );
-	editText:setFontColor( ccc3( colorR,colorG,colorB ) );
+	editText:setFontColor( cc.c3b( colorR,colorG,colorB ) );
 	editText:setMaxLength( 32 );
 	paresentCtrl:addChild( editText);
     return editText
@@ -293,13 +294,13 @@ end
                         currentControll = "self." + buttonPrefix + info.name.ToLower();
                         if (info.frame)
                         {
-                            ret += string.Format("    {7} = self:addFrameButton(\"{8}\", {0}, \"{1}\", \"{2}\", {3}, {4}, {5}, {6})\n",
-                                paresentCtrl.Peek(), info.fpath, info.pressFpath, info.px, info.py, info.anchorX, info.anchorY, currentControll, info.name.ToLower());
+                            ret += string.Format("    {8} = self:addFrameButton(\"{9}\", {0}, \"{1}\", \"{2}\", \"{3}\", {4}, {5}, {6}, {7})\n",
+                                paresentCtrl.Peek(), info.fpath, info.pressFpath, info.disableFpath, info.px, info.py, info.anchorX, info.anchorY, currentControll, info.name.ToLower());
                         }
                         else
                         {
-                            ret += string.Format("    {7} = self:addButton(\"{8}\", {0}, \"{1}\", \"{2}\", {3}, {4}, {5}, {6})\n",
-                                paresentCtrl.Peek(), info.fpath, info.pressFpath, info.px, info.py, info.anchorX, info.anchorY, currentControll, info.name.ToLower());
+                            ret += string.Format("    {8} = self:addButton(\"{9}\", {0}, \"{1}\", \"{2}\", \"{3}\", {4}, {5}, {6}, {7})\n",
+                                paresentCtrl.Peek(), info.fpath, info.pressFpath, info.disableFpath, info.px, info.py, info.anchorX, info.anchorY, currentControll, info.name.ToLower());
                         }
                     }
                     else if (info.typeName == "TextObjectData")//字体控件
@@ -323,7 +324,14 @@ end
                         ret += string.Format("    {0} = self:addScrollView(\"{10}\", {1}, {2}, {3}, {4}, {5}, {6}, {7}, {8}, {9})\n",
                                 currentControll, paresentCtrl.Peek(), info.px, info.py, info.anchorX, info.anchorY, info.sx, info.sy,
                                 info.innerSx, info.innerSy, info.name.ToLower());
-
+                        if (info.ScrollDirectionType == scrollViewType.Horizontal)
+                        {
+                            ret += string.Format("    {0}:setDirection(2)\n", currentControll);
+                        }
+                        else if (info.ScrollDirectionType == scrollViewType.Vertical_Horizontal)
+                        {
+                            ret += string.Format("    {0}:setDirection(3)\n", currentControll);
+                        }
                     }
 
                     if (ret != "")
@@ -331,6 +339,11 @@ end
                         if (!info.visible)
                         {
                             ret += string.Format("    {0}:setVisible(false)\n", currentControll);
+                        }
+
+                        if (info.scaleX != 1 || info.scaleY != 1)
+                        {
+                            ret += string.Format("    {0}:setScale({1}, {2})\n", currentControll, info.scaleX, info.scaleY);
                         }
                     }
                     
