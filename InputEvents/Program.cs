@@ -10,15 +10,15 @@ namespace ns_YAMini
 {
     class TimerProvide : Singleton<TimerProvide>
     {
-        uint mTime;
+        UInt64 mTime;
         public void updateTimer()
         {
-            var tmp = (uint)(System.DateTime.Now.Ticks / 10000 << 4 >> 4);
+            var tmp = (UInt64)(System.DateTime.Now.Ticks / 10000 << 4 >> 4);
             if (tmp > mTime)
                 mTime = tmp;
         }
 
-        public uint nowTimer()
+        public UInt64 nowTimer()
         {
             return mTime;
         }
@@ -45,6 +45,8 @@ namespace ns_YAMini
             initAll();
             while (TLoop.Instance.exit == false)
             {
+                var t = TimerProvide.Instance.nowTimer();
+                //Console.WriteLine(t);
                 TLoop.Instance.update();
             }
         }
@@ -68,23 +70,23 @@ namespace ns_YAMini
         }
 
         static bool toggle = false;
+        static int toggleCD = 100;
 
 
         static int clickEvent = -1;
 
-        static uint timeInterval = 500;
-
-
+        static UInt64 timeInterval = 500;
+        
         static void upInterval()
         {
-            timeInterval = (uint)(timeInterval / 1.1);
+            timeInterval = (UInt64)(timeInterval / 1.1);
             stopAutoClick();
             autoClick();
         }
 
         static void downInterval()
         {
-            timeInterval = (uint)(timeInterval * 1.1); 
+            timeInterval = (UInt64)(timeInterval * 1.1); 
             stopAutoClick();
             autoClick();
         }
@@ -98,13 +100,11 @@ namespace ns_YAMini
                 InputEvents.click();
             }, timeInterval, null,
             4211111111);
-            toggle = false;
         }
         static void stopAutoClick()
         {
             if (clickEvent != -1)
                 ns_YAUtils.TimerManager.get().clearTimer(clickEvent);
-            toggle = true;
         }
 
 
@@ -114,14 +114,24 @@ namespace ns_YAMini
 
             ns_YAUtils.TimerManager.get().setInterval((i, t) =>
             {
+                toggleCD++;
                 if (InputEvents.GetKeyPressState((int)VirtualKeyStates.VK_LCONTROL))
                 {
-                    autoClick();
+                    if (toggleCD < 20) return;
+                    if (toggle)
+                    {
+                        autoClick();
+                        toggle = false;
+                        toggleCD = 0;
+                    }
+                    else
+                    {
+                        stopAutoClick();
+                        toggle = true;
+                        toggleCD = 0;
+                    }
                 }
-                else if (InputEvents.GetKeyPressState((int)VirtualKeyStates.VK_RETURN))
-                {
-                    stopAutoClick();
-                }
+                
                 else if (InputEvents.GetKeyPressState((int)VirtualKeyStates.VK_UP))
                 {
                     upInterval();

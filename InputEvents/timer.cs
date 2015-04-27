@@ -153,12 +153,12 @@ namespace ns_YAUtils
         {
             public int mID = 0;
             public int mIndex = 0;
-            Action<UInt32, UInt32, bool> mIntevalHandler = null;
-            UInt32 mStartTime;
-            UInt32 mDuration;
-            UInt32 mInterval;
+            Action<UInt64, UInt64, bool> mIntevalHandler = null;
+            UInt64 mStartTime;
+            UInt64 mDuration;
+            UInt64 mInterval;
 
-            public bool tillEnd(UInt32 now)
+            public bool tillEnd(UInt64 now)
             {
                 var ret = now >= mEndCount;
                 if (ret)
@@ -169,12 +169,12 @@ namespace ns_YAUtils
                 return ret;
             }
 
-            public bool tillInterval(UInt32 now)
+            public bool tillInterval(UInt64 now)
             {
                 bool ret = now > mIntervalCount;
                 if (ret)
                 {
-                    uint det = now - mIntervalCount;
+                    UInt64 det = now - mIntervalCount;
                     mIntervalCount = mIntervalCount + mInterval;
                     var t = ((float)(now - mStartTime)) / mDuration;
                     mIntevalHandler(det + mInterval, now - mStartTime, false);
@@ -188,12 +188,12 @@ namespace ns_YAUtils
                 return ret;
             }
 
-            UInt32 mIntervalCount;
-            UInt32 mEndCount;
+            UInt64 mIntervalCount;
+            UInt64 mEndCount;
 
             public bool mValid = true;
 
-            internal TimeContext(int id, UInt32 now, Action<UInt32, UInt32, bool> handler, UInt32 duration, UInt32 interval)
+            internal TimeContext(int id, UInt64 now, Action<UInt64, UInt64, bool> handler, UInt64 duration, UInt64 interval)
             {
                 mID = id;
                 mIntevalHandler = handler;
@@ -204,15 +204,15 @@ namespace ns_YAUtils
                 mEndCount = mStartTime + mDuration;
                 mIntervalCount = mStartTime + mInterval;
 
-                if (interval == UInt32.MaxValue)
-                    mIntervalCount = UInt32.MaxValue;
-                if (mDuration == UInt32.MaxValue)
-                    mEndCount = UInt32.MaxValue;
+                if (interval == UInt64.MaxValue)
+                    mIntervalCount = UInt64.MaxValue;
+                if (mDuration == UInt64.MaxValue)
+                    mEndCount = UInt64.MaxValue;
 
                 mValid = true;
             }
 
-            UInt32 nextTime
+            UInt64 nextTime
             {
                 get
                 {
@@ -241,8 +241,8 @@ namespace ns_YAUtils
                     return false;
                 }
 
-                uint an = a.nextTime;
-                uint bn = b.nextTime;
+                ulong an = a.nextTime;
+                ulong bn = b.nextTime;
                 if (an < bn)
                 {
                     return true;
@@ -260,9 +260,9 @@ namespace ns_YAUtils
             }
         }
 
-        Func<UInt32> mTimer;
-        UInt32 mLast = 0;
-        public TimerManager(Func<UInt32> t, int id)
+        Func<UInt64> mTimer;
+        UInt64 mLast = 0;
+        public TimerManager(Func<UInt64> t, int id)
         {
             mTimer = t;
             mLast = t();
@@ -278,22 +278,22 @@ namespace ns_YAUtils
 
 
       //timer as it in html5
-        public int setTimeout(Action<UInt32> handler, UInt32 duration)
+        public int setTimeout(Action<UInt64> handler, UInt64 duration)
         {
-            UInt32 start = mTimer();
-            var elem = new TimeContext(++mIDCount, mTimer(), (i, t, b) => { handler(t); }, duration, UInt32.MaxValue);
+            UInt64 start = mTimer();
+            var elem = new TimeContext(++mIDCount, mTimer(), (i, t, b) => { handler(t); }, duration, UInt64.MaxValue);
             mInterpolates.push(elem);
             mID2Interpolation.Add(mIDCount, elem);
             //Console.WriteLine("add timer:" + mIDCount);
             return mIDCount;
         }
 
-        public int setInterval(Action<UInt32, UInt32> intervalHandler, UInt32 interval, Action<UInt32> endHandler = null, UInt32 duration = UInt32.MaxValue)
+        public int setInterval(Action<UInt64, UInt64> intervalHandler, UInt64 interval, Action<UInt64> endHandler = null, UInt64 duration = UInt64.MaxValue)
         {
             if (intervalHandler == null) intervalHandler = (i, n) => { };
             if (endHandler == null) endHandler = (n) => { };
 
-            UInt32 start = mTimer();
+            UInt64 start = mTimer();
             var elem = new TimeContext(++mIDCount, mTimer(), (i, t, b) => { if (b) endHandler(t); else intervalHandler(i, t); }, duration, interval);
             mInterpolates.push(elem);
             mID2Interpolation.Add(mIDCount, elem);
@@ -328,7 +328,7 @@ namespace ns_YAUtils
 
         public void tick()
         {
-            UInt32 now = mTimer();
+            UInt64 now = mTimer();
 
             for (; ; )
             {
@@ -362,8 +362,8 @@ namespace ns_YAUtils
         static SortedDictionary<int, TimerManager> mID2Timer = new SortedDictionary<int, TimerManager>();
         static SortedDictionary<int, TimerManager> mPreID2Timer = new SortedDictionary<int, TimerManager>();
         static bool mIDTimerChanged = false;
-        static Func<UInt32> mGlobalTimer;
-        public static void Init(Func<UInt32> t)
+        static Func<UInt64> mGlobalTimer;
+        public static void Init(Func<UInt64> t)
         {
             mGlobalTimer = t;
         }
@@ -415,11 +415,11 @@ namespace ns_YAUtils
     //        static void tese1(string[] args)
     //        {
     //            TimerManager gtimer = new TimerManager(() => {
-    //                UInt32 t = (UInt32)((DateTime.Now.Ticks<<16>>16)/10000);  
+    //                UInt64 t = (UInt64)((DateTime.Now.Ticks<<16>>16)/10000);  
     //                return t; 
     //            });
 
-    //            UInt32 t1 = gtimer.setInterval((n) => { Console.WriteLine("now is " + n); }, 300);
+    //            UInt64 t1 = gtimer.setInterval((n) => { Console.WriteLine("now is " + n); }, 300);
     //            gtimer.setTimeout((n) => { 
     //                Console.WriteLine("1now is " + n); 
     //                gtimer.clearTimer(t1); 
@@ -436,7 +436,7 @@ namespace ns_YAUtils
 
     //        static void Main(string[] args)
     //        {
-    //            UInt32 now = 0;
+    //            UInt64 now = 0;
 
     //            TimerManager.Init(() =>
     //            {   
@@ -448,10 +448,10 @@ namespace ns_YAUtils
 
     //            TimerManager.get(0).setInterpolates((n) => { Console.WriteLine(n); }, 0, 1, 5000); 
 
-    //            now = (UInt32)((DateTime.Now.Ticks << 16 >> 16) / 10000);
+    //            now = (UInt64)((DateTime.Now.Ticks << 16 >> 16) / 10000);
     //            while (true)
     //            {
-    //                now = (UInt32)((DateTime.Now.Ticks << 16 >> 16) / 10000);
+    //                now = (UInt64)((DateTime.Now.Ticks << 16 >> 16) / 10000);
     //                TimerManager.tickAll();
     //            }
     //        }
