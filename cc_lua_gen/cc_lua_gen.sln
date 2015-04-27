@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cc_lua_gen", "cc_lua_gen\cc_lua_gen.csproj", "{D65E95CF-E7FF-46B9-B4BD-47CD9DCACDD1}"
 EndProject
-Project("{5697748A-77EF-44CA-8824-4F5637E5945B}") = "temp_s1-products", "C:\Users\XF\Documents\BabeLua\Project\temp_s1-products\temp_s1-products.luaproj", "{E439935D-B2A2-46AE-856D-2AA408428F33}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,10 +13,6 @@ Global
 		{D65E95CF-E7FF-46B9-B4BD-47CD9DCACDD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D65E95CF-E7FF-46B9-B4BD-47CD9DCACDD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D65E95CF-E7FF-46B9-B4BD-47CD9DCACDD1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E439935D-B2A2-46AE-856D-2AA408428F33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E439935D-B2A2-46AE-856D-2AA408428F33}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E439935D-B2A2-46AE-856D-2AA408428F33}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E439935D-B2A2-46AE-856D-2AA408428F33}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

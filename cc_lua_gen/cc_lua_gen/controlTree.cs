@@ -19,8 +19,10 @@ namespace ns_CodeGen
     //控件信息
     public class CCNodeInfo
     {
-        public string name = "";
-        public string typeName = "";
+        //这两个标志不能重
+        public string name = ""; 
+        public string typeName = ""; 
+
         public int px = 0;
         public int py = 0;
         public int sx = 64;

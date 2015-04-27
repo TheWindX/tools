@@ -8,6 +8,7 @@ namespace ns_CodeGen
     public static class ExportLua
     {
         public const string luaTemplate = @"
+--生成代码开始--
 require ""extern""
 require ""Include/LuaCtrl""
 require ""Logic/base/scene_base""
@@ -120,7 +121,13 @@ end
 
 function UITemplateToReplace:resetLayout()
 	
+
+    --生成代码结束--
+    
+    --TODO bind here
 end
+
+
 ";
         const string nodePrefix = "node_";
         const string spritePrefix = "sprite_";
