@@ -15,7 +15,7 @@ namespace ServerTest
         static void Main(string[] args)
         {
             var s = SimpleNetworkLib.ServerBase.create();
-            s.bind(10021);
+            s.bind(10028);
             s.evtLog += str =>
                 {
                     Console.WriteLine(str);
@@ -28,6 +28,10 @@ namespace ServerTest
 
             s.evtRecv += (id, str) =>
                 {
+                    if(str.Contains("close"))
+                    {
+                        s.close();
+                    }
                     Console.WriteLine(string.Format("recv from {0} message:{1}", id, str));
                 };
 

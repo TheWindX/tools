@@ -38,6 +38,7 @@ namespace SimpleNetworkLib
 
         protoState mStat = protoState.e_uninit;
         public event System.Action<string> evtStatError;
+        public event System.Action<string> evtLog;
         public event System.Action<string> evtStatRecv;
         int mLen = 0;
         Queue<byte> datas = new Queue<byte>();
@@ -135,13 +136,17 @@ namespace SimpleNetworkLib
                 try
                 {
                     int receiveNumber = mSocket.Receive(buff);
-                    mActionQ.Enqueue(() =>
+                    if (receiveNumber != 0)
                     {
-                        for (int i = 0; i < receiveNumber; ++i)
+                        mActionQ.Enqueue(() =>
                         {
-                            datas.Enqueue(buff[i]);
-                        }
-                    });
+                            for (int i = 0; i < receiveNumber; ++i)
+                            {
+                                datas.Enqueue(buff[i]);
+                            }
+                        });
+                    }
+                    exit = true;
                 }
                 catch (Exception ex)
                 {
@@ -152,10 +157,15 @@ namespace SimpleNetworkLib
                         {
                             evtStatError(string.Format("接受数据失败:{0}", ex.Message));
                         }
-                        close();
                     });
+                    close();
                 }
             }
+            close();
+            mActionQ.Enqueue(() =>
+                    {
+                        if (evtLog != null) evtLog(string.Format("session 线程结束退出"));
+                    });
         }
 
         public void send(string str)
@@ -177,8 +187,19 @@ namespace SimpleNetworkLib
         {
             if (mSocket != null)
             {
-                mSocket.Shutdown(SocketShutdown.Both);
-                mSocket.Close();
+                try
+                {
+                    mSocket.Shutdown(SocketShutdown.Both);
+                    mSocket.Close();
+                }
+                catch(Exception ex)
+                {
+                    if(evtStatError != null)
+                    {
+                        evtStatError(string.Format("session {0} shutdown exception: {1}", id, ex.Message));
+                    }
+                }
+                
             }
             mSocket = null;
 

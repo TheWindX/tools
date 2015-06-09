@@ -20,7 +20,7 @@ namespace clientTest
                     Console.WriteLine(str);
                 };
 
-            c.connect("127.0.0.1", 10021);
+            c.connect("127.0.0.1", 10028);
 
             c.session.evtStatError += str =>
                 {
@@ -30,7 +30,10 @@ namespace clientTest
                 {
                     Console.WriteLine(str);
                 };
-
+            c.session.evtLog += str =>
+                {
+                    Console.WriteLine(str);
+                };
             //input thread
             var inputThread = new Thread(() =>
                 {

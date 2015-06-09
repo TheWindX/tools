@@ -5,7 +5,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
+
 
 namespace SimpleNetworkLib
 {
@@ -17,7 +17,7 @@ namespace SimpleNetworkLib
             return ret;
         }
 
-        Queue<System.Action> mActionQ = new Queue<Action>();
+        Queue<System.Action> mActionQ = new Queue<System.Action>();
         public void runOnce()
         {
             while (mActionQ.Count != 0)
@@ -57,6 +57,7 @@ namespace SimpleNetworkLib
                 {
                     IPAddress ip = IPAddress.Parse(addr);
                     mSession.socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                    
                     try
                     {
                         mSession.socket.Connect(new IPEndPoint(ip, port)); //配置服务器IP与端口  
@@ -65,8 +66,8 @@ namespace SimpleNetworkLib
                                 if (evtLog != null)
                                 {
                                     evtLog(string.Format("连接服务器成功 {0}:{1}", addr, port));
-                                }   
-                                if(evtConnectSucc != null)
+                                }
+                                if (evtConnectSucc != null)
                                 {
                                     evtConnectSucc(addr, port);
                                 }
@@ -74,19 +75,30 @@ namespace SimpleNetworkLib
                     }
                     catch
                     {
-                        if (evtLog != null)
+                        mActionQ.Enqueue(() =>
                         {
-                            evtLog(string.Format("连接服务器失败 {0}:{1}", addr, port));
-                        }
-                        if (evtConnectException != null)
-                        {
-                            evtConnectException(addr, port);
-                        }
+                            if (evtLog != null)
+                            {
+                                evtLog(string.Format("连接服务器失败 {0}:{1}", addr, port));
+                            }
+                            if (evtConnectException != null)
+                            {
+                                evtConnectException(addr, port);
+                            }
+                        });
+
                         mSession.close();
                     }
 
                     mSession.asycRun();
                     mConnectThread = null;
+                    mActionQ.Enqueue(() =>
+                    {
+                        if (evtLog != null)
+                        {
+                            evtLog(string.Format("connect 线程退出"));
+                        }
+                    });
                 });
             mConnectThread.Start();
         }

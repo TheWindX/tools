@@ -11,7 +11,7 @@ namespace SimpleNetworkLib
     public class ServerBase
     {
 
-        Socket mSocketLisener = null;
+        TcpListener mSocketLisener = null;
 
         private Dictionary<int, sessionBase> mSessions = new Dictionary<int, sessionBase>();
 
@@ -114,14 +114,14 @@ namespace SimpleNetworkLib
             mThreadBind = new Thread(() =>
             {
                 IPAddress ip = IPAddress.Parse("127.0.0.1");
-                mSocketLisener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                mSocketLisener.Bind(new IPEndPoint(ip, port));  //绑定IP地址：端口  
-                mSocketLisener.Listen(10);    //设定最多10个排队连接请求  
+                mSocketLisener = new TcpListener(new IPEndPoint(ip, port));//绑定IP地址：端口  
+                mSocketLisener.Start();
+                //设定最多10个排队连接请求  
                 mActionQ.Enqueue(() =>
                 {
                     if (evtLog != null)
                     {
-                        evtLog(string.Format("启动监听{0}成功", mSocketLisener.LocalEndPoint.ToString()));
+                        evtLog(string.Format("启动监听{0}成功", mSocketLisener.LocalEndpoint.ToString()));
                     }
                 });
                 try
@@ -130,7 +130,25 @@ namespace SimpleNetworkLib
                     {
                         while (!mThreadListenExit)
                         {
-                            Socket clientSocket = mSocketLisener.Accept();
+                            Socket clientSocket = null;
+                            try
+                            {
+                                if (!mSocketLisener.Pending())
+                                {
+                                    Thread.Sleep(500); // choose a number (in milliseconds) that makes sense
+                                    continue; // skip to next iteration of loop
+                                }
+                                clientSocket = mSocketLisener.AcceptSocket();
+                            }
+                            catch(Exception ex)
+                            {
+                                if(evtErr != null)
+                                {
+                                    evtErr(-1, ex.Message);
+                                }
+                                break;
+                            }
+                            
                             int id = newID();
                             sessionBase sess = new sessionBase();
                             sess.id = id;
@@ -149,6 +167,14 @@ namespace SimpleNetworkLib
                             });
                             mActionQ.Enqueue(() =>
                             {
+                                sess.evtLog += str =>
+                                    {
+                                        if (evtLog != null)
+                                        {
+                                            evtLog(string.Format("session id={0}:{1}", sess.id, str));
+                                        }
+                                    };
+
                                 sess.evtStatRecv += str =>
                                 {
                                     if (evtRecv != null)
@@ -172,6 +198,7 @@ namespace SimpleNetworkLib
                                 }
                             });
                         }
+                        if (evtLog != null) evtLog(string.Format("server listern 线程退出"));
                     });
                     mThreadListen.Start();
                 }
@@ -212,15 +239,30 @@ namespace SimpleNetworkLib
 
         public void close()
         {
-            mSocketLisener.Shutdown(SocketShutdown.Both);
-            mSocketLisener.Close();
-            mSocketLisener = null;
-            mThreadListenExit = false;
-
             foreach (var s in mSessions.Values)
             {
                 s.close();
             }
+
+            try
+            {   
+                mSocketLisener.Stop();
+                mSocketLisener = null;
+                mThreadListenExit = true;
+            }
+            catch (Exception ex)
+            {
+                if (evtLog != null)
+                {
+                    evtLog(ex.Message);
+                }
+                if (evtErr != null)
+                {
+                    evtErr(-1, ex.Message);
+                }
+            }
+
+            
         }
 
         public void closeClient(int cid)
