@@ -136,17 +136,22 @@ namespace SimpleNetworkLib
                 try
                 {
                     int receiveNumber = mSocket.Receive(buff);
+
+                    var buffClone = buff.Clone() as byte[];
                     if (receiveNumber != 0)
                     {
                         mActionQ.Enqueue(() =>
                         {
                             for (int i = 0; i < receiveNumber; ++i)
                             {
-                                datas.Enqueue(buff[i]);
+                                datas.Enqueue(buffClone[i]);
                             }
                         });
                     }
-                    exit = true;
+                    else
+                    {
+                        exit = true;
+                    }
                 }
                 catch (Exception ex)
                 {
