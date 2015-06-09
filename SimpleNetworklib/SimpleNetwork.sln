@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "clientTest", "clientTest\cl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerTest", "ServerTest\ServerTest.csproj", "{45D2DB28-7C2E-46F3-9DD5-166EB2BAB5AD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "networkLib", "SimpleNetworklib\networkLib.csproj", "{DF7BBEDB-E19C-4B82-A132-370DA1BFC16A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleNetworkLib", "SimpleNetworklib\SimpleNetworkLib.csproj", "{DF7BBEDB-E19C-4B82-A132-370DA1BFC16A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

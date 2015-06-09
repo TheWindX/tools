@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace networkLib
+namespace SimpleNetworkLib
 {
     public class ClientBase
     {

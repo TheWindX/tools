@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using networkLib;
+using SimpleNetworkLib;
 using System.Threading;
 
 namespace clientTest
@@ -14,7 +14,7 @@ namespace clientTest
         static Queue<System.Action> mAQ = new Queue<Action>();
         static void Main(string[] args)
         {
-            var c = networkLib.ClientBase.create();
+            var c = SimpleNetworkLib.ClientBase.create();
             c.evtLog += str =>
                 {
                     Console.WriteLine(str);

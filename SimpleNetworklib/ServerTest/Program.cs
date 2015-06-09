@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using networkLib;
+using SimpleNetworkLib;
 using System.Threading;
 
 namespace ServerTest
@@ -14,7 +14,7 @@ namespace ServerTest
         static Queue<System.Action> mAQ = new Queue<Action>();
         static void Main(string[] args)
         {
-            var s = networkLib.ServerBase.create();
+            var s = SimpleNetworkLib.ServerBase.create();
             s.bind(10021);
             s.evtLog += str =>
                 {
