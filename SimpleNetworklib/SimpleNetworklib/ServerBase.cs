@@ -175,11 +175,11 @@ namespace SimpleNetworkLib
                                         }
                                     };
 
-                                sess.evtStatRecv += str =>
+                                sess.evtStatRecv += (sn, str) =>
                                 {
                                     if (evtRecv != null)
                                     {
-                                        evtRecv(sess.id, str);
+                                        evtRecv(sess.id, sn, str);
                                     }
                                 };
 
@@ -224,7 +224,7 @@ namespace SimpleNetworkLib
         }
 
         public event System.Action<string> evtLog;
-        public event System.Action<int, string> evtRecv;
+        public event System.Action<int, Int64, string> evtRecv;
         public event System.Action<int, string> evtErr;
         //协议
         public void send(int cid, string str)

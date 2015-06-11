@@ -10,6 +10,12 @@ namespace SimpleNetworkLib
     public class sessionBase
     {
         public int id = 0;
+        private static Int64 serialNumCounter = 0;
+        private static Int64 genSerialNum()
+        {
+            serialNumCounter++;
+            return serialNumCounter;
+        }
 
         private Socket mSocket = null;
 
@@ -32,6 +38,7 @@ namespace SimpleNetworkLib
             e_uninit,
             e_magic0,
             e_magic1,
+            e_seriNO,
             e_len,
             e_data,
         }
@@ -39,8 +46,9 @@ namespace SimpleNetworkLib
         protoState mStat = protoState.e_uninit;
         public event System.Action<string> evtStatError;
         public event System.Action<string> evtLog;
-        public event System.Action<string> evtStatRecv;
-        int mLen = 0;
+        public event System.Action<Int64, string> evtStatRecv;
+        int mRecvLen = 0;
+        Int64 mRecvSN = 0;
         Queue<byte> datas = new Queue<byte>();
 
         void recvState()
@@ -77,6 +85,24 @@ namespace SimpleNetworkLib
                         close();
                         return;
                     }
+                    mStat = protoState.e_seriNO;
+                }
+            }
+            else if (mStat == protoState.e_seriNO)
+            {
+                if (datas.Count >= 8)
+                {
+                    var bsSN = new byte[8];
+                    bsSN[0] = datas.Dequeue();
+                    bsSN[1] = datas.Dequeue();
+                    bsSN[2] = datas.Dequeue();
+                    bsSN[3] = datas.Dequeue();
+                    bsSN[4] = datas.Dequeue();
+                    bsSN[5] = datas.Dequeue();
+                    bsSN[6] = datas.Dequeue();
+                    bsSN[7] = datas.Dequeue();
+
+                    mRecvSN = BitConverter.ToInt64(bsSN, 0);
                     mStat = protoState.e_len;
                 }
             }
@@ -90,25 +116,36 @@ namespace SimpleNetworkLib
                     bsLen[2] = datas.Dequeue();
                     bsLen[3] = datas.Dequeue();
 
-                    mLen = BitConverter.ToInt32(bsLen, 0);
+                    mRecvLen = BitConverter.ToInt32(bsLen, 0);
                     mStat = protoState.e_data;
                 }
             }
             else if (mStat == protoState.e_data)
             {
-                if (datas.Count >= mLen)
+                if (datas.Count >= mRecvLen)
                 {
-                    byte[] bs = new byte[mLen];
-                    for (int i = 0; i < mLen; ++i)
+                    byte[] bs = new byte[mRecvLen];
+                    for (int i = 0; i < mRecvLen; ++i)
                     {
                         bs[i] = datas.Dequeue();
                     }
 
                     string str = netUtils.GetString(bs);
-                    if (evtStatRecv != null)
+                    try
                     {
-                        evtStatRecv(str);
+                        if (evtStatRecv != null)
+                        {
+                            evtStatRecv(mRecvSN, str);
+                        }
                     }
+                    catch(Exception ex)
+                    {
+                        if(evtStatError != null)
+                        {
+                            evtStatError(ex.Message);
+                        }
+                    }
+                    
                     mStat = protoState.e_magic0;
                 }
             }
@@ -124,14 +161,32 @@ namespace SimpleNetworkLib
             while (mActionQ.Count != 0)
             {
                 var act = mActionQ.Dequeue();
-                act();
+                try
+                {
+                    act();
+                }
+                catch(Exception ex)
+                {
+                    if(evtStatError != null)
+                    {
+                        evtStatError("error in sessionBase.runOnce:" + ex.Message);
+                    }
+                }
             }
+        }
+
+        bool mAvailable = false;
+
+        //是否可用
+        public bool available()
+        {
+            return mAvailable;
         }
 
         public void asycRun()
         {
-            bool exit = false;
-            while (!exit)
+            mAvailable = true;
+            while (mAvailable)
             {
                 try
                 {
@@ -149,13 +204,13 @@ namespace SimpleNetworkLib
                         });
                     }
                     else
-                    {
-                        exit = true;
+                    {   
+                        mAvailable = false;
                     }
                 }
                 catch (Exception ex)
                 {
-                    exit = true;
+                    mAvailable = false;
                     mActionQ.Enqueue(() =>
                     {
                         if (evtStatError != null)
@@ -173,19 +228,31 @@ namespace SimpleNetworkLib
                     });
         }
 
-        public void send(string str)
+        //seriNum
+        public Int64 send(string str)
         {
-            if (mSocket != null)
+            var sn = genSerialNum();
+            if (available())
             {
                 List<byte> sbs = new List<byte>();
                 sbs.Add(127);
                 sbs.Add(128);
+                sbs.AddRange(BitConverter.GetBytes(sn));
                 var bs = netUtils.GetBytes(str);
                 var bsLen = BitConverter.GetBytes(bs.Length);
                 sbs.AddRange(bsLen);
                 sbs.AddRange(bs);
                 mSocket.Send(sbs.ToArray());
             }
+            else
+            {
+                //redo
+                mActionQ.Enqueue(() =>
+                {
+                    send(str);
+                });
+            }
+            return sn;
         }
 
         public void close()

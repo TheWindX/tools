@@ -17,13 +17,21 @@ namespace SimpleNetworkLib
             return ret;
         }
 
+
         Queue<System.Action> mActionQ = new Queue<System.Action>();
         public void runOnce()
         {
             while (mActionQ.Count != 0)
             {
                 var act = mActionQ.Dequeue();
-                act();
+                try
+                {
+                    act();
+                }
+                catch(Exception ex)
+                {
+                    Console.WriteLine(ex.Message);//这里已经无法handle
+                }
             }
 
             mSession.runOnce();
@@ -31,7 +39,7 @@ namespace SimpleNetworkLib
 
         public event System.Action<string> evtLog;
         public event System.Action<string, short> evtConnectSucc;
-        public event System.Action<string, short> evtConnectException;
+        public event System.Action<string> evErr;
 
         sessionBase mSession = new sessionBase();
         public sessionBase session
@@ -81,17 +89,16 @@ namespace SimpleNetworkLib
                             {
                                 evtLog(string.Format("连接服务器失败 {0}:{1}", addr, port));
                             }
-                            if (evtConnectException != null)
+                            if (evErr != null)
                             {
-                                evtConnectException(addr, port);
+                                evErr(string.Format("连接服务器失败 {0}:{1}", addr, port));
                             }
                         });
 
                         mSession.close();
                     }
-
-                    mSession.asycRun();
                     mConnectThread = null;
+                    mSession.asycRun();
                     mActionQ.Enqueue(() =>
                     {
                         if (evtLog != null)
