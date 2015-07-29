@@ -26,7 +26,7 @@ namespace clientTest
                 {
                     Console.WriteLine(str);
                 };
-            c.session.evtStatRecv += str =>
+            c.session.evtStatRecv += (sn, str) =>
                 {
                     Console.WriteLine(str);
                 };

@@ -51,9 +51,9 @@ namespace SimpleNetworkLib
         Int64 mRecvSN = 0;
         Queue<byte> datas = new Queue<byte>();
 
-        void recvState()
+        bool recvState()
         {
-            if (mSocket == null) return;
+            if (mSocket == null) return false;
             if (mStat == protoState.e_magic0)
             {
                 if (datas.Count >= 1)
@@ -66,9 +66,10 @@ namespace SimpleNetworkLib
                             evtStatError(string.Format("接受数据失败:m0 == {0}", m0));
                         }
                         close();
-                        return;
+                        return false;
                     }
                     mStat = protoState.e_magic1;
+                    return true;
                 }
             }
             else if (mStat == protoState.e_magic1)
@@ -83,9 +84,10 @@ namespace SimpleNetworkLib
                             evtStatError(string.Format("接受数据失败:m1 == {0}", m1));
                         }
                         close();
-                        return;
+                        return false;
                     }
                     mStat = protoState.e_seriNO;
+                    return true;
                 }
             }
             else if (mStat == protoState.e_seriNO)
@@ -104,6 +106,7 @@ namespace SimpleNetworkLib
 
                     mRecvSN = BitConverter.ToInt64(bsSN, 0);
                     mStat = protoState.e_len;
+                    return true;
                 }
             }
             else if (mStat == protoState.e_len)
@@ -118,6 +121,7 @@ namespace SimpleNetworkLib
 
                     mRecvLen = BitConverter.ToInt32(bsLen, 0);
                     mStat = protoState.e_data;
+                    return true;
                 }
             }
             else if (mStat == protoState.e_data)
@@ -131,24 +135,26 @@ namespace SimpleNetworkLib
                     }
 
                     string str = netUtils.GetString(bs);
-                    try
+                    //try//TODO...
                     {
                         if (evtStatRecv != null)
                         {
                             evtStatRecv(mRecvSN, str);
                         }
-                    }
-                    catch(Exception ex)
-                    {
-                        if(evtStatError != null)
-                        {
-                            evtStatError(ex.Message);
-                        }
-                    }
+                    }                    //catch(Exception ex)
+                    //{
+                    //    if(evtStatError != null)
+                    //    {
+                    //        evtStatError(ex.Message);
+                    //    }
+                    //}
+
                     
                     mStat = protoState.e_magic0;
+                    return true;
                 }
             }
+            return false;
         }
 
         byte[] buff = new byte[8096];
@@ -157,7 +163,7 @@ namespace SimpleNetworkLib
 
         public void runOnce()
         {
-            recvState();
+            while (recvState()) { }
             while (mActionQ.Count != 0)
             {
                 var act = mActionQ.Dequeue();
@@ -232,6 +238,12 @@ namespace SimpleNetworkLib
         public Int64 send(string str)
         {
             var sn = genSerialNum();
+            doSend(str, sn);
+            return sn;
+        }
+
+        private void doSend(string str, Int64 sn)
+        {
             if (available())
             {
                 List<byte> sbs = new List<byte>();
@@ -249,10 +261,9 @@ namespace SimpleNetworkLib
                 //redo
                 mActionQ.Enqueue(() =>
                 {
-                    send(str);
+                    doSend(str, sn);
                 });
             }
-            return sn;
         }
 
         public void close()

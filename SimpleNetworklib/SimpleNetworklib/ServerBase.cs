@@ -114,8 +114,24 @@ namespace SimpleNetworkLib
             mThreadBind = new Thread(() =>
             {
                 IPAddress ip = IPAddress.Parse("127.0.0.1");
-                mSocketLisener = new TcpListener(new IPEndPoint(ip, port));//绑定IP地址：端口  
-                mSocketLisener.Start();
+                try
+                {
+                    mSocketLisener = new TcpListener(new IPEndPoint(ip, port));//绑定IP地址：端口  
+                    mSocketLisener.Start();
+                }
+                catch(Exception ex)
+                {
+                    //设定最多10个排队连接请求  
+                    mActionQ.Enqueue(() =>
+                    {
+                        if (evtErr != null)
+                        {
+                            evtErr(-1, string.Format("启动监听{0}失败", port));
+                        }
+                    });
+                    return;
+                }
+                
                 //设定最多10个排队连接请求  
                 mActionQ.Enqueue(() =>
                 {

@@ -26,7 +26,7 @@ namespace ServerTest
                     Console.WriteLine(string.Format("{0} error:{1}", id, str));
                 };
 
-            s.evtRecv += (id, str) =>
+            s.evtRecv += (id, sn, str) =>
                 {
                     if(str.Contains("close"))
                     {
