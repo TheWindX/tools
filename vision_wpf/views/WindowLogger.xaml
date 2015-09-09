@@ -9,7 +9,6 @@
             </Grid.RowDefinitions>
             <DockPanel Grid.Row="1" LastChildFill="False">
                 <Button Content="clear" DockPanel.Dock="Left" Margin="0,0,20,0" FontStyle="Italic" Width="89" Click="MenuItem_Click"/>
-                <Button Content="test" DockPanel.Dock="Right" Margin="0,0,20,0" FontStyle="Italic" Width="89" Click="MenuItem_Test"/>
         </DockPanel>
             <TabControl Grid.Row="0" x:Name="m_tabs" Grid.RowSpan="1">
                 <TabItem Header="info">

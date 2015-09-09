@@ -1,0 +1,32 @@
+﻿<UserControl x:Class="ns_vision.UI_ICON_Moduler"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:vision_wpf.views"
+             mc:Ignorable="d" 
+             Width="64" Height="68" Margin="4, 8, 4, 8">
+    <Grid>
+        <DockPanel>
+            <TextBlock x:Name="m_title" DockPanel.Dock="Bottom" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontSize="16"> asdf</TextBlock>
+            <Grid DockPanel.Dock="Top" Margin="2, 2, 2, 0">
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Rectangle Grid.RowSpan="5" Margin="8,2,8,2" Fill="#FFACD69B" Stroke="White">
+                </Rectangle>
+                <Ellipse Margin="0, 0, 4,0"  Grid.Row="2" Width="8" Height="8" Stroke="White" HorizontalAlignment="Right" Fill="#FF644F91">
+                </Ellipse>
+                <Ellipse Margin="4,0" Grid.Row="1" Width="8" Height="8" Stroke="White" HorizontalAlignment="Left" Fill="#FF8D6842">
+                </Ellipse>
+                <Ellipse Margin="4,0" Grid.Row="3" Width="8" Height="8" Stroke="White" HorizontalAlignment="Left" Fill="#FF8D6842">
+                </Ellipse>
+            </Grid>
+        </DockPanel>
+        <Rectangle x:Name="m_mask" Fill="#38263385" PreviewMouseLeftButtonDown="onMouseLeftButtonDown"></Rectangle>
+    </Grid>
+</UserControl>

@@ -54,10 +54,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Runtime\runMain.cs" />
-    <Compile Include="Runtime\RuntimeInherit.cs" />
-    <Compile Include="Runtime\RuntimeInit.cs" />
-    <Compile Include="Runtime\RuntimeTest1.cs" />
+    <Compile Include="Runtime\RuntimeBase.cs" />
+    <Compile Include="Runtime\RuntimeCreation.cs" />
+    <Compile Include="Runtime\RuntimeTest.cs" />
     <Compile Include="utils\runtimeUtils.cs" />
     <Compile Include="utils\Component.cs" />
     <Compile Include="utils\ListAdvance.cs" />
@@ -65,6 +64,18 @@
     <Compile Include="utils\TimeUtils.cs" />
     <Compile Include="utils\Utils.cs" />
     <Compile Include="views\DockPanelSplitter\DockPanelSplitter.cs" />
+    <Compile Include="views\UI_ICON_BaseTypeValue.xaml.cs">
+      <DependentUpon>UI_ICON_BaseTypeValue.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\UI_ICON_Folder.xaml.cs">
+      <DependentUpon>UI_ICON_Folder.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\UI_ICON_Moduler.xaml.cs">
+      <DependentUpon>UI_ICON_Moduler.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\UI_ModuleTree.xaml.cs">
+      <DependentUpon>UI_ModuleTree.xaml</DependentUpon>
+    </Compile>
     <Compile Include="views\WindowLogger.xaml.cs">
       <DependentUpon>WindowLogger.xaml</DependentUpon>
     </Compile>
@@ -93,6 +104,22 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Theme\SplitterStyle1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\UI_ICON_BaseTypeValue.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\UI_ICON_Folder.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\UI_ICON_Moduler.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\UI_ModuleTree.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

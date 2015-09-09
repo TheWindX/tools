@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ns_vision;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -34,6 +35,17 @@ namespace vision_wpf
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            var mi = (sender as MenuItem);
+            RuntimeUtil.Instance.onTest(mi.Header.ToString());
+        }
+
+        private void Window_PreviewKeyUp(object sender, KeyEventArgs e)
+        {
+            RuntimeUtil.Instance.onKeyUp(e.Key);
         }
     }
 }

@@ -75,10 +75,5 @@ namespace vision_wpf.views
             Top = Owner.Top + (Owner.Height - Owner.ActualHeight) / 2;
             Activate();
         }
-
-        private void MenuItem_Test(object sender, RoutedEventArgs e)
-        {
-            testMain.Instance.init();
-        }
     }
 }
