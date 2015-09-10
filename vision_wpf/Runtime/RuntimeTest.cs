@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ns_vision.ns_utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,101 +7,43 @@ using System.Threading.Tasks;
 
 namespace ns_vision
 {
-    public partial class CRuntime
+    public partial class RuntimeTest : Singleton<RuntimeTest>
     {
-        public CModuleTree currentSpace = null;
-        public CModuleItem selected = null;
-
-        public CRuntime()
-        {
-            reset();
-        }
-
-        public void reset()
-        {
-            currentSpace = createModule(null, "root").getComponent<CModuleTree>();
-            selected = null;
-
-            rootModule = currentSpace.getComponent<CModule>();
-        }
-
-        #region test1
-        void mkFold(string name)
-        {
-            currentSpace = createFold(currentSpace, name).getComponent<CModuleTree>(); ;
-            selected = null;
-        }
-
-        void mkModule(string name)
-        {
-            currentSpace = createModule(currentSpace, name).getComponent<CModuleTree>(); ;
-            selected = null;
-        }
-
-        void cd(string name)
-        {
-            var s = currentSpace.children.First(item =>
-            {
-                return item.getComponent<CNamed>().name == name;
-            });
-            var t = s.getComponent<CModuleTree>();
-            if(t != null)
-            {
-                currentSpace = t;
-                selected = null;
-                return;
-            }
-            RuntimeUtil.Instance.log("no found");
-        }
-
-        public void cdback()
-        {
-            var mi = currentSpace.getComponent<CModuleItem>();
-            if (mi.parent != null)
-            {
-                selected = mi;
-                currentSpace = mi.parent;
-            }
-        }
-
-        void mkInt(int v)
-        {
-            selected = createIntValue(currentSpace, v).getComponent<CModuleItem>();
-        }
-
         public void test1()
         {
-            mkFold("fa");
-            mkFold("faa");
-            mkFold("faaa");
-            cdback();
-            cdback();
-            mkModule("ma");
-            mkModule("maa");
-            mkModule("maaa");
-            cdback();
-            mkInt(100);
-            var mt = rootModule.getComponent<CModuleItem>();
+            var bs = (App.Current.MainWindow as MainWindow).m_mainBrowser.runtimeBrowser;
+            bs.mkFold("fa");
+            bs.mkFold("faa");
+            bs.mkFold("faaa");
+            bs.cdback();
+            bs.cdback();
+            bs.mkModule("ma");
+            bs.mkModule("maa");
+            bs.mkModule("maaa");
+            bs.cdback();
+            bs.mkInt(100);
+            bs.resetTop();
+            var mt = bs.currentSpace.getComponent<CModuleItem>();
             mt.print(0);
         }
-        #endregion test1
-
+        
         #region test2
         public void test2()
         {
-            mkFold("fa");
-            mkFold("faa");
-            mkFold("faaa");
-            cdback();
-            cdback();
-            mkModule("ma");
-            mkModule("maa");
-            mkModule("maaa");
-            cdback();
-            mkInt(100);
-
-            var mt = rootModule.getComponent<CModuleTree>();
-            RuntimeUtil.Instance.SetCurrentSpace(mt);
+            var bsView = (App.Current.MainWindow as MainWindow).m_mainBrowser;
+            var bs = bsView.runtimeBrowser;
+            bs.mkFold("fa");
+            bs.mkFold("faa");
+            bs.mkFold("faaa");
+            bs.cdback();
+            bs.cdback();
+            bs.mkModule("ma");
+            bs.mkModule("maa");
+            bs.mkModule("maaa");
+            bs.cdback();
+            bs.mkInt(100);
+            bs.resetTop();
+            bsView.SetCurrentSpace(bs.currentSpace);
         }
         #endregion test2
     }

@@ -22,7 +22,7 @@ namespace ns_vision
         public StringEnter()
         {
             InitializeComponent();
-            Owner = vision_wpf.App.Current.MainWindow;
+            Owner = App.Current.MainWindow;
         }
 
         public System.Action<string> evtEnter = null;

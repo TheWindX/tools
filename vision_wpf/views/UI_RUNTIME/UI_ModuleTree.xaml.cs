@@ -60,8 +60,8 @@ namespace ns_vision
                                 RuntimeUtil.Instance.popStringEnter(enterString =>
                                 {
                                     var ro = runtimeObj.getComponent<CRuntimeObj>();
-                                    ro.runtime.createFold(runtimeObj, enterString);
-                                    RuntimeUtil.Instance.updateView();
+                                    RuntimeUtil.Instance.currentBrowser.runtimeBrowser.currentSpace.createFold(enterString);
+                                    RuntimeUtil.Instance.currentBrowser.updateView();
                                 });
                             }
                             else if (cmd == "new module")
@@ -69,8 +69,8 @@ namespace ns_vision
                                 RuntimeUtil.Instance.popStringEnter(enterString =>
                                 {
                                     var ro = runtimeObj.getComponent<CRuntimeObj>();
-                                    ro.runtime.createModule(runtimeObj, enterString);
-                                    RuntimeUtil.Instance.updateView();
+                                    RuntimeUtil.Instance.currentBrowser.runtimeBrowser.currentSpace.createModule(enterString);
+                                    RuntimeUtil.Instance.currentBrowser.updateView();
                                 });
                             }
                             else if (cmd == "new int value")
@@ -80,13 +80,28 @@ namespace ns_vision
                                     var ro = runtimeObj.getComponent<CRuntimeObj>();
                                     int val = -1;
                                     bool b = int.TryParse(enterString, out val);
-                                    ro.runtime.createIntValue(runtimeObj, val);
-                                    RuntimeUtil.Instance.updateView();
+                                    RuntimeUtil.Instance.currentBrowser.runtimeBrowser.currentSpace.createIntValue(val);
+                                    RuntimeUtil.Instance.currentBrowser.updateView();
                                 });
                             }
                         });
                 }
             }
+        }
+
+        private void m_panel_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            var mtx = RenderTransform.Value;
+            if(e.Delta > 0)
+            {
+                mtx.Scale(0.9, 0.9);
+            }
+            else
+            {
+                mtx.Scale(1.1, 1.1);
+            }
+            
+            RenderTransform = new MatrixTransform(mtx);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿<Application x:Class="vision_wpf.App"
+﻿<Application x:Class="ns_vision.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              StartupUri="MainWindow.xaml">

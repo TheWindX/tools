@@ -45,7 +45,7 @@ namespace ns_vision
 
         private void Window_PreviewKeyUp(object sender, KeyEventArgs e)
         {
-            RuntimeUtil.Instance.onKeyUp(e.Key);
+            RuntimeUtil.Instance.currentBrowser.onKeyUp(e.Key);
         }
     }
 }

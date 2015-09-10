@@ -9,7 +9,7 @@
     <Grid>
         <TextBlock x:Name="m_title" Foreground="#338D8D8D" FontSize="32" HorizontalAlignment="Center" VerticalAlignment="Center" TextDecorations="{x:Null}" FontWeight="Bold">
         </TextBlock>
-        <WrapPanel x:Name="m_panel" Orientation="Horizontal" PreviewMouseLeftButtonDown="m_panel_PreviewMouseLeftButtonDown" Background="#02000000">
+        <WrapPanel x:Name="m_panel" Orientation="Horizontal" PreviewMouseLeftButtonDown="m_panel_PreviewMouseLeftButtonDown"  Background="#02000000" MouseWheel="m_panel_MouseWheel">
         </WrapPanel>
     </Grid>
 

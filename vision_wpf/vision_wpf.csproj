@@ -54,20 +54,37 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Runtime\RuntimeBase.cs" />
+    <Compile Include="Runtime\Objects\CIntValue.cs" />
+    <Compile Include="Runtime\Objects\CTypeConstructor.cs" />
+    <Compile Include="Runtime\Objects\CTypeConstructorPara.cs" />
+    <Compile Include="Runtime\Objects\CTypeEnum.cs" />
+    <Compile Include="Runtime\Objects\CTypeTurple.cs" />
+    <Compile Include="Runtime\Objects\CType.cs" />
+    <Compile Include="Runtime\Objects\CModuleValue.cs" />
+    <Compile Include="Runtime\Objects\CModule.cs" />
+    <Compile Include="Runtime\Objects\CModuleItem.cs" />
+    <Compile Include="Runtime\Objects\CFold.cs" />
+    <Compile Include="Runtime\Objects\CNamed.cs" />
+    <Compile Include="Runtime\Objects\CModuleTree.cs" />
+    <Compile Include="Runtime\Objects\CRuntime.cs" />
+    <Compile Include="Runtime\Objects\CRuntimeObj.cs" />
     <Compile Include="Runtime\RuntimeCreation.cs" />
     <Compile Include="Runtime\RuntimeTest.cs" />
+    <Compile Include="Runtime\CRuntimeBrowser.cs" />
     <Compile Include="utils\runtimeUtils.cs" />
     <Compile Include="utils\Component.cs" />
     <Compile Include="utils\ListAdvance.cs" />
     <Compile Include="utils\Singleton.cs" />
     <Compile Include="utils\TimeUtils.cs" />
     <Compile Include="utils\Utils.cs" />
+    <Compile Include="views\UI_RUNTIME\browser\ModuleTreeBrowser.xaml.cs">
+      <DependentUpon>ModuleTreeBrowser.xaml</DependentUpon>
+    </Compile>
     <Compile Include="views\DockPanelSplitter\DockPanelSplitter.cs" />
     <Compile Include="views\StringEnter.xaml.cs">
       <DependentUpon>StringEnter.xaml</DependentUpon>
     </Compile>
-    <Compile Include="views\UI_RUNTIME\adress_box\PathViewer.xaml.cs">
+    <Compile Include="views\UI_RUNTIME\browser\adress_box\PathViewer.xaml.cs">
       <DependentUpon>PathViewer.xaml</DependentUpon>
     </Compile>
     <Compile Include="views\UI_RUNTIME\UI_ICON\UI_ICON_UP.xaml.cs">
@@ -108,6 +125,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="views\UI_RUNTIME\browser\ModuleTreeBrowser.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="views\DockPanelSplitter\SplitterStyle.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -120,7 +141,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="views\UI_RUNTIME\adress_box\PathViewer.xaml">
+    <Page Include="views\UI_RUNTIME\browser\adress_box\PathViewer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

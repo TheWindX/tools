@@ -72,20 +72,11 @@
             </Menu>
         </Border><!--menu-->
         <Border Height="1" DockPanel.Dock="Top"></Border><!--line split-->
-        <Border Height="24" DockPanel.Dock="Top">
-            <DockPanel>
-                <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Margin="2,0">URL</TextBlock>
-                <local:PathViewer x:Name="m_adress"></local:PathViewer>
-            </DockPanel>
-        </Border><!--address-->
         <!--line split-->
         <Border Height="20" DockPanel.Dock="Bottom" >
             <TextBlock x:Name="m_tb" Margin="10,0" HorizontalAlignment="Left" VerticalAlignment="Center" PreviewMouseLeftButtonDown="Border_PreviewMouseDown">stat</TextBlock>
         </Border><!--status-->
-        <Border DockPanel.Dock="Top">
-            <Grid x:Name="m_panel" Background="#FF515151">
-                
-            </Grid>
-        </Border><!--shower-->
+
+        <local:ModuleTreeBrowser x:Name="m_mainBrowser" DockPanel.Dock="Top"></local:ModuleTreeBrowser>
     </DockPanel>
 </Window>

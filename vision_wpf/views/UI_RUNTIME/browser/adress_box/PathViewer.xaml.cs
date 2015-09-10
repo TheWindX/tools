@@ -62,11 +62,11 @@ namespace ns_vision
                         var mt = mi.getComponent<CModuleTree>();
                         if(mt != null)
                         {
-                            RuntimeUtil.Instance.SetCurrentSpace(mt);
+                            RuntimeUtil.Instance.currentBrowser.SetCurrentSpace(mt);
                         }
                         else
                         {
-                            RuntimeUtil.Instance.SetSelect(mi);
+                            RuntimeUtil.Instance.currentBrowser.SetSelect(mi);
                         }
                     });
                     m_panel.Children.Add(bt);
