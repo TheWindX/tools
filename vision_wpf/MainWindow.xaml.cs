@@ -15,7 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 
-namespace vision_wpf
+namespace ns_vision
 {
     /// <summary>
     /// MainWindow.xaml 的交互逻辑

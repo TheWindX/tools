@@ -1,0 +1,13 @@
+﻿<Window x:Class="ns_vision.StringEnter"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ns_vision"
+        mc:Ignorable="d"    
+        Title="StringEnter" Height="34.204" Width="329.216" WindowStyle="None" PreviewKeyDown="Window_PreviewKeyDown">
+    <DockPanel>
+        <Button DockPanel.Dock="Right" Click="Button_Click">commit</Button>
+        <TextBox x:Name="m_text" DockPanel.Dock="Left" Margin="4, 0, 4, 0" VerticalAlignment="Center"></TextBox>
+    </DockPanel>
+</Window>

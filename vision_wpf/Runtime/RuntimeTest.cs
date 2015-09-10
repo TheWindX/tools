@@ -100,9 +100,7 @@ namespace ns_vision
             mkInt(100);
 
             var mt = rootModule.getComponent<CModuleTree>();
-            var ui = mt.drawUI();
-            RuntimeUtil.Instance.setMainPanel(ui);
-            
+            RuntimeUtil.Instance.SetCurrentSpace(mt);
         }
         #endregion test2
     }

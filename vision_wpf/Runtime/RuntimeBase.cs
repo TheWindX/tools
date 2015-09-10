@@ -71,7 +71,13 @@ namespace ns_vision
             {
                 mUI.runtimeObj = this;
                 mUI.clearChildren();
-                foreach(var item in children)
+
+                //增加向上按钮
+                var uiUp = new UI_ICON_UP();
+                uiUp.setSelect(false);
+
+                mUI.addChild(uiUp);
+                foreach (var item in children)
                 {
                     item.select(false);
                     var ui = item.drawIcon();

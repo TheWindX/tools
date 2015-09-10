@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace ns_vision
 {
     /// <summary>
-    /// Interaction logic for UI_ICON_Module.xaml
+    /// Interaction logic for UI_Folder.xaml
     /// </summary>
-    public partial class UI_ICON_Moduler : UserControl
+    public partial class UI_ICON_Folder : UserControl
     {
-        public UI_ICON_Moduler()
+        public UI_ICON_Folder()
         {
             InitializeComponent();
         }
@@ -67,9 +67,9 @@ namespace ns_vision
             else if (e.ClickCount == 2)
             {
                 var mt = runtimeObject.getComponent<CModuleTree>();
-                runtimeObject.getComponent<CRuntimeObj>().runtime.currentSpace = mt;
-                RuntimeUtil.Instance.setMainPanel(mt.drawUI());
+                RuntimeUtil.Instance.SetCurrentSpace(mt);
             }
         }
+
     }
 }
