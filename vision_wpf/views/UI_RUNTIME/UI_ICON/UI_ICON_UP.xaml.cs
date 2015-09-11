@@ -29,7 +29,7 @@ namespace ns_vision
         {
             if(e.ClickCount == 2)
             {
-                RuntimeUtil.Instance.currentBrowser.CDBackView();
+                CRuntimeBrowserViewManager.Instance.currentTreeBrowser.CDBackView();
             }
         }
 

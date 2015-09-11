@@ -67,7 +67,7 @@ namespace ns_vision
             else if (e.ClickCount == 2)
             {
                 var mt = runtimeObject.getComponent<CModuleTree>();
-                RuntimeUtil.Instance.currentBrowser.SetCurrentSpace(mt);
+                CRuntimeBrowserViewManager.Instance.currentTreeBrowser.SetCurrentSpace(mt);
             }
         }
     }

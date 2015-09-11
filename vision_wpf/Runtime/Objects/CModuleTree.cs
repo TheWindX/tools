@@ -33,6 +33,7 @@ namespace ns_vision
         {
             _HandleDrawUI = () =>
             {
+                mUI = new UI_ModuleTree();
                 mUI.runtimeObj = this;
                 mUI.clearChildren();
 
@@ -52,7 +53,7 @@ namespace ns_vision
             };
         }
 
-        public static UI_ModuleTree mUI = new UI_ModuleTree();
+        public static UI_ModuleTree mUI = null;
 
         public System.Func<FrameworkElement> _HandleDrawUI = null;
 

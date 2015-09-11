@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="clr-namespace:vision.views">
+    xmlns:local="clr-namespace:ns_vision">
     <Style TargetType="{x:Type local:DockPanelSplitter}">
         <Setter Property="Thickness" Value="6"/>
         <Setter Property="Template">

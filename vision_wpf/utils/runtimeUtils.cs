@@ -14,23 +14,24 @@ namespace ns_vision
 {
     class RuntimeUtil : ns_utils.Singleton<RuntimeUtil>
     {
+        #region logger
         WindowLogger mLogger = null;
 
         public RuntimeUtil()
         {
             mLogger = new WindowLogger();
         }
-        public void log(params Object[] objs)
+        public void error(params Object[] objs)
         {
             StringBuilder sb = new StringBuilder();
             foreach (var obj in objs)
-            {   
+            {
                 sb.Append(obj.ToString());
             }
             mLogger.addInfo(sb.ToString());
         }
 
-        public void error(params Object[] objs)
+        public void log(params Object[] objs)
         {
             StringBuilder sb = new StringBuilder();
             foreach (var obj in objs)
@@ -44,36 +45,18 @@ namespace ns_vision
         {
             mLogger.showAtCenter();
         }
+        #endregion logger
 
-        public CRuntime runtime
+        #region view
+        public MainWindow getMainWindow()
         {
-            get
-            {
-                return (App.Current as App).runtime;
-            }
+            return (App.Current as App).MainWindow as MainWindow;
         }
-
-        public ModuleTreeBrowser currentBrowser
-        {
-            get
-            {
-                return (App.Current.MainWindow as MainWindow).m_mainBrowser;
-            }
-        }
-
-
-        public void onTest(string testItem)
-        {
-            runtime.reset();
-            MethodInfo methodInfo = RuntimeTest.Instance.GetType().GetMethod(testItem);
-            methodInfo.Invoke(RuntimeTest.Instance, new object[] { });
-        }
-
-
+        
         public void popupContext(List<string> cmds, System.Action<string> handle)
         {
             var mContextMenu = new ContextMenu();
-            for(int i = 0; i<cmds.Count; ++i)
+            for (int i = 0; i < cmds.Count; ++i)
             {
                 MenuItem mi = new MenuItem();
                 mi.Header = cmds[i];
@@ -90,5 +73,32 @@ namespace ns_vision
         {
             StringEnter.ShowOnTop(handle);
         }
+        #endregion view
+
+
+        #region runtime
+        public CRuntime runtime
+        {
+            get
+            {
+                return (App.Current as App).runtime;
+            }
+        }
+        #endregion
+
+
+        #region test
+        public void onTest(string testItem)
+        {
+            runtime.reset();
+            MethodInfo methodInfo = RuntimeTest.Instance.GetType().GetMethod(testItem);
+            methodInfo.Invoke(RuntimeTest.Instance, new object[] { });
+        }
+        #endregion
+
+
+
+
+
     }
 }

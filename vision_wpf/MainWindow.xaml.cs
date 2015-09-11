@@ -34,7 +34,7 @@ namespace ns_vision
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            
+            RuntimeInit.Instance.init();
         }
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
@@ -45,7 +45,11 @@ namespace ns_vision
 
         private void Window_PreviewKeyUp(object sender, KeyEventArgs e)
         {
-            RuntimeUtil.Instance.currentBrowser.onKeyUp(e.Key);
+            if (evtOnKey != null)
+                evtOnKey(e.Key);
         }
+
+        public System.Action<Key> evtOnKey;
+        
     }
 }

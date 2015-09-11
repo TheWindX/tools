@@ -54,6 +54,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Runtime\Browser\CRuntimeBrowserManager.cs" />
     <Compile Include="Runtime\Objects\CIntValue.cs" />
     <Compile Include="Runtime\Objects\CTypeConstructor.cs" />
     <Compile Include="Runtime\Objects\CTypeConstructorPara.cs" />
@@ -68,9 +69,9 @@
     <Compile Include="Runtime\Objects\CModuleTree.cs" />
     <Compile Include="Runtime\Objects\CRuntime.cs" />
     <Compile Include="Runtime\Objects\CRuntimeObj.cs" />
-    <Compile Include="Runtime\RuntimeCreation.cs" />
+    <Compile Include="Runtime\RuntimeInit.cs" />
     <Compile Include="Runtime\RuntimeTest.cs" />
-    <Compile Include="Runtime\CRuntimeBrowser.cs" />
+    <Compile Include="Runtime\Browser\CRuntimeBrowser.cs" />
     <Compile Include="utils\runtimeUtils.cs" />
     <Compile Include="utils\Component.cs" />
     <Compile Include="utils\ListAdvance.cs" />
@@ -121,15 +122,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Theme\ExpressionDarkTheme.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="views\UI_RUNTIME\browser\ModuleTreeBrowser.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="views\DockPanelSplitter\SplitterStyle.xaml">
+    <Page Include="Theme\SplitterStyle.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

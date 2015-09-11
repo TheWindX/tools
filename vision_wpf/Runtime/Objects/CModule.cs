@@ -21,6 +21,7 @@ namespace ns_vision
             var mi = getComponent<CModuleItem>();
             mi._HandleDrawIcon = () =>
             {
+                mICon = new UI_ICON_Moduler();
                 mICon.runtimeObject = this.getComponent<CModuleItem>();
                 mICon.setTitle(getComponent<CNamed>().name);
                 return mICon;
@@ -29,11 +30,14 @@ namespace ns_vision
             //override of CModuleItem._HandleSelect
             mi._HandleSelect = b =>
             {
-                mICon.setSelect(b);
+                if (mICon != null)
+                {
+                    mICon.setSelect(b);
+                }
             };
         }
 
-        public UI_ICON_Moduler mICon = new UI_ICON_Moduler();
+        public UI_ICON_Moduler mICon = null;
     }
 
 }

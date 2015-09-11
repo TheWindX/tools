@@ -11,7 +11,7 @@ namespace ns_vision
     {
         public void test1()
         {
-            var bs = (App.Current.MainWindow as MainWindow).m_mainBrowser.runtimeBrowser;
+            var bs = (App.Current.MainWindow as MainWindow).m_leftBrowser.runtimeBrowser;
             bs.mkFold("fa");
             bs.mkFold("faa");
             bs.mkFold("faaa");
@@ -30,8 +30,9 @@ namespace ns_vision
         #region test2
         public void test2()
         {
-            var bsView = (App.Current.MainWindow as MainWindow).m_mainBrowser;
-            var bs = bsView.runtimeBrowser;
+            var leftView = CRuntimeBrowserViewManager.Instance.currentTreeBrowser;
+            var righView = CRuntimeBrowserViewManager.Instance.otherTreeBrowser;
+            var bs = leftView.runtimeBrowser;
             bs.mkFold("fa");
             bs.mkFold("faa");
             bs.mkFold("faaa");
@@ -43,7 +44,8 @@ namespace ns_vision
             bs.cdback();
             bs.mkInt(100);
             bs.resetTop();
-            bsView.SetCurrentSpace(bs.currentSpace);
+            leftView.updateView();
+            righView.updateView();
         }
         #endregion test2
     }

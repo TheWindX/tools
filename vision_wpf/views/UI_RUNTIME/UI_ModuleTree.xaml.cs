@@ -60,8 +60,9 @@ namespace ns_vision
                                 RuntimeUtil.Instance.popStringEnter(enterString =>
                                 {
                                     var ro = runtimeObj.getComponent<CRuntimeObj>();
-                                    RuntimeUtil.Instance.currentBrowser.runtimeBrowser.currentSpace.createFold(enterString);
-                                    RuntimeUtil.Instance.currentBrowser.updateView();
+                                    var bsView = CRuntimeBrowserViewManager.Instance.currentTreeBrowser;
+                                    bsView.runtimeBrowser.currentSpace.createFold(enterString);
+                                    bsView.updateView();
                                 });
                             }
                             else if (cmd == "new module")
@@ -69,8 +70,9 @@ namespace ns_vision
                                 RuntimeUtil.Instance.popStringEnter(enterString =>
                                 {
                                     var ro = runtimeObj.getComponent<CRuntimeObj>();
-                                    RuntimeUtil.Instance.currentBrowser.runtimeBrowser.currentSpace.createModule(enterString);
-                                    RuntimeUtil.Instance.currentBrowser.updateView();
+                                    var bsView = CRuntimeBrowserViewManager.Instance.currentTreeBrowser;
+                                    bsView.runtimeBrowser.currentSpace.createModule(enterString);
+                                    bsView.updateView();
                                 });
                             }
                             else if (cmd == "new int value")
@@ -80,8 +82,9 @@ namespace ns_vision
                                     var ro = runtimeObj.getComponent<CRuntimeObj>();
                                     int val = -1;
                                     bool b = int.TryParse(enterString, out val);
-                                    RuntimeUtil.Instance.currentBrowser.runtimeBrowser.currentSpace.createIntValue(val);
-                                    RuntimeUtil.Instance.currentBrowser.updateView();
+                                    var bsView = CRuntimeBrowserViewManager.Instance.currentTreeBrowser;
+                                    bsView.runtimeBrowser.currentSpace.createIntValue(val);
+                                    bsView.updateView();
                                 });
                             }
                         });

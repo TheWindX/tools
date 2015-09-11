@@ -26,6 +26,8 @@ namespace ns_vision
             InitializeComponent();
         }
 
+        public ModuleTreeBrowser browserView = null;
+
         CModuleItem _runtimeObject = null;
         public CModuleItem runtimeObject
         {
@@ -62,11 +64,11 @@ namespace ns_vision
                         var mt = mi.getComponent<CModuleTree>();
                         if(mt != null)
                         {
-                            RuntimeUtil.Instance.currentBrowser.SetCurrentSpace(mt);
+                            browserView.SetCurrentSpace(mt);
                         }
                         else
                         {
-                            RuntimeUtil.Instance.currentBrowser.SetSelect(mi);
+                            browserView.SetSelect(mi);
                         }
                     });
                     m_panel.Children.Add(bt);

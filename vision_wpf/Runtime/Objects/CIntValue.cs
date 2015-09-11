@@ -20,20 +20,24 @@ namespace ns_vision
             var mi = getComponent<CModuleItem>();
             mi._HandleDrawIcon = () =>
             {
+                mICon = new UI_ICON_BaseTypeValue();
                 mICon.runtimeObject = this.getComponent<CModuleItem>();
                 mICon.setTitle(getComponent<CNamed>().name);
-                mICon.setTag("Int");
+                mICon.setTag("int");
                 return mICon;
             };
 
             //override of CModuleItem._HandleSelect
             mi._HandleSelect = b =>
             {
-                mICon.setSelect(b);
+                if (mICon != null)
+                {
+                    mICon.setSelect(b);
+                }
             };
         }
 
-        UI_ICON_BaseTypeValue mICon = new UI_ICON_BaseTypeValue();
+        UI_ICON_BaseTypeValue mICon = null;
 
         public int value = 0;
     }

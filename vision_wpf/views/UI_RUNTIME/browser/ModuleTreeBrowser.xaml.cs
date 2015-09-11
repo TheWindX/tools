@@ -23,6 +23,7 @@ namespace ns_vision
         public ModuleTreeBrowser()
         {
             InitializeComponent();
+            m_adress.browserView = this;
         }
 
         public CRuntimeBrowser _runtimeBrowser;
@@ -94,6 +95,14 @@ namespace ns_vision
         {
             setMainPanel(runtimeBrowser.currentSpace.drawUI());
         }
-        
+
+        private void UserControl_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if(CRuntimeBrowserViewManager.Instance.currentTreeBrowser != this)
+            {
+                CRuntimeBrowserViewManager.Instance.toggle();
+            }
+            
+        }
     }
 }

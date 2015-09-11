@@ -3,7 +3,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 
-namespace vision.views
+namespace ns_vision
 {
     /// <summary>
     /// Code Project article
