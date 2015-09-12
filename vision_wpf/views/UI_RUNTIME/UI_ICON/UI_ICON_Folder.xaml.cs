@@ -18,57 +18,37 @@ namespace ns_vision
     /// <summary>
     /// Interaction logic for UI_Folder.xaml
     /// </summary>
-    public partial class UI_ICON_Folder : UserControl
+    public partial class UI_ICON_Folder : UI_ICON
     {
         public UI_ICON_Folder()
         {
             InitializeComponent();
         }
 
-        public void setTitle(string title)
+        protected override TextBlock getTag()
         {
-            m_title.Text = title;
+            return null;
         }
 
-        public void setSelect(bool b)
+        protected override TextBlock getTitle()
         {
-            if (b)
-            {
-                var cb = (m_mask.Fill as SolidColorBrush);
-                cb.Color = Color.FromArgb(40, cb.Color.R, cb.Color.G, cb.Color.B);
-            }
-            else
-            {
-                var cb = (m_mask.Fill as SolidColorBrush);
-                cb.Color = Color.FromArgb(1, cb.Color.R, cb.Color.G, cb.Color.B);
-            }
+            return m_title;
         }
 
-        //模块
-        public CModuleItem runtimeObject
+        protected override Rectangle getMask()
         {
-            get;
-            set;
+            return m_mask;
         }
-        private void onMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+
+        protected override void onClick()
         {
-            if (e.ClickCount == 1)
-            {
-                if (runtimeObject != null)
-                {
-                    var cont = runtimeObject.parent;
-                    foreach (var c in cont.children)
-                    {
-                        c.select(false);
-                    }
-                }
-                setSelect(true);
-            }
-            else if (e.ClickCount == 2)
-            {
-                var mt = runtimeObject.getComponent<CModuleTree>();
-                CRuntimeBrowserViewManager.Instance.currentTreeBrowser.SetCurrentSpace(mt);
-            }
+
+        }
+
+        protected override void onDoubleClick()
+        {
+            var mt = runtimeObject.getComponent<CModuleTree>();
+            CRuntimeBrowserViewManager.Instance.currentTreeBrowser.SetCurrentSpace(mt);
         }
 
     }

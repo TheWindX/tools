@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="ns_vision.UI_ICON_Moduler"
+﻿<local:UI_ICON x:Class="ns_vision.UI_ICON_Moduler"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -27,6 +27,6 @@
                 </Ellipse>
             </Grid>
         </DockPanel>
-        <Rectangle x:Name="m_mask" Fill="#38263385" PreviewMouseLeftButtonDown="onMouseLeftButtonDown"></Rectangle>
+        <Rectangle x:Name="m_mask" Fill="#38263385"></Rectangle>
     </Grid>
-</UserControl>
+</local:UI_ICON>

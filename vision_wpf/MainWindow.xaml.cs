@@ -47,9 +47,14 @@ namespace ns_vision
         {
             if (evtOnKey != null)
                 evtOnKey(e.Key);
+            e.Handled = true;
         }
 
         public System.Action<Key> evtOnKey;
-        
+
+        private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            e.Handled = true;
+        }
     }
 }

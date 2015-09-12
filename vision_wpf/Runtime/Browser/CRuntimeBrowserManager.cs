@@ -16,8 +16,8 @@ namespace ns_vision
         Border _leftBorder;
         Border _rightBorder;
 
-        public SolidColorBrush mainFrameBG = new SolidColorBrush(Colors.White);
-        public SolidColorBrush subFrameBG = new SolidColorBrush(Colors.Black);
+        public SolidColorBrush mainFrameBG = new SolidColorBrush(Color.FromArgb(255, 199, 230, 255));
+        public SolidColorBrush subFrameBG = new SolidColorBrush(Color.FromArgb(255, 255, 255, 227)); 
 
         bool left = true;
         public ModuleTreeBrowser currentTreeBrowser
@@ -78,6 +78,10 @@ namespace ns_vision
             if (kc == System.Windows.Input.Key.Back)
             {
                 currentTreeBrowser.CDBackView();
+            }
+            else if (kc == System.Windows.Input.Key.Tab)
+            {
+                toggle();
             }
         }
     }

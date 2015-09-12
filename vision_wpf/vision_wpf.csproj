@@ -88,6 +88,7 @@
     <Compile Include="views\UI_RUNTIME\browser\adress_box\PathViewer.xaml.cs">
       <DependentUpon>PathViewer.xaml</DependentUpon>
     </Compile>
+    <Compile Include="views\UI_RUNTIME\UI_ICON\UI_ICON.cs" />
     <Compile Include="views\UI_RUNTIME\UI_ICON\UI_ICON_UP.xaml.cs">
       <DependentUpon>UI_ICON_UP.xaml</DependentUpon>
     </Compile>

@@ -18,61 +18,36 @@ namespace ns_vision
     /// <summary>
     /// Interaction logic for UI_BaseTypeValue.xaml
     /// </summary>
-    public partial class UI_ICON_BaseTypeValue : UserControl
+    public partial class UI_ICON_BaseTypeValue : UI_ICON
     {
         public UI_ICON_BaseTypeValue()
         {
             InitializeComponent();
         }
 
-        public void setTag(string tag)
+        protected override TextBlock getTag()
         {
-            m_tag.Text = tag;
+            return m_tag;
         }
 
-        public void setTitle(string name)
+        protected override TextBlock getTitle()
         {
-            m_title.Text = name;
+            return m_title;
         }
 
-        public void setSelect(bool b)
+        protected override Rectangle getMask()
         {
-            if(b)
-            {
-                var cb = (m_mask.Fill as SolidColorBrush);
-                cb.Color = Color.FromArgb(40, cb.Color.R, cb.Color.G, cb.Color.B);
-            }
-            else
-            {
-                var cb = (m_mask.Fill as SolidColorBrush);
-                cb.Color = Color.FromArgb(1, cb.Color.R, cb.Color.G, cb.Color.B);
-            }
+            return m_mask;
         }
 
-        //模块
-        public CModuleItem runtimeObject
+        protected override void onClick()
         {
-            get;
-            set;
+            
         }
-        private void onMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+
+        protected override void onDoubleClick()
         {
-            if(e.ClickCount == 1)
-            {
-                if (runtimeObject != null)
-                {
-                    var cont = runtimeObject.parent;
-                    foreach (var c in cont.children)
-                    {
-                        c.select(false);
-                    }
-                }
-                setSelect(true);
-            }
-            else if(e.ClickCount == 2)
-            {
-                //nothing
-            }
+
         }
     }
 }
