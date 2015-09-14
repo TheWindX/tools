@@ -33,27 +33,26 @@ namespace ns_vision
         {
             _HandleDrawUI = () =>
             {
-                mUI = new UI_ModuleTree();
+                mUI = new UI_Panel_ModuleTree();
                 mUI.runtimeObj = this;
                 mUI.clearChildren();
 
                 //增加向上按钮
-                var uiUp = new UI_ICON_UP();
-                uiUp.setSelect(false);
+                //var uiUp = new UI_ICON_UP();
+                //mUI.addChild(uiUp);
 
-                mUI.addChild(uiUp);
                 foreach (var item in children)
                 {
                     item.select(false);
                     var ui = item.drawIcon();
-                    mUI.addChild(ui);
+                    mUI.addChild(ui as UI_ICON_ModuleItem);
                 }
 
                 return mUI;
             };
         }
 
-        public static UI_ModuleTree mUI = null;
+        public static UI_Panel_ModuleTree mUI = null;
 
         public System.Func<FrameworkElement> _HandleDrawUI = null;
 
@@ -80,9 +79,9 @@ namespace ns_vision
             return com;
         }
 
-        public CFold createFold(string name)
+        public CModuleFold createFold(string name)
         {
-            var com = Component.create<CFold>(new ComponentContainer());
+            var com = Component.create<CModuleFold>(new ComponentContainer());
             com.getComponent<CRuntimeObj>().runtime = this.getComponent<CRuntimeObj>().runtime;
             com.getComponent<CNamed>()._HandleNamed = () => name;
             com.getComponent<CModuleItem>().parent = this;
@@ -90,9 +89,9 @@ namespace ns_vision
             return com;
         }
 
-        public CIntValue createIntValue(int v)
+        public CValueInt createIntValue(int v)
         {
-            var com = Component.create<CIntValue>(new ComponentContainer());
+            var com = Component.create<CValueInt>(new ComponentContainer());
             com.value = v;
             com.getComponent<CRuntimeObj>().runtime = this.getComponent<CRuntimeObj>().runtime;
             com.getComponent<CNamed>()._HandleNamed = () => com.value.ToString();
@@ -100,6 +99,8 @@ namespace ns_vision
             this.children.Add(com.getComponent<CModuleItem>());
             return com;
         }
+
+        
     }
 
 }

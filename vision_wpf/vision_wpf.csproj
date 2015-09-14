@@ -54,8 +54,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Runtime\Browser\CRuntimeBrowserManager.cs" />
-    <Compile Include="Runtime\Objects\CIntValue.cs" />
+    <Compile Include="Runtime\Browser\CBrowserModuleTreeManager.cs" />
+    <Compile Include="Runtime\Objects\CValueInt.cs" />
     <Compile Include="Runtime\Objects\CTypeConstructor.cs" />
     <Compile Include="Runtime\Objects\CTypeConstructorPara.cs" />
     <Compile Include="Runtime\Objects\CTypeEnum.cs" />
@@ -64,47 +64,47 @@
     <Compile Include="Runtime\Objects\CModuleValue.cs" />
     <Compile Include="Runtime\Objects\CModule.cs" />
     <Compile Include="Runtime\Objects\CModuleItem.cs" />
-    <Compile Include="Runtime\Objects\CFold.cs" />
+    <Compile Include="Runtime\Objects\CModuleFold.cs" />
     <Compile Include="Runtime\Objects\CNamed.cs" />
     <Compile Include="Runtime\Objects\CModuleTree.cs" />
     <Compile Include="Runtime\Objects\CRuntime.cs" />
     <Compile Include="Runtime\Objects\CRuntimeObj.cs" />
     <Compile Include="Runtime\RuntimeInit.cs" />
     <Compile Include="Runtime\RuntimeTest.cs" />
-    <Compile Include="Runtime\Browser\CRuntimeBrowser.cs" />
+    <Compile Include="Runtime\Browser\CBrowserModuleTree.cs" />
     <Compile Include="utils\runtimeUtils.cs" />
     <Compile Include="utils\Component.cs" />
     <Compile Include="utils\ListAdvance.cs" />
     <Compile Include="utils\Singleton.cs" />
     <Compile Include="utils\TimeUtils.cs" />
     <Compile Include="utils\Utils.cs" />
-    <Compile Include="views\UI_RUNTIME\browser\ModuleTreeBrowser.xaml.cs">
-      <DependentUpon>ModuleTreeBrowser.xaml</DependentUpon>
+    <Compile Include="UIs\UI_RUNTIME\UI_browser\UI_browserModuleTree.xaml.cs">
+      <DependentUpon>UI_browserModuleTree.xaml</DependentUpon>
     </Compile>
-    <Compile Include="views\DockPanelSplitter\DockPanelSplitter.cs" />
-    <Compile Include="views\StringEnter.xaml.cs">
+    <Compile Include="UIs\DockPanelSplitter\DockPanelSplitter.cs" />
+    <Compile Include="UIs\StringEnter.xaml.cs">
       <DependentUpon>StringEnter.xaml</DependentUpon>
     </Compile>
-    <Compile Include="views\UI_RUNTIME\browser\adress_box\PathViewer.xaml.cs">
+    <Compile Include="UIs\UI_RUNTIME\UI_browser\adress_box\PathViewer.xaml.cs">
       <DependentUpon>PathViewer.xaml</DependentUpon>
     </Compile>
-    <Compile Include="views\UI_RUNTIME\UI_ICON\UI_ICON.cs" />
-    <Compile Include="views\UI_RUNTIME\UI_ICON\UI_ICON_UP.xaml.cs">
+    <Compile Include="UIs\UI_RUNTIME\UI_ICON\UI_ICON_ModuleItem.cs" />
+    <Compile Include="UIs\UI_RUNTIME\UI_ICON\UI_ICON_UP.xaml.cs">
       <DependentUpon>UI_ICON_UP.xaml</DependentUpon>
     </Compile>
-    <Compile Include="views\UI_RUNTIME\UI_ICON\UI_ICON_BaseTypeValue.xaml.cs">
+    <Compile Include="UIs\UI_RUNTIME\UI_ICON\UI_ICON_BaseTypeValue.xaml.cs">
       <DependentUpon>UI_ICON_BaseTypeValue.xaml</DependentUpon>
     </Compile>
-    <Compile Include="views\UI_RUNTIME\UI_ICON\UI_ICON_Folder.xaml.cs">
+    <Compile Include="UIs\UI_RUNTIME\UI_ICON\UI_ICON_Folder.xaml.cs">
       <DependentUpon>UI_ICON_Folder.xaml</DependentUpon>
     </Compile>
-    <Compile Include="views\UI_RUNTIME\UI_ICON\UI_ICON_Moduler.xaml.cs">
+    <Compile Include="UIs\UI_RUNTIME\UI_ICON\UI_ICON_Moduler.xaml.cs">
       <DependentUpon>UI_ICON_Moduler.xaml</DependentUpon>
     </Compile>
-    <Compile Include="views\UI_RUNTIME\UI_ModuleTree.xaml.cs">
-      <DependentUpon>UI_ModuleTree.xaml</DependentUpon>
+    <Compile Include="UIs\UI_RUNTIME\UI_Panel_ModuleTree.xaml.cs">
+      <DependentUpon>UI_Panel_ModuleTree.xaml</DependentUpon>
     </Compile>
-    <Compile Include="views\WindowLogger.xaml.cs">
+    <Compile Include="UIs\WindowLogger.xaml.cs">
       <DependentUpon>WindowLogger.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
@@ -123,7 +123,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="views\UI_RUNTIME\browser\ModuleTreeBrowser.xaml">
+    <Page Include="UIs\UI_RUNTIME\UI_browser\UI_browserModuleTree.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -135,35 +135,35 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="views\StringEnter.xaml">
+    <Page Include="UIs\StringEnter.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="views\UI_RUNTIME\browser\adress_box\PathViewer.xaml">
+    <Page Include="UIs\UI_RUNTIME\UI_browser\adress_box\PathViewer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="views\UI_RUNTIME\UI_ICON\UI_ICON_UP.xaml">
+    <Page Include="UIs\UI_RUNTIME\UI_ICON\UI_ICON_UP.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="views\UI_RUNTIME\UI_ICON\UI_ICON_BaseTypeValue.xaml">
+    <Page Include="UIs\UI_RUNTIME\UI_ICON\UI_ICON_BaseTypeValue.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="views\UI_RUNTIME\UI_ICON\UI_ICON_Folder.xaml">
+    <Page Include="UIs\UI_RUNTIME\UI_ICON\UI_ICON_Folder.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="views\UI_RUNTIME\UI_ICON\UI_ICON_Moduler.xaml">
+    <Page Include="UIs\UI_RUNTIME\UI_ICON\UI_ICON_Moduler.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="views\UI_RUNTIME\UI_ModuleTree.xaml">
+    <Page Include="UIs\UI_RUNTIME\UI_Panel_ModuleTree.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="views\WindowLogger.xaml">
+    <Page Include="UIs\WindowLogger.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

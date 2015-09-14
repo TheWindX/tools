@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ns_vision
 {
-    public partial class CRuntimeBrowser : Component
+    public partial class CBrowserModuleTree : Component
     {
         public CModuleTree currentSpace = null;
         public CModuleItem selected = null;

@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace ns_vision
 {
     /// <summary>
-    /// Interaction logic for UI_Folder.xaml
+    /// Interaction logic for UI_ICON_Module.xaml
     /// </summary>
-    public partial class UI_ICON_Folder : UI_ICON
+    public partial class UI_ICON_Moduler : UI_ICON_ModuleItem
     {
-        public UI_ICON_Folder()
+        public UI_ICON_Moduler()
         {
             InitializeComponent();
         }
@@ -48,8 +48,7 @@ namespace ns_vision
         protected override void onDoubleClick()
         {
             var mt = runtimeObject.getComponent<CModuleTree>();
-            CRuntimeBrowserViewManager.Instance.currentTreeBrowser.SetCurrentSpace(mt);
+            CBrowserModuleTreeManager.Instance.currentTreeBrowser.SetCurrentSpace(mt);
         }
-
     }
 }

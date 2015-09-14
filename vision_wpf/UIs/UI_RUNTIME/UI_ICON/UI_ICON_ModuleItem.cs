@@ -18,9 +18,9 @@ namespace ns_vision
     /// <summary>
     /// Interaction logic for UI_BaseTypeValue.xaml
     /// </summary>
-    public class UI_ICON : UserControl
+    public class UI_ICON_ModuleItem : UserControl
     {
-        public UI_ICON()
+        public UI_ICON_ModuleItem()
         {
             PreviewMouseLeftButtonDown += onMouseLeftButtonDown;
             Loaded += UI_ICON_Loaded;
@@ -96,7 +96,7 @@ namespace ns_vision
             set;
         }
 
-        public ModuleTreeBrowser browser
+        public UI_browserModuleTree browser
         {
             get;
             set;
@@ -109,7 +109,7 @@ namespace ns_vision
                 var p = (Parent as Panel);
                 foreach(var item in p.Children)
                 {
-                    var icon = (item as UI_ICON);
+                    var icon = (item as UI_ICON_ModuleItem);
                     if(icon != null)
                     {
                         icon.setSelect(false);

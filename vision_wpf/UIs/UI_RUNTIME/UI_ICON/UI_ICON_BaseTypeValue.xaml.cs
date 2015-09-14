@@ -18,7 +18,7 @@ namespace ns_vision
     /// <summary>
     /// Interaction logic for UI_BaseTypeValue.xaml
     /// </summary>
-    public partial class UI_ICON_BaseTypeValue : UI_ICON
+    public partial class UI_ICON_BaseTypeValue : UI_ICON_ModuleItem
     {
         public UI_ICON_BaseTypeValue()
         {

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,14 +19,14 @@ namespace ns_vision
     /// <summary>
     /// Interaction logic for UI_ModuleTree.xaml
     /// </summary>
-    public partial class UI_ModuleTree : UserControl
+    public partial class UI_Panel_ModuleTree : UserControl, IEnumerable<UI_ICON_ModuleItem>
     {
-        public UI_ModuleTree()
+        public UI_Panel_ModuleTree()
         {
             InitializeComponent();
         }
 
-        public void addChild(FrameworkElement child)
+        public void addChild(UI_ICON_ModuleItem child)
         {
             m_panel.Children.Add(child);
         }
@@ -39,7 +40,7 @@ namespace ns_vision
         {
             m_title.Text = title;
         }
-
+        
         public CModuleTree runtimeObj
         {
             get;
@@ -60,7 +61,7 @@ namespace ns_vision
                                 RuntimeUtil.Instance.popStringEnter(enterString =>
                                 {
                                     var ro = runtimeObj.getComponent<CRuntimeObj>();
-                                    var bsView = CRuntimeBrowserViewManager.Instance.currentTreeBrowser;
+                                    var bsView = CBrowserModuleTreeManager.Instance.currentTreeBrowser;
                                     bsView.runtimeBrowser.currentSpace.createFold(enterString);
                                     bsView.updateView();
                                 });
@@ -70,7 +71,7 @@ namespace ns_vision
                                 RuntimeUtil.Instance.popStringEnter(enterString =>
                                 {
                                     var ro = runtimeObj.getComponent<CRuntimeObj>();
-                                    var bsView = CRuntimeBrowserViewManager.Instance.currentTreeBrowser;
+                                    var bsView = CBrowserModuleTreeManager.Instance.currentTreeBrowser;
                                     bsView.runtimeBrowser.currentSpace.createModule(enterString);
                                     bsView.updateView();
                                 });
@@ -82,7 +83,7 @@ namespace ns_vision
                                     var ro = runtimeObj.getComponent<CRuntimeObj>();
                                     int val = -1;
                                     bool b = int.TryParse(enterString, out val);
-                                    var bsView = CRuntimeBrowserViewManager.Instance.currentTreeBrowser;
+                                    var bsView = CBrowserModuleTreeManager.Instance.currentTreeBrowser;
                                     bsView.runtimeBrowser.currentSpace.createIntValue(val);
                                     bsView.updateView();
                                 });
@@ -105,6 +106,27 @@ namespace ns_vision
             }
             
             RenderTransform = new MatrixTransform(mtx);
+        }
+
+        private IEnumerable<UI_ICON_ModuleItem> getEnumerable()
+        {
+            foreach (var item in m_panel.Children)
+            {
+                if (item is UI_ICON_ModuleItem)
+                {
+                    yield return item as UI_ICON_ModuleItem;
+                }
+            }
+        }
+
+        public IEnumerator<UI_ICON_ModuleItem> GetEnumerator()
+        {
+            return getEnumerable().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return getEnumerable().GetEnumerator();
         }
     }
 }

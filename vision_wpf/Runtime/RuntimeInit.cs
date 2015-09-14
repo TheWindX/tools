@@ -11,7 +11,7 @@ namespace ns_vision
     {
         public void init()
         {
-            CRuntimeBrowserViewManager.Instance.init();
+            CBrowserModuleTreeManager.Instance.init();
         }
     }
 }

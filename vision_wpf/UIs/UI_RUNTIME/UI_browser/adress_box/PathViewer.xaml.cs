@@ -26,7 +26,7 @@ namespace ns_vision
             InitializeComponent();
         }
 
-        public ModuleTreeBrowser browserView = null;
+        public UI_browserModuleTree browserView = null;
 
         CModuleItem _runtimeObject = null;
         public CModuleItem runtimeObject

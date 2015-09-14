@@ -10,33 +10,35 @@ using System.Windows.Media;
 
 namespace ns_vision
 {
-    public partial class CFold : Component
+    public partial class CValueInt : Component
     {
         public override void inherit()
         {
-            addComponent<CModuleTree>();
+            addComponent<CModuleValue>();
 
             //override of CModuleItem._HandleDrawIcon
             var mi = getComponent<CModuleItem>();
             mi._HandleDrawIcon = () =>
             {
-                mICon = new UI_ICON_Folder();
+                mICon = new UI_ICON_BaseTypeValue();
                 mICon.runtimeObject = this.getComponent<CModuleItem>();
                 mICon.setTitle(getComponent<CNamed>().name);
+                mICon.setTag("int");
                 return mICon;
             };
 
             //override of CModuleItem._HandleSelect
             mi._HandleSelect = b =>
             {
-                if(mICon != null)
+                if (mICon != null)
                 {
                     mICon.setSelect(b);
                 }
             };
         }
 
-        private UI_ICON_Folder mICon = null;
-    }
+        UI_ICON_BaseTypeValue mICon = null;
 
+        public int value = 0;
+    }
 }

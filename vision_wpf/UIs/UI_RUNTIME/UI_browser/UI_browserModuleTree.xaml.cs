@@ -13,21 +13,22 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+
 namespace ns_vision
 {
     /// <summary>
     /// Interaction logic for ModuleTreeBrowser.xaml
     /// </summary>
-    public partial class ModuleTreeBrowser : UserControl
+    public partial class UI_browserModuleTree : UserControl
     {
-        public ModuleTreeBrowser()
+        public UI_browserModuleTree()
         {
             InitializeComponent();
             m_adress.browserView = this;
         }
 
-        public CRuntimeBrowser _runtimeBrowser;
-        public CRuntimeBrowser runtimeBrowser
+        public CBrowserModuleTree _runtimeBrowser;
+        public CBrowserModuleTree runtimeBrowser
         {
             get
             {
@@ -62,17 +63,30 @@ namespace ns_vision
             m_panel.Children.Add(ui);
         }
 
+        public UI_Panel_ModuleTree getMainPanel()
+        {
+            return m_panel.Children[0] as UI_Panel_ModuleTree;
+        }
+
         private void SetCurrentSpaceView(CModuleTree tree)
         {
             setMainPanel(tree.drawUI());
         }
 
-        public void SetCurrentSpace(CModuleTree tree)
+        public void SetCurrentSpace(CModuleTree tree = null)
         {   
+            if(tree == null)
+            {
+                tree = runtimeBrowser
+            }
             runtimeBrowser.currentSpace = tree;
             runtimeBrowser.selected = null;
             SetCurrentSpaceView(tree);
             m_adress.runtimeObject = tree.getComponent<CModuleItem>();
+        }
+
+        public void SetCurrentSpace(CModuleTree tree)
+        {
         }
 
         public void SetSelect(CModuleItem mi)
@@ -82,12 +96,13 @@ namespace ns_vision
                 var tree = mi.parent;
                 if (tree == null) return;
                 runtimeBrowser.currentSpace = tree;
-                SetCurrentSpace(tree);
+                //SetCurrentSpace(tree);
                 foreach (var c in tree.children)
                 {
                     c.select(false);
                 }
                 mi.select(true);
+                runtimeBrowser.selected = mi;
             }
         }
 
@@ -98,11 +113,10 @@ namespace ns_vision
 
         private void UserControl_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if(CRuntimeBrowserViewManager.Instance.currentTreeBrowser != this)
+            if(CBrowserModuleTreeManager.Instance.currentTreeBrowser != this)
             {
-                CRuntimeBrowserViewManager.Instance.toggle();
+                CBrowserModuleTreeManager.Instance.toggle();
             }
-            
         }
     }
 }
