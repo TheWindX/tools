@@ -77,16 +77,13 @@ namespace ns_vision
         {   
             if(tree == null)
             {
-                tree = runtimeBrowser
+                tree = runtimeBrowser.selected.getComponent<CModuleTree>();
+                if (tree == null) return;
             }
             runtimeBrowser.currentSpace = tree;
             runtimeBrowser.selected = null;
             SetCurrentSpaceView(tree);
             m_adress.runtimeObject = tree.getComponent<CModuleItem>();
-        }
-
-        public void SetCurrentSpace(CModuleTree tree)
-        {
         }
 
         public void SetSelect(CModuleItem mi)

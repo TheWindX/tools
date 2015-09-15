@@ -95,8 +95,7 @@ namespace ns_vision
                 }
                 this.currentTreeBrowser.getMainPanel().m_serachBox.Text = "";
 
-                var mt = runtimeObject.getComponent<CModuleTree>();
-                CBrowserModuleTreeManager.Instance.currentTreeBrowser.SetCurrentSpace(mt);
+                CBrowserModuleTreeManager.Instance.currentTreeBrowser.SetCurrentSpace(null);
             }
             else if (kc >= System.Windows.Input.Key.A && kc <= System.Windows.Input.Key.Z)
             {
