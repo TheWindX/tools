@@ -6,12 +6,24 @@
              xmlns:local="clr-namespace:Touch"
              mc:Ignorable="d" 
              HorizontalAlignment="Center" VerticalAlignment="Center" Width="Auto" Height="32" Padding="0" PreviewMouseLeftButtonDown="UserControl_PreviewMouseLeftButtonDown" PreviewMouseMove="UserControl_PreviewMouseMove" PreviewMouseLeftButtonUp="UserControl_PreviewMouseLeftButtonUp">
+    <UserControl.Resources>
+        <Style x:Key="linkPtStyle" TargetType="{x:Type Rectangle}">
+            <Style.Triggers>
+                <!--鼠标滑过时字体为红色-->
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Stroke" Value="#FFFFFFFF"/>
+                </Trigger>
+            </Style.Triggers>
+            <Setter Property="Stroke" Value="#FFB4B4B4"/>
+            <Setter Property="Fill" Value="#02000000"/>
+        </Style>
+    </UserControl.Resources>
     <Grid>
         <Border Background="#FF9C9C9C" CornerRadius="8" Padding="4,0">
             <Grid>
                 <TextBlock x:Name="m_text" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18.667">asdf</TextBlock>
-                <Rectangle x:Name="m_left" Width="8" Height="8" HorizontalAlignment="Left" Margin="-8,0,0,0" Fill="#00000000" Stroke="#FFC7C7C7" StrokeThickness="2"/>
-                <Rectangle x:Name="m_right" Width="8" Height="8" HorizontalAlignment="Right" Margin="0,0,-8,0" Fill="#00000000" Stroke="#FFC7C7C7" StrokeThickness="2"></Rectangle>
+                <Rectangle x:Name="m_left" Width="8" Height="8" HorizontalAlignment="Left" Margin="-8,0,0,0" StrokeThickness="2" Style="{DynamicResource linkPtStyle}" MouseLeftButtonDown="m_left_MouseLeftButtonDown"/>
+                <Rectangle x:Name="m_right" Width="8" Height="8" HorizontalAlignment="Right" Margin="0,0,-8,0" StrokeThickness="2" Style="{DynamicResource linkPtStyle}" MouseLeftButtonDown="m_right_MouseLeftButtonDown"/>
             </Grid>
         </Border>
     </Grid>
