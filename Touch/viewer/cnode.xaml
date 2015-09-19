@@ -1,0 +1,18 @@
+﻿<UserControl x:Class="Touch.CNode"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Touch"
+             mc:Ignorable="d" 
+             HorizontalAlignment="Center" VerticalAlignment="Center" Width="Auto" Height="32" Padding="0" PreviewMouseLeftButtonDown="UserControl_PreviewMouseLeftButtonDown" PreviewMouseMove="UserControl_PreviewMouseMove" PreviewMouseLeftButtonUp="UserControl_PreviewMouseLeftButtonUp">
+    <Grid>
+        <Border Background="#FF9C9C9C" CornerRadius="8" Padding="4,0">
+            <Grid>
+                <TextBlock x:Name="m_text" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18.667">asdf</TextBlock>
+                <Rectangle x:Name="m_left" Width="8" Height="8" HorizontalAlignment="Left" Margin="-8,0,0,0" Fill="#00000000" Stroke="#FFC7C7C7" StrokeThickness="2"/>
+                <Rectangle x:Name="m_right" Width="8" Height="8" HorizontalAlignment="Right" Margin="0,0,-8,0" Fill="#00000000" Stroke="#FFC7C7C7" StrokeThickness="2"></Rectangle>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>
