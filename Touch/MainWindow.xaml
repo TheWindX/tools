@@ -1,0 +1,14 @@
+﻿<Window x:Class="Touch.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Touch"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="512" Width="512" BorderBrush="Black" Background="#FF878787">
+    <Grid>
+        <!--local:CLink start="30, 20" end="256, 256"-->
+        <local:CNode text="node1" Margin="22,0,0,0" HorizontalAlignment="Left" HorizontalContentAlignment="Left" VerticalAlignment="Top" VerticalContentAlignment="Top"/>
+        <local:CNode text="node2" HorizontalAlignment="Left" HorizontalContentAlignment="Left" VerticalAlignment="Top" VerticalContentAlignment="Top"></local:CNode>
+    </Grid>
+</Window>

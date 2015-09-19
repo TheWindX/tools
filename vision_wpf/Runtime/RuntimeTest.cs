@@ -30,8 +30,8 @@ namespace ns_vision
         #region test2
         public void test2()
         {
-            var leftView = CRuntimeBrowserViewManager.Instance.currentTreeBrowser;
-            var righView = CRuntimeBrowserViewManager.Instance.otherTreeBrowser;
+            var leftView = CBrowserModuleTreeManager.Instance.currentTreeBrowser;
+            var righView = CBrowserModuleTreeManager.Instance.otherTreeBrowser;
             var bs = leftView.runtimeBrowser;
             bs.mkFold("fa");
             bs.mkFold("faa");

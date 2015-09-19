@@ -28,9 +28,9 @@ namespace ns_vision
             rootModule = com;
         }
 
-        public CRuntimeBrowser createBrowser(CModuleTree mt)
+        public CBrowserModuleTree createBrowser(CModuleTree mt)
         {
-            var bs = new CRuntimeBrowser();
+            var bs = new CBrowserModuleTree();
             bs.currentSpace = mt;
             bs.selected = null;
             return bs;

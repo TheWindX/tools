@@ -24,12 +24,12 @@
 
         <DockPanel LastChildFill="True">
             <Border x:Name="m_leftBrowserFrame" Width="255">
-                <local:ModuleTreeBrowser DockPanel.Dock="Left" x:Name="m_leftBrowser" Margin="2,2"></local:ModuleTreeBrowser>
+                <local:UI_browserModuleTree DockPanel.Dock="Left" x:Name="m_leftBrowser" Margin="2,2"></local:UI_browserModuleTree>
             </Border>
             
             <local:DockPanelSplitter></local:DockPanelSplitter>
             <Border x:Name="m_rightBrowserFrame">
-                <local:ModuleTreeBrowser DockPanel.Dock="Right" x:Name="m_rightBrowser" Margin="2,2" ></local:ModuleTreeBrowser>
+                <local:UI_browserModuleTree DockPanel.Dock="Right" x:Name="m_rightBrowser" Margin="2,2" ></local:UI_browserModuleTree>
             </Border>
             
         </DockPanel>

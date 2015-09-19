@@ -58,7 +58,7 @@ namespace ns_vision
         TextBlock mUI = new TextBlock();
         public FrameworkElement drawIcon()
         {
-            return _HandleDrawIcon();
+            return _HandleDrawIcon();  
         }
 
         public System.Action<bool> _HandleSelect;
@@ -67,6 +67,4 @@ namespace ns_vision
             _HandleSelect(s);
         }
     }
-
-
 }
