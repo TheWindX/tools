@@ -79,8 +79,7 @@ namespace Touch
         private void UserControl_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             drag = false;
-            if(this.IsMouseCaptured)
-                this.ReleaseMouseCapture();
+            this.ReleaseMouseCapture();
         }
 
         private void m_right_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -95,7 +94,7 @@ namespace Touch
             }
         }
 
-        private void m_left_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void m_left_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             if (Keyboard.IsKeyDown(Key.LeftCtrl))
             {
