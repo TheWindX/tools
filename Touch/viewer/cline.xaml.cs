@@ -24,42 +24,47 @@ namespace Touch
         {
             InitializeComponent();
         }
-
-        Point _start;
-        public Point start
+        
+        public Point begin
         {
             get
             {
-                return _start;
+                return (Point)GetValue(beginProp);
             }
             set
             {
-                _start = value;
-                update();
+                SetValue(beginProp, value);
             }
         }
 
-        public void update()
-        {
-            SetValue(Grid.MarginProperty, new Thickness(_start.X, _start.Y, 0, 0));
-            m_seg.Point3 = new Point(_end.X - _start.X, _end.Y - _start.Y);
-            m_seg.Point1 = new Point(64, 0);
-            m_seg.Point2 = new Point(m_seg.Point3.X - 64, m_seg.Point3.Y);
-        }
 
-        Point _end;
         public Point end
         {
             get
             {
-                return _end;
+                return (Point)GetValue(endProp);
             }
             set
             {
-                _end = value;
-                update();
+                SetValue(endProp, value);
             }
         }
 
+
+        static DependencyProperty beginProp = DependencyProperty.Register("begin", typeof(Point), typeof(CLink), new PropertyMetadata(new Point(0, 0), dataChanged));
+        static DependencyProperty endProp = DependencyProperty.Register("end", typeof(Point), typeof(CLink), new PropertyMetadata(new Point(0, 0), dataChanged));
+
+        public static void dataChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            (d as CLink).update();
+        }
+
+        public void update()
+        {
+            SetValue(Grid.MarginProperty, new Thickness(begin.X, begin.Y, 0, 0));
+            m_seg.Point3 = new Point(end.X - begin.X, end.Y - begin.Y);
+            m_seg.Point1 = new Point(64, 0);
+            m_seg.Point2 = new Point(m_seg.Point3.X - 64, m_seg.Point3.Y);
+        }
     }
 }

@@ -6,9 +6,9 @@
         xmlns:local="clr-namespace:Touch"
         mc:Ignorable="d"
         Title="MainWindow" Height="512" Width="512" BorderBrush="Black" Background="#FF878787" PreviewMouseMove="m_panel_PreviewMouseMove">
-    <Grid x:Name="m_panel" >
+    <Grid x:Name="m_panel" Background="#02010101" >
         <!--local:CLink start="30, 20" end="256, 256"-->
-        <local:CNode x:Name="m_node1" text="node1" Margin="45,34,0,0" HorizontalAlignment="Left" HorizontalContentAlignment="Left" VerticalAlignment="Top" VerticalContentAlignment="Top"/>
+        <local:CNode x:Name="m_node1" text="node1" Margin="45,34,0,0" HorizontalAlignment="Left" HorizontalContentAlignment="Left" VerticalAlignment="Top" VerticalContentAlignment="Top" Loaded="m_node1_Loaded"/>
         <local:CNode x:Name="m_node2" text="node2" HorizontalAlignment="Left" HorizontalContentAlignment="Left" VerticalAlignment="Top" VerticalContentAlignment="Top" Margin="106,215,0,0"></local:CNode>
     </Grid>
 </Window>

@@ -57,11 +57,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="entity.cs" />
+    <Compile Include="entityManager.cs" />
+    <Compile Include="linker.cs" />
     <Compile Include="viewer\cline.xaml.cs">
       <DependentUpon>cline.xaml</DependentUpon>
     </Compile>
     <Compile Include="viewer\cnode.xaml.cs">
       <DependentUpon>cnode.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="viewer\CNodeLink.cs" />
+    <Compile Include="viewer\StringEnter.xaml.cs">
+      <DependentUpon>StringEnter.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -80,6 +87,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="viewer\cnode.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="viewer\StringEnter.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

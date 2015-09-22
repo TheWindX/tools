@@ -27,7 +27,8 @@ namespace Touch
             e_pickSecPoint,
         }
         e_createLineSt pickSt = e_createLineSt.e_init;
-        CLink curLink = null;
+        CNodeLink curLink = null;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -37,11 +38,12 @@ namespace Touch
                 if(pickSt == e_createLineSt.e_init)
                 {
                     pickSt = e_createLineSt.e_pickOnePoint;
-                    curLink = new CLink();
+                    curLink = new CNodeLink();
                     curLink.IsEnabled = false;
                     curLink.IsHitTestVisible = false;
                     m_panel.Children.Add(curLink);
-                    curLink.start = pt;
+                    curLink.leftNode = m_node1;
+                    curLink.begin = pt;
                 }
             };
 
@@ -51,6 +53,7 @@ namespace Touch
                 { 
                     pickSt = e_createLineSt.e_init;
                     curLink.end = pt;
+                    curLink.rightNode = m_node2;
                 }
             };
 
@@ -63,6 +66,11 @@ namespace Touch
                 curLink.end = e.GetPosition(this);
                 this.UpdateLayout();
             }
+        }
+
+        private void m_node1_Loaded(object sender, RoutedEventArgs e)
+        {
+            var ins = entityManager.ins;
         }
     }
 }

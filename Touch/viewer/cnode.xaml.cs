@@ -36,7 +36,7 @@ namespace Touch
                 m_text.Text = value;
             }
         }
-
+        
         Point mStartPoint;
         Point mStartMousePoint;
         bool drag = false;
@@ -46,6 +46,8 @@ namespace Touch
 
         private void UserControl_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            this.Focusable = true;
+            Keyboard.Focus(this);
             if(Keyboard.IsKeyDown(Key.LeftCtrl))
             {
                 return;
@@ -104,6 +106,22 @@ namespace Touch
                     evtOnLeftUp(relativePoint);
                 }
                 return;
+            }
+        }
+
+        public Point leftPos
+        {
+            get
+            {
+                return m_left.TransformToAncestor(this.Parent as Visual).Transform(new Point(m_right.Width / 2, m_right.Height / 2));
+            }
+        }
+
+        public Point rightPos
+        {
+            get
+            {
+                return m_right.TransformToAncestor(this.Parent as Visual).Transform(new Point(m_right.Width / 2, m_right.Height / 2));
             }
         }
     }
