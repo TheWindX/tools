@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:Touch"
              mc:Ignorable="d" >
     <Grid>
-        <Path Stroke="#C0000000" StrokeThickness="3">
+        <Path x:Name="m_path" Stroke="#ff000000" StrokeThickness="3">
             <Path.Data>
                 <PathGeometry>
                     <PathGeometry.Figures>

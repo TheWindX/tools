@@ -11,6 +11,7 @@ namespace Touch
     public class entity
     {
         public string name;
+
         public float x;
         public float y;
 
@@ -23,49 +24,47 @@ namespace Touch
                 mUI = new CNode();
                 mUI.VerticalAlignment = System.Windows.VerticalAlignment.Top;
                 mUI.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
-                mUI.PreviewKeyDown += MUI_PreviewKeyDown;
-
+                
                 mUI.evtOnRightDown += pt =>
                 {
-                    if (entityManager.pickSt == entityManager.e_createLineSt.e_init)
+                    if (entityManager.ins.pickSt == entityManager.e_createLineSt.e_init)
                     {
-                        entityManager.pickSt = entityManager.e_createLineSt.e_pickOnePoint;
-                        entityManager.curLink = new CNodeLink();
-                        entityManager.curLink.IsEnabled = false;
-                        entityManager.curLink.IsHitTestVisible = false;
-                        (mUI.Parent as Grid).Children.Add(entityManager.curLink);
-                        entityManager.curLink.leftNode = mUI;
-                        entityManager.curLink.begin = pt;
+                        entityManager.ins.pickSt = entityManager.e_createLineSt.e_pickOnePoint;
+                        entityManager.ins.curLink = new CNodeLink();
+                        entityManager.ins.curLink.IsEnabled = false;
+                        entityManager.ins.curLink.IsHitTestVisible = false;
+                        (mUI.Parent as Grid).Children.Add(entityManager.ins.curLink);
+                        entityManager.ins.curLink.leftNode = mUI;
+                        entityManager.ins.curLink.begin = pt;
                     }
                 };
 
                 mUI.evtOnLeftUp += pt =>
                 {
-                    if (entityManager.pickSt == entityManager.e_createLineSt.e_pickOnePoint)
+                    if (entityManager.ins.pickSt == entityManager.e_createLineSt.e_pickOnePoint)
                     {
-                        entityManager.pickSt = entityManager.e_createLineSt.e_init;
-                        entityManager.curLink.end = pt;
-                        entityManager.curLink.rightNode = mUI;
+                        entityManager.ins.pickSt = entityManager.e_createLineSt.e_init;
+                        entityManager.ins.curLink.end = pt;
+                        entityManager.ins.curLink.rightNode = mUI;
+
+                        var ent1 = entityManager.ins.ents.Where(ent =>
+                       {
+                           return ent.getUI() == entityManager.ins.curLink.leftNode;
+                       }).First();
+
+
+                        var ent2 = entityManager.ins.ents.Where(ent =>
+                        {
+                            return ent.getUI() == entityManager.ins.curLink.rightNode;
+                        }).First();
+                        entityManager.ins.getUI().Children.Remove(entityManager.ins.curLink);
+                        entityManager.ins.addLinker(ent1, ent2);
                     }
                 };
             }
             return mUI;
         }
 
-
-
-
-        private void MUI_PreviewKeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.F2)
-            {
-                StringEnter.ShowOnTop(str =>
-                {
-                    mUI.text = str;
-                });
-            }
-        }
-          
 
         public void updateView()
         {

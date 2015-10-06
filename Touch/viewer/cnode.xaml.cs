@@ -40,10 +40,6 @@ namespace Touch
         Point mStartPoint;
         Point mStartMousePoint;
         bool drag = false;
-
-        public System.Action<Point> evtOnLeftUp;
-        public System.Action<Point> evtOnRightDown;
-
         private void UserControl_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             this.Focusable = true;
@@ -73,42 +69,41 @@ namespace Touch
             }
         }
 
-        public void onDrag(Point deltaPos, Point newThisPos)
+        private void MUI_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.F2)
+            {
+                StringEnter.ShowOnTop(str =>
+                {
+                    text = str;
+                });
+            }
+            else if (e.Key == Key.Delete)
+            {
+                if (evtRemove != null)
+                {
+                    evtRemove();
+                }
+            }
+        }
+        public System.Action evtRemove;
+
+        void onDrag(Point deltaPos, Point newThisPos)
         {
             Margin = new Thickness(newThisPos.X, newThisPos.Y, 0, 0);
+            if(evtOnDrag != null)
+            {
+                evtOnDrag();
+            }
         }
+        public System.Action evtOnDrag;
 
         private void UserControl_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             drag = false;
             this.ReleaseMouseCapture();
         }
-
-        private void m_right_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            if (Keyboard.IsKeyDown(Key.LeftCtrl))
-            {
-                Point relativePoint = m_right.TransformToAncestor(this.Parent as Visual).Transform(new Point(m_right.Width/2, m_right.Height/2));
-                if (evtOnRightDown != null)
-                {
-                    evtOnRightDown(relativePoint);}
-                return;
-            }
-        }
-
-        private void m_left_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            if (Keyboard.IsKeyDown(Key.LeftCtrl))
-            {
-                Point relativePoint = m_left.TransformToAncestor(this.Parent as Visual).Transform(new Point(m_right.Width / 2, m_right.Height / 2));
-                if(evtOnLeftUp != null)
-                {
-                    evtOnLeftUp(relativePoint);
-                }
-                return;
-            }
-        }
-
+        
         public Point leftPos
         {
             get
@@ -122,6 +117,34 @@ namespace Touch
             get
             {
                 return m_right.TransformToAncestor(this.Parent as Visual).Transform(new Point(m_right.Width / 2, m_right.Height / 2));
+            }
+        }
+
+        public System.Action<Point> evtOnRightDown;
+        public System.Action<Point> evtOnLeftUp;
+        private void m_right_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (Keyboard.IsKeyDown(Key.LeftCtrl))
+            {
+                Point relativePoint = m_right.TransformToAncestor(this.Parent as Visual).Transform(new Point(m_right.Width / 2, m_right.Height / 2));
+                if (evtOnRightDown != null)
+                {
+                    evtOnRightDown(relativePoint);
+                }
+                return;
+            }
+        }
+
+        private void m_left_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (Keyboard.IsKeyDown(Key.LeftCtrl))
+            {
+                Point relativePoint = m_left.TransformToAncestor(this.Parent as Visual).Transform(new Point(m_right.Width / 2, m_right.Height / 2));
+                if (evtOnLeftUp != null)
+                {
+                    evtOnLeftUp(relativePoint);
+                }
+                return;
             }
         }
     }

@@ -22,9 +22,22 @@ namespace Touch
     {
         public CNodeLink():base()
         {
-            var b = new Binding();
-            b.Source = this;
+            MouseLeftButtonDown += CNodeLink_MouseLeftButtonDown;
+            KeyDown += CNodeLink_KeyDown;
         }
+
+        private void CNodeLink_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.Key == Key.Delete)
+            {
+                if(evtRemove != null)
+                {
+                    evtRemove();
+                }
+            }
+        }
+
+        public System.Action evtRemove;
 
         CNode _leftNode;
         public CNode leftNode
@@ -36,12 +49,7 @@ namespace Touch
             set
             {
                 _leftNode = value;
-                var b = new Binding();
-                b.Source = _leftNode;
-                b.Path = new PropertyPath("Margin");
-                b.Mode = BindingMode.TwoWay;
-                b.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
-                BindingOperations.SetBinding(this, LeftPos, b);
+                begin = _leftNode.rightPos;
             }
         }
 
@@ -55,32 +63,58 @@ namespace Touch
             set
             {
                 _rightNode = value;
-                var b = new Binding();
-                b.Source = _rightNode;
-                b.Path = new PropertyPath("Margin");
-                b.Mode = BindingMode.TwoWay;
-                b.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
-                BindingOperations.SetBinding(this, RightPos, b);
+                end = _rightNode.leftPos;
             }
         }
 
-        public readonly static DependencyProperty LeftPos = DependencyProperty.Register("leftPos", typeof(Thickness), typeof(CNodeLink), new PropertyMetadata(propertyChanged));
-        public readonly static DependencyProperty RightPos = DependencyProperty.Register("rightPos", typeof(Thickness), typeof(CNodeLink), new PropertyMetadata(propertyChanged));
+        public readonly static DependencyProperty LeftPos = DependencyProperty.Register("leftPos", typeof(Thickness), typeof(CNodeLink));
+        public readonly static DependencyProperty RightPos = DependencyProperty.Register("rightPos", typeof(Thickness), typeof(CNodeLink));
 
-        
-        public static void propertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        public void updateView()
         {
-            var nl = (d as CNodeLink);
-            if(nl.leftNode != null)
+            if (leftNode != null)
             {
-                nl.begin = nl.leftNode.rightPos;
+                begin = leftNode.rightPos;
             }
 
-            if (nl.rightNode != null)
+            if (rightNode != null)
             {
-                nl.end = nl.rightNode.leftPos;
+                end = rightNode.leftPos;
             }
         }
 
+        Color choosed = Color.FromArgb(122, 0, 0, 20);
+        Color unChoosed = Color.FromArgb(255, 0, 0, 0);
+        public bool selected
+        {
+            set
+            {
+                if (value)
+                {
+                    m_path.Stroke = new SolidColorBrush(choosed);
+                    this.Focusable = true;
+                    Keyboard.Focus(this);
+                }   
+                else
+                {
+                    m_path.Stroke = new SolidColorBrush(unChoosed);
+                }
+                    
+            }
+        }
+
+        private void CNodeLink_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if(e.ClickCount == 2)
+            {
+                selected = true;
+                if(evtSelect != null)
+                {
+                    evtSelect();
+                }
+            }
+        }
+
+        public System.Action evtSelect;
     }
 }
