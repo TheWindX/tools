@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,6 +18,10 @@ namespace Touch
 
         public void save()
         {
+            if(File.Exists("data.txt") )
+            {
+                File.Copy("data.txt", "data"+ DateTime.Now.ToString("HHmmss")+".txt");
+            }
             //num entity
             //entity line (id, name, x, y)
             //links
@@ -26,7 +31,10 @@ namespace Touch
             for(int i = 0; i<ents.Count; ++i)
             {
                 string ln = "";
-                ln = string.Format("{0} {1} {2} {4}", i, ents[i].getUI().text, ents[i].getUI().Margin.Left, ents[i].getUI().Margin.Top);
+                var ent = ents[i];
+                var ui = ent.getUI();
+                var txt = ui.text;
+                ln = string.Format("{0} {1} {2} {3}", i, ent.getUI().text, ent.getUI().Margin.Left, ent.getUI().Margin.Top);
                 lines.Add(ln);
             }
             for(int i = 0; i<linkers.Count; ++i)
@@ -36,11 +44,51 @@ namespace Touch
                 ln = string.Format("{0} {1}", ents.IndexOf(lnk.left), ents.IndexOf(lnk.right));
                 lines.Add(ln);
             }
+
+            File.WriteAllLines("data.txt", lines.ToArray());
         }
 
         public void load()
         {
-
+            ents.Clear();
+            linkers.Clear();
+            getUI().Children.Clear();
+            var lns = File.ReadAllLines("data.txt");
+            int st = 0;
+            int entNums = 0;
+            int lnNum = 0;
+            List<entity> entAdd = new List<entity>();
+            foreach(var ln in lns)
+            {
+                if(st == 0)
+                {
+                    entNums = int.Parse(ln);
+                    st = 1;
+                    continue;
+                }
+                else if(st == 1)
+                {
+                    var items = ln.Split(' ');
+                    var name = items[1];
+                    var x = float.Parse(items[2]);
+                    var y = float.Parse(items[3]);
+                    entAdd.Add(addEntity(name, x, y));
+                    lnNum++;
+                    if (lnNum == entNums)
+                    {
+                        getUI().UpdateLayout();
+                        st = 2;
+                    }
+                    continue;
+                }
+                else if(st == 2)
+                {
+                    var items = ln.Split(' ');
+                    var item1 = int.Parse(items[0]);
+                    var item2 = int.Parse(items[1]);
+                    addLinker(entAdd[item1], entAdd[item2]);
+                }
+            }
         }
 
 
@@ -53,11 +101,15 @@ namespace Touch
                 {
                     _ins = new entityManager();
                     _ins.getUI();
-                    _ins.getUI().PreviewKeyDown += (send, e) =>
+                    App.Current.MainWindow.PreviewKeyDown += (send, e) =>
                     {
                         if (e.Key == Key.Insert)
                         {
                             _ins.save();
+                        }
+                        else if(e.Key == Key.Home)
+                        {
+                            _ins.load();
                         }
                     };
                 }
@@ -70,6 +122,10 @@ namespace Touch
             var ent = new entity();
             getUI().Children.Add(ent.getUI());
             ent.getUI().evtOnDrag = () => updateUI();
+            ent.getUI().evtRemove = () =>
+            {
+                removeEntity(ent);
+            };
             ent.name = name;
             ent.x = x;
             ent.y = y;
@@ -95,7 +151,7 @@ namespace Touch
             linkers.Add(lnk);
             lnk.left = left;
             lnk.right = right;
-
+            updateUI();
             return lnk;
         }
 
