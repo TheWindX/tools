@@ -6,6 +6,31 @@ using System.Threading.Tasks;
 
 namespace CodeParser
 {
+    class stkNode<T>
+    {
+        public stkNode<T> parent = null;
+        public T val;
+        public static stkNode<T> create(T v)
+        {
+            var r = new stkNode<T>();
+            r.val = v;
+            return r;
+        }
+
+        public stkNode<T> push(T v)
+        {
+            var r = stkNode<T>.create(v);
+            r.parent = this;
+            return r;
+        }
+
+        public stkNode<T> pop()
+        {
+            return parent;
+        }
+    }
+
+
     class CodeSource
     {
         private string mSource = "";
@@ -14,14 +39,16 @@ namespace CodeParser
 
         private int len = 0;
 
-        Stack<int> posStk = new Stack<int>();
+        stkNode<int> posStk = new stkNode<int>();
+
+
         public void setSoruce(string src)
         {
             mSource = src;
             idx = 0;
             marked = 0;
             len = src.Length;
-            posStk.Clear();
+            posStk = stkNode<int>.create(idx);
         }
 
         public char getchar()
@@ -65,12 +92,13 @@ namespace CodeParser
 
         public void pushPos()
         {
-            posStk.Push(idx);
+            posStk = posStk.push(idx);
         }
 
         public void popPos()
         {
-            idx = posStk.Pop();
+            posStk = posStk.pop();
+            idx = posStk.val;
         }
 
         public void markPos()
