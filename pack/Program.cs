@@ -29,7 +29,7 @@ namespace pk
             return rets;
         }
 
-        public string key = "561479";
+        public string key = "1";
         
         void packFile(string fin)
         {
@@ -49,7 +49,7 @@ namespace pk
             var fname = fin.Substring(idx + 1);
             fname = fname.Substring(0, fname.Length - 3);
             var fdir = fin.Substring(0, idx + 1);
-            var fname1 = fdir + unpackStr(fname)+".x";
+            var fname1 = fdir + unpackStr(fname);
             var cont1 = packBytes(File.ReadAllBytes(fin));
             File.WriteAllBytes(fname1, cont1);
         }
