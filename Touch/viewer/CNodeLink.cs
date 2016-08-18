@@ -28,16 +28,8 @@ namespace Touch
 
         private void CNodeLink_KeyDown(object sender, KeyEventArgs e)
         {
-            if(e.Key == Key.Delete)
-            {
-                if(evtRemove != null)
-                {
-                    evtRemove();
-                }
-            }
-        }
 
-        public System.Action evtRemove;
+        }
 
         CNode _leftNode;
         public CNode leftNode
@@ -105,13 +97,9 @@ namespace Touch
 
         private void CNodeLink_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if(e.ClickCount == 2)
+            if(evtSelect != null)
             {
-                selected = true;
-                if(evtSelect != null)
-                {
-                    evtSelect();
-                }
+                evtSelect();
             }
         }
 

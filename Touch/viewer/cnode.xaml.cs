@@ -55,7 +55,14 @@ namespace Touch
             mStartMousePoint.Y = Mouse.GetPosition(this.Parent as IInputElement).Y;
             drag = true;
             this.CaptureMouse();
+
+            if(evtSelect != null)
+            {
+                evtSelect();
+            }
         }
+
+        public System.Action evtSelect;
 
         private void UserControl_PreviewMouseMove(object sender, MouseEventArgs e)
         {
@@ -78,15 +85,7 @@ namespace Touch
                     text = str;
                 });
             }
-            else if (e.Key == Key.Delete)
-            {
-                if (evtRemove != null)
-                {
-                    evtRemove();
-                }
-            }
         }
-        public System.Action evtRemove;
 
         void onDrag(Point deltaPos, Point newThisPos)
         {

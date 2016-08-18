@@ -8,6 +8,36 @@ namespace Touch
 {
     public class linker
     {
+        private linker()
+        {
+
+        }
+
+        public static linker create()
+        {
+            var ins = new linker();
+            mIns = ins;
+            ins.focus();
+            return ins;
+        }
+
+
+        public void focus()
+        {
+            if (mIns != null) unfocus();
+            mIns = this;
+        }
+
+        public void unfocus()
+        {
+        }
+
+        public static linker getIns()
+        {
+            return mIns;
+        }
+        static linker mIns = null;
+
         private entity _left;
         private entity _right;
         public entity left
@@ -48,10 +78,7 @@ namespace Touch
             }
         }
 
-        public CNodeLink getLinker()
-        {
-            return null;
-        }
+
 
         public CNodeLink _UI = null;
         public CNodeLink getUI()
@@ -59,15 +86,6 @@ namespace Touch
             if(_UI == null)
             {
                 _UI = new CNodeLink();
-                _UI.evtRemove += () =>
-                {
-                    var lnk1 = entityManager.ins.linkers.Where(lnk =>
-                    {
-                        var ui = lnk.getUI();
-                        return ui == _UI;
-                    }).First();
-                    entityManager.ins.removeLinker(lnk1);
-                };
             }
             return _UI;
         }

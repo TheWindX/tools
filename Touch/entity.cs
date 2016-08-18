@@ -10,6 +10,35 @@ namespace Touch
 {
     public class entity
     {
+        private entity()
+        {
+
+        }
+
+        public static entity create()
+        {
+            var ins = new entity();
+            mIns = ins;
+            ins.focus();
+            return ins;
+        }
+
+        public void focus()
+        {
+            if (mIns != null) unfocus();
+            mIns = this;
+        }
+
+        public void unfocus()
+        {
+        }
+
+        public static entity getIns()
+        {
+            return mIns;
+        }
+        static entity mIns = null;
+
         public string name;
 
         public float x;
@@ -47,13 +76,13 @@ namespace Touch
                         entityManager.ins.curLink.end = pt;
                         entityManager.ins.curLink.rightNode = mUI;
 
-                        var ent1 = entityManager.ins.ents.Where(ent =>
+                        var ent1 = entityManager.ins.mDatas.data.ents.Where(ent =>
                        {
                            return ent.getUI() == entityManager.ins.curLink.leftNode;
                        }).First();
 
 
-                        var ent2 = entityManager.ins.ents.Where(ent =>
+                        var ent2 = entityManager.ins.mDatas.data.ents.Where(ent =>
                         {
                             return ent.getUI() == entityManager.ins.curLink.rightNode;
                         }).First();

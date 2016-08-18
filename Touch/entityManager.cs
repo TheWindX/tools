@@ -4,16 +4,84 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 
 namespace Touch
 {
+    public class DataBackup<Data> where Data : class, ICloneable, new()
+    {
+        List<Data> mDataBackup = new List<Data>() { new Data() };
+        const int MAX_LEN = 5;
+        int dataIdx = 0;
+
+        public Data data
+        {
+            get
+            {
+                return mDataBackup[dataIdx];
+            }
+        }
+
+        private void trim()
+        {
+            mDataBackup.RemoveRange(dataIdx + 1, mDataBackup.Count - dataIdx - 1);
+        }
+
+        public void backup()
+        {
+            trim();
+            mDataBackup.Add(data.Clone() as Data);
+            if (dataIdx > MAX_LEN)
+            {
+                mDataBackup.RemoveAt(0);
+            }
+            dataIdx = mDataBackup.Count - 1;
+        }
+
+        public void undo()
+        {
+            dataIdx--;
+            if (dataIdx < 0)
+                dataIdx = 0;
+        }
+
+        public void redo()
+        {
+            dataIdx++;
+            if (dataIdx >= mDataBackup.Count)
+                dataIdx = mDataBackup.Count - 1;
+        }
+
+    }
+
     public class entityManager
     {
-        public List<entity> ents = new List<entity>();
-        public List<linker> linkers = new List<linker>();
+        public class data : ICloneable
+        {
+            public List<entity> ents = new List<entity>();
+            public List<linker> linkers = new List<linker>();
+
+            public object Clone()
+            {
+                var r = new data();
+                foreach(var ent in ents)
+                {
+                    r.ents.Add(ent);
+                }
+                foreach (var lnk in linkers)
+                {
+                    r.linkers.Add(lnk);
+                }
+                return r;
+            }
+        }
+
+        public DataBackup<data> mDatas = new DataBackup<data>();
+
+
 
 
         public void save()
@@ -27,21 +95,21 @@ namespace Touch
             //links
             //(id1, id2)
             List<string> lines = new List<string>();
-            lines.Add(ents.Count.ToString());
-            for(int i = 0; i<ents.Count; ++i)
+            lines.Add(mDatas.data.ents.Count.ToString());
+            for(int i = 0; i< mDatas.data.ents.Count; ++i)
             {
                 string ln = "";
-                var ent = ents[i];
+                var ent = mDatas.data.ents[i];
                 var ui = ent.getUI();
                 var txt = ui.text;
                 ln = string.Format("{0} {1} {2} {3}", i, ent.getUI().text, ent.getUI().Margin.Left, ent.getUI().Margin.Top);
                 lines.Add(ln);
             }
-            for(int i = 0; i<linkers.Count; ++i)
+            for(int i = 0; i<mDatas.data.linkers.Count; ++i)
             {
-                var lnk = linkers[i];
+                var lnk = mDatas.data.linkers[i];
                 string ln = "";
-                ln = string.Format("{0} {1}", ents.IndexOf(lnk.left), ents.IndexOf(lnk.right));
+                ln = string.Format("{0} {1}", mDatas.data.ents.IndexOf(lnk.left), mDatas.data.ents.IndexOf(lnk.right));
                 lines.Add(ln);
             }
 
@@ -50,8 +118,8 @@ namespace Touch
 
         public void load()
         {
-            ents.Clear();
-            linkers.Clear();
+            mDatas.data.ents.Clear();
+            mDatas.data.linkers.Clear();
             getUI().Children.Clear();
             var lns = File.ReadAllLines("data.txt");
             int st = 0;
@@ -117,27 +185,67 @@ namespace Touch
             }
         }
 
+        object mSelect = null;
+        object selected
+        {
+            get
+            {
+                return selected;
+            }
+            set
+            {
+                if(mSelect != null)
+                {
+                    if (mSelect is entity)
+                    {
+                        (mSelect as entity).unfocus();
+                    }
+                    else
+                    {
+                        (mSelect as linker).unfocus();
+                    }
+                }
+                
+                mSelect = value;
+                if (mSelect != null)
+                {
+                    if (mSelect is entity)
+                    {
+                        (mSelect as entity).focus();
+                    }
+                    else
+                    {
+                        (mSelect as linker).focus();
+                    }
+                }
+            }
+
+        }
+
+        
+
+
         public entity addEntity(string name, float x, float y)
         {
-            var ent = new entity();
+            var ent = entity.create();
             getUI().Children.Add(ent.getUI());
             ent.getUI().evtOnDrag = () => updateUI();
-            ent.getUI().evtRemove = () =>
+            ent.getUI().evtSelect = () =>
             {
-                removeEntity(ent);
+                selected = ent;
             };
             ent.name = name;
             ent.x = x;
             ent.y = y;
             ent.updateView();
-            ents.Remove(ent);
-            ents.Add(ent);
+            mDatas.data.ents.Remove(ent);
+            mDatas.data.ents.Add(ent);
             return ent;
         }
 
         public void updateUI()
         {
-            linkers.ForEach(lnk =>
+            mDatas.data.linkers.ForEach(lnk =>
             {
                 lnk.left = lnk.left;
                 lnk.right = lnk.right;
@@ -146,9 +254,13 @@ namespace Touch
         
         public linker addLinker(entity left, entity right)
         {
-            var lnk = new linker();
+            var lnk = linker.create();
+            lnk.getUI().evtSelect = () =>
+            {
+                selected = lnk;
+            };
             getUI().Children.Add(lnk.getUI());
-            linkers.Add(lnk);
+            mDatas.data.linkers.Add(lnk);
             lnk.left = left;
             lnk.right = right;
             updateUI();
@@ -157,15 +269,15 @@ namespace Touch
 
         public void removeLinker(linker lnk)
         {
-            linkers.Remove(lnk);
+            mDatas.data.linkers.Remove(lnk);
             getUI().Children.Remove(lnk.getUI());
         }
         
         public void removeEntity(entity ent)
         {
-            ents.Remove(ent);
+            mDatas.data.ents.Remove(ent);
             getUI().Children.Remove(ent.getUI());
-            var lnks = linkers.Where(lnk => lnk.left == ent || lnk.right == ent).ToList();
+            var lnks = mDatas.data.linkers.Where(lnk => lnk.left == ent || lnk.right == ent).ToList();
             foreach(var lnk in lnks)
             {
                 removeLinker(lnk);
@@ -180,8 +292,33 @@ namespace Touch
                 mUI = (App.Current.MainWindow as MainWindow).m_panel;
                 mUI.PreviewMouseLeftButtonDown += MUI_PreviewMouseLeftButtonDown;
                 mUI.PreviewMouseMove += m_panel_PreviewMouseMove;
+
+                EventManager.RegisterClassHandler(typeof(System.Windows.Controls.Control), 
+                    System.Windows.Controls.Control.KeyDownEvent,
+                    new KeyEventHandler(MUI_PreviewKeyDown));
+                //mUI.PreviewKeyDown += MUI_PreviewKeyDown;
+                
             }
             return mUI;
+        }
+
+        private void MUI_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Delete)
+            {
+                if (mSelect != null)
+                {
+                    if (mSelect is entity)
+                    {
+                        removeEntity(mSelect as entity);
+                    }
+                    else
+                    {
+                        removeLinker(mSelect as linker);
+                    }
+                    updateUI();
+                }
+            }
         }
 
         private void MUI_PreviewMouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
