@@ -76,18 +76,26 @@ namespace Touch
                         entityManager.ins.curLink.end = pt;
                         entityManager.ins.curLink.rightNode = mUI;
 
-                        var ent1 = entityManager.ins.mDatas.data.ents.Where(ent =>
+                        var ent1 = entityManager.ins.ents.Where(ent =>
                        {
                            return ent.getUI() == entityManager.ins.curLink.leftNode;
                        }).First();
 
 
-                        var ent2 = entityManager.ins.mDatas.data.ents.Where(ent =>
+                        var ent2 = entityManager.ins.ents.Where(ent =>
                         {
                             return ent.getUI() == entityManager.ins.curLink.rightNode;
                         }).First();
                         entityManager.ins.getUI().Children.Remove(entityManager.ins.curLink);
+
                         entityManager.ins.addLinker(ent1, ent2);
+                        var lns = entityManager.ins.serial();
+                        entityManager.ins.mDatas.data.mData = lns;
+                        entityManager.ins.mDatas.backup();
+                    }
+                    else
+                    {
+
                     }
                 };
             }

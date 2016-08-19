@@ -61,19 +61,14 @@ namespace Touch
     {
         public class data : ICloneable
         {
-            public List<entity> ents = new List<entity>();
-            public List<linker> linkers = new List<linker>();
+            public List<string> mData = new List<string>();
 
             public object Clone()
             {
                 var r = new data();
-                foreach(var ent in ents)
+                foreach(var str in mData)
                 {
-                    r.ents.Add(ent);
-                }
-                foreach (var lnk in linkers)
-                {
-                    r.linkers.Add(lnk);
+                    r.mData.Add(str);
                 }
                 return r;
             }
@@ -81,60 +76,60 @@ namespace Touch
 
         public DataBackup<data> mDatas = new DataBackup<data>();
 
+        public List<entity> ents = new List<entity>();
+        public List<linker> linkers = new List<linker>();
 
-
-
-        public void save()
+        public List<string> serial()
         {
-            if(File.Exists("data.txt") )
-            {
-                File.Copy("data.txt", "data"+ DateTime.Now.ToString("HHmmss")+".txt");
-            }
-            //num entity
-            //entity line (id, name, x, y)
-            //links
-            //(id1, id2)
             List<string> lines = new List<string>();
-            lines.Add(mDatas.data.ents.Count.ToString());
-            for(int i = 0; i< mDatas.data.ents.Count; ++i)
+            lines.Add(ents.Count.ToString());
+            for (int i = 0; i < ents.Count; ++i)
             {
                 string ln = "";
-                var ent = mDatas.data.ents[i];
+                var ent = ents[i];
                 var ui = ent.getUI();
                 var txt = ui.text;
                 ln = string.Format("{0} {1} {2} {3}", i, ent.getUI().text, ent.getUI().Margin.Left, ent.getUI().Margin.Top);
                 lines.Add(ln);
             }
-            for(int i = 0; i<mDatas.data.linkers.Count; ++i)
+            for (int i = 0; i < linkers.Count; ++i)
             {
-                var lnk = mDatas.data.linkers[i];
+                var lnk = linkers[i];
                 string ln = "";
-                ln = string.Format("{0} {1}", mDatas.data.ents.IndexOf(lnk.left), mDatas.data.ents.IndexOf(lnk.right));
+                ln = string.Format("{0} {1}", ents.IndexOf(lnk.left), ents.IndexOf(lnk.right));
                 lines.Add(ln);
             }
-
-            File.WriteAllLines("data.txt", lines.ToArray());
+            return lines;
         }
 
-        public void load()
+        public void unserial(IEnumerable<string> lns)
         {
-            mDatas.data.ents.Clear();
-            mDatas.data.linkers.Clear();
-            getUI().Children.Clear();
-            var lns = File.ReadAllLines("data.txt");
+            foreach(var ent in ents)
+            {
+                getUI().Children.Remove(ent.getUI());
+            }
+
+            foreach (var lnk in linkers)
+            {
+                getUI().Children.Remove(lnk.getUI());
+            }
+            ents.Clear();
+            linkers.Clear();
+
+            
             int st = 0;
             int entNums = 0;
             int lnNum = 0;
             List<entity> entAdd = new List<entity>();
-            foreach(var ln in lns)
+            foreach (var ln in lns)
             {
-                if(st == 0)
+                if (st == 0)
                 {
                     entNums = int.Parse(ln);
                     st = 1;
                     continue;
                 }
-                else if(st == 1)
+                else if (st == 1)
                 {
                     var items = ln.Split(' ');
                     var name = items[1];
@@ -149,7 +144,7 @@ namespace Touch
                     }
                     continue;
                 }
-                else if(st == 2)
+                else if (st == 2)
                 {
                     var items = ln.Split(' ');
                     var item1 = int.Parse(items[0]);
@@ -157,6 +152,28 @@ namespace Touch
                     addLinker(entAdd[item1], entAdd[item2]);
                 }
             }
+        }
+
+        public void save()
+        {
+            if(File.Exists("data.txt") )
+            {
+                File.Copy("data.txt", "data"+ DateTime.Now.ToString("HHmmss")+".txt");
+            }
+            //num entity
+            //entity line (id, name, x, y)
+            //links
+            //(id1, id2)
+            File.WriteAllLines("data.txt", serial().ToArray());
+        }
+
+        public void load()
+        {
+            ents.Clear();
+            linkers.Clear();
+            getUI().Children.Clear();
+            var lns = File.ReadAllLines("data.txt");
+            unserial(lns);
         }
 
 
@@ -238,14 +255,14 @@ namespace Touch
             ent.x = x;
             ent.y = y;
             ent.updateView();
-            mDatas.data.ents.Remove(ent);
-            mDatas.data.ents.Add(ent);
+            ents.Remove(ent);
+            ents.Add(ent);
             return ent;
         }
 
         public void updateUI()
         {
-            mDatas.data.linkers.ForEach(lnk =>
+            linkers.ForEach(lnk =>
             {
                 lnk.left = lnk.left;
                 lnk.right = lnk.right;
@@ -260,7 +277,7 @@ namespace Touch
                 selected = lnk;
             };
             getUI().Children.Add(lnk.getUI());
-            mDatas.data.linkers.Add(lnk);
+            linkers.Add(lnk);
             lnk.left = left;
             lnk.right = right;
             updateUI();
@@ -269,15 +286,15 @@ namespace Touch
 
         public void removeLinker(linker lnk)
         {
-            mDatas.data.linkers.Remove(lnk);
+            linkers.Remove(lnk);
             getUI().Children.Remove(lnk.getUI());
         }
         
         public void removeEntity(entity ent)
         {
-            mDatas.data.ents.Remove(ent);
+            ents.Remove(ent);
             getUI().Children.Remove(ent.getUI());
-            var lnks = mDatas.data.linkers.Where(lnk => lnk.left == ent || lnk.right == ent).ToList();
+            var lnks = linkers.Where(lnk => lnk.left == ent || lnk.right == ent).ToList();
             foreach(var lnk in lnks)
             {
                 removeLinker(lnk);
@@ -290,14 +307,16 @@ namespace Touch
             if(mUI == null)
             {
                 mUI = (App.Current.MainWindow as MainWindow).m_panel;
+                mUI.PreviewMouseLeftButtonDown -= MUI_PreviewMouseLeftButtonDown;
                 mUI.PreviewMouseLeftButtonDown += MUI_PreviewMouseLeftButtonDown;
+                mUI.PreviewMouseMove -= m_panel_PreviewMouseMove;
                 mUI.PreviewMouseMove += m_panel_PreviewMouseMove;
 
                 EventManager.RegisterClassHandler(typeof(System.Windows.Controls.Control), 
                     System.Windows.Controls.Control.KeyDownEvent,
-                    new KeyEventHandler(MUI_PreviewKeyDown));
-                //mUI.PreviewKeyDown += MUI_PreviewKeyDown;
-                
+                    new KeyEventHandler(MUI_PreviewKeyDown)); 
+                mUI.PreviewKeyDown -= MUI_PreviewKeyDown;
+                mUI.PreviewKeyDown += MUI_PreviewKeyDown;
             }
             return mUI;
         }
@@ -316,8 +335,32 @@ namespace Touch
                     {
                         removeLinker(mSelect as linker);
                     }
+                    var lns = serial();
+                    mDatas.data.mData = lns;
+                    mDatas.backup();
+
                     updateUI();
                 }
+            }
+            else if (e.Key == Key.Z && Keyboard.IsKeyDown(Key.LeftCtrl))
+            {
+                mDatas.undo();
+                unserial(mDatas.data.mData);
+                //getUI().PreviewMouseLeftButtonDown -= MUI_PreviewMouseLeftButtonDown;
+                //getUI().PreviewMouseLeftButtonDown += MUI_PreviewMouseLeftButtonDown;
+                //getUI().PreviewMouseMove -= m_panel_PreviewMouseMove;
+                //getUI().PreviewMouseMove += m_panel_PreviewMouseMove;
+
+                //EventManager.RegisterClassHandler(typeof(System.Windows.Controls.Control),
+                //    System.Windows.Controls.Control.KeyDownEvent,
+                //    new KeyEventHandler(MUI_PreviewKeyDown));
+                //getUI().PreviewKeyDown -= MUI_PreviewKeyDown;
+                //getUI().PreviewKeyDown += MUI_PreviewKeyDown;
+            }
+            else if (e.Key == Key.Y && Keyboard.IsKeyDown(Key.LeftCtrl))
+            {
+                mDatas.redo();
+                unserial(mDatas.data.mData);
             }
         }
 
@@ -329,6 +372,9 @@ namespace Touch
                 {
                     var pos = Mouse.GetPosition(mUI);
                     addEntity("entity1", (float)pos.X, (float)pos.Y);
+                    var lns = serial();
+                    mDatas.data.mData = lns;
+                    mDatas.backup();
                 }
             }
         }
