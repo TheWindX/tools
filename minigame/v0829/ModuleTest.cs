@@ -19,8 +19,13 @@ namespace ns_MiniGame
             Console.WriteLine("onInit");
             MTimer.get().setTimeout(t =>
             {
-                MRuntime.exit = true;
+                MRuntime.unregModule(this);
             }, 500);
+
+            MTimer.get().setTimeout(t =>
+            {
+                MRuntime.exit = true;
+            }, 1500);
         }
 
         public void onUpdate()

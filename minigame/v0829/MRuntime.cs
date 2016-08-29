@@ -11,6 +11,7 @@ namespace ns_MiniGame
         public static bool exit = false;
 
         internal static int mStart = 0;
+        internal static int mLast = 0;
         internal static int mNow = 0;
 
         internal static System.Action mEvtUpdate;
@@ -59,12 +60,12 @@ namespace ns_MiniGame
 
         public static int getTime()
         {
-            return mNow;
+            return mNow - mStart;
         }
 
         public static int getDeltaTime()
         {
-            return mNow - mStart;
+            return mNow - mLast;
         }
 
         internal class ModuleState
@@ -110,7 +111,7 @@ namespace ns_MiniGame
     [System.AttributeUsage(System.AttributeTargets.Class)]
     public class ModuleInstance : System.Attribute
     {
-        private int level;
+        public int level;
 
         public ModuleInstance(int level)
         {

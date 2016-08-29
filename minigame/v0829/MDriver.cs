@@ -12,18 +12,35 @@ namespace ns_MiniGame
     {
         static Stopwatch mStopWatch = new Stopwatch();
 
+        
         static void addAssemblyModules()
         {
             Assembly myAssembly = Assembly.GetExecutingAssembly();
             var ts = myAssembly.GetTypes();
+            
+            List<Type> mAttrModules = new List<Type>();
             foreach (var t in ts)
             {
                 var attrs = t.GetCustomAttribute<ModuleInstance>();
                 if (attrs != null)
                 {
-                    MModule instance = (MModule)Activator.CreateInstance(t);
-                    MRuntime.regModule(instance);
+                    //MModule instance = (MModule)Activator.CreateInstance(t);
+                    mAttrModules.Add(t);
                 }
+            }
+            mAttrModules.Sort((t1, t2) =>
+            {
+                var att1 = t1.GetCustomAttribute<ModuleInstance>();
+                var att2 = t2.GetCustomAttribute<ModuleInstance>();
+                if (att1.level < att2.level) return -1;
+                else if (att1.level < att2.level) return 0;
+                else return 1;
+            });
+
+            foreach (var t in mAttrModules)
+            {
+                MModule instance = (MModule)Activator.CreateInstance(t);
+                MRuntime.regModule(instance);
             }
         }
 
@@ -33,6 +50,7 @@ namespace ns_MiniGame
 
             mStopWatch.Start();
             MRuntime.mStart = (int)mStopWatch.ElapsedMilliseconds;
+            MRuntime.mLast = MRuntime.mStart;
             MTimer.Init(() => (uint)mStopWatch.ElapsedMilliseconds);
 
             try
@@ -81,6 +99,7 @@ namespace ns_MiniGame
 
                 if (mod.state == MRuntime.ModuleState.EState.eExited)
                 {
+                    toRemoved.Add(mod);
                     try
                     {
                         mod.mod.onExit();
@@ -119,6 +138,7 @@ namespace ns_MiniGame
             {
                 MRuntime.modules.Remove(rmv);
             }
+            MRuntime.mLast = MRuntime.mNow;
         }
 
         internal static void exit()
