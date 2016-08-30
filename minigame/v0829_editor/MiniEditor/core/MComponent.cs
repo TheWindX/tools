@@ -6,17 +6,54 @@ using System.Threading.Tasks;
 
 namespace MiniEditor
 {
-    class EditObject
+    public class EditObject
     {
         List<MComponent> mComponents = new List<MComponent>();
+        List<EditObject> mChildren = new List<EditObject>();
+        EditObject mParent = null;
+
+        public string name
+        {
+            get;
+            set;
+        }
+
+        public IEnumerable<EditObject> children
+        {
+            get
+            {
+                return mChildren;
+            }
+        }
+
+        public EditObject parent
+        {
+            get
+            {
+                return mParent;
+            }
+            set
+            {
+                if (mParent != null)
+                {
+                    mParent.mChildren.Remove(this);
+                }
+                mParent = value;
+                if (parent == null)
+                {
+                    return;
+                }
+                mParent.mChildren.Add(this);
+            }
+        }
 
         public MComponent addComponent(Type t)
         {
             foreach (var com in mComponents)
             {
-                if (com.GetType() == t)
+                if (t.IsAssignableFrom(com.GetType()))
                 {
-                    throw new Exception("already add same component");
+                    return com;
                 }
             }
             var c = (MComponent)Activator.CreateInstance(t);
@@ -40,7 +77,7 @@ namespace MiniEditor
         {
             foreach (var com in mComponents)
             {
-                if (com.GetType() == t)
+                if (t.IsAssignableFrom(com.GetType()))
                 {
                     return com;
                 }
@@ -87,6 +124,11 @@ namespace MiniEditor
         internal EditObject go = null;
         internal Action evtAdd = null;
         internal Action evtRemove = null;
+
+        public EditObject getObject()
+        {
+            return go;
+        }
 
         public T addComponent<T>() where T : MComponent
         {

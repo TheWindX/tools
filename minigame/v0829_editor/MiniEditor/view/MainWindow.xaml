@@ -20,32 +20,27 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="350"></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition Width="350"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <ScrollViewer Grid.Column="0" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Background="#FF2A2A2A">
-                <!--prop-->
-                <StackPanel Grid.Column="0">
-                    <!-- TextBlock FontSize="20" Text="属性" HorizontalAlignment="Center" FontStyle="Italic" Margin="0,5,0,15" Foreground="White"/-->
-                    <!--local:intField></>
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <local:itemList Grid.Row="0" x:Name="mListView">
+                </local:itemList>
+                <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Background="#FF2A2A2A">
+                    <!--prop-->
+                    <StackPanel Grid.Column="0">
+                        <TextBlock x:Name="m_property_object_name" FontSize="20" Text="属性" HorizontalAlignment="Center" FontStyle="Italic" Margin="0,5,0,15" Foreground="White"/>
+                        <!--local:intField></>
                     <local:doubleField></local:doubleField-->
-                    <StackPanel x:Name="m_object_list">
-                        
+                        <StackPanel x:Name="m_propertys">
+                        </StackPanel>
                     </StackPanel>
-                </StackPanel>
-            </ScrollViewer>
+                </ScrollViewer>
+            </Grid>
             <Canvas Grid.Column="1">
-                
             </Canvas>
-            <ScrollViewer Grid.Column="2" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Background="#FF2A2A2A">
-                <!--prop-->
-                <StackPanel Grid.Column="0">
-                    <TextBlock x:Name="m_property_object_name" FontSize="20" Text="属性" HorizontalAlignment="Center" FontStyle="Italic" Margin="0,5,0,15" Foreground="White"/>
-                    <!--local:intField></>
-                    <local:doubleField></local:doubleField-->
-                    <StackPanel x:Name="m_propertys">
-                    </StackPanel>
-                </StackPanel>
-            </ScrollViewer>
         </Grid>
         <DockPanel Grid.Row="2" LastChildFill="True">
             <Menu DockPanel.Dock="Right">

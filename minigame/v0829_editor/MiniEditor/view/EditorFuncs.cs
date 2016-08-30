@@ -78,5 +78,14 @@ namespace MiniEditor
             }
             return mMainWindow.m_propertys;
         }
+
+        public itemList getItemListWindow()
+        {
+            if (mMainWindow != null)
+            {
+                init();
+            }
+            return mMainWindow.mListView;
+        }
     }
 }

@@ -21,11 +21,14 @@ namespace MiniEditor
             List<Type> mAttrModules = new List<Type>();
             foreach (var t in ts)
             {
-                var attrs = t.GetCustomAttribute<ModuleInstance>();
-                if (attrs != null)
+                if(typeof(MModule).IsAssignableFrom(t))
                 {
-                    //MModule instance = (MModule)Activator.CreateInstance(t);
-                    mAttrModules.Add(t);
+                    var attrs = t.GetCustomAttribute<ModuleInstance>();
+                    if (attrs != null)
+                    {
+                        //MModule instance = (MModule)Activator.CreateInstance(t);
+                        mAttrModules.Add(t);
+                    }
                 }
             }
             mAttrModules.Sort((t1, t2) =>

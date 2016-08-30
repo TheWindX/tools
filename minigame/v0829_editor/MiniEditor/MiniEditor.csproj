@@ -37,6 +37,8 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -59,13 +61,23 @@
     <Compile Include="core\MDriver.cs" />
     <Compile Include="core\MLogger.cs" />
     <Compile Include="core\MModule.cs" />
+    <Compile Include="core\MObjectManager.cs" />
     <Compile Include="core\ModuleTest.cs" />
     <Compile Include="core\MRuntime.cs" />
     <Compile Include="core\MTimer.cs" />
-    <Compile Include="viewModel\UICom.cs" />
+    <Compile Include="components\MapObject.cs" />
+    <Compile Include="editorCore\EditorWorld.cs" />
     <Compile Include="viewModel\Module1.cs" />
+    <Compile Include="viewModel\ModuleTestListItem.cs" />
+    <Compile Include="components\editorUICOM.cs" />
     <Compile Include="view\boolField.xaml.cs" />
     <Compile Include="view\intField.xaml.cs" />
+    <Compile Include="view\itemList.xaml.cs">
+      <DependentUpon>itemList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view\listItem.xaml.cs">
+      <DependentUpon>listItem.xaml</DependentUpon>
+    </Compile>
     <Compile Include="view\WindowsF1.xaml.cs">
       <DependentUpon>WindowsF1.xaml</DependentUpon>
     </Compile>
@@ -80,6 +92,14 @@
     <Page Include="view\intField.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="view\itemList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="view\listItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="view\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
