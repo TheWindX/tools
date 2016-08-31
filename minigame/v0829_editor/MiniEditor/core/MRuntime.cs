@@ -122,15 +122,71 @@ namespace MiniEditor
     [System.AttributeUsage(System.AttributeTargets.Class, Inherited = true)]
     public class ComponentCustomAttribute : System.Attribute
     {
+        public string mPath = "";
         public string path
         {
-            get;set;
+            get
+            {
+                return mPath;
+            }
+            set
+            {
+                mPath = value;
+            }
         }
 
+        public string mName = "";
         public string name
         {
-            get;set;
+            get
+            {
+                return mName;
+            }
+            set
+            {
+                mName = value;
+            }
         }
+
+        private bool mRemovable = true;
+        public bool removable
+        {
+            get
+            {
+                return mRemovable;
+            }
+            set
+            {
+                mRemovable = value;
+            }
+        }
+
+        private bool mEditable = true;
+        public bool editable
+        {
+            get
+            {
+                return mEditable;
+            }
+            set
+            {
+                mEditable = value;
+            }
+        }
+
+        private bool mIsMain = false;
+        public bool isMain
+        {
+            get
+            {
+                return mIsMain;
+            }
+            set
+            {
+                mIsMain = value;
+            }
+        }
+
 
         public ComponentCustomAttribute()
         {

@@ -7,14 +7,14 @@ using System.Windows.Controls;
 
 namespace MiniEditor
 {
-    [ComponentCustom(path = "global", name ="editor")]
-    class editorUICOM : MComponent
+    [ComponentCustom(path = "global", name ="editor", removable = false)]
+    class editorCOM : MComponent
     {
         listItem mItem = null;
         int getLevel()
         {
             if (getObject().parent == null) return 0;
-            else return getObject().parent.getComponent<editorUICOM>().getLevel() + 1;
+            else return getObject().parent.getComponent<editorCOM>().getLevel() + 1;
         }
 
         public virtual listItem getMenuItem()
@@ -32,19 +32,5 @@ namespace MiniEditor
         {
 
         }
-
-        #region props
-        public string name
-        {
-            get;
-            set;
-        }
-
-        public int id
-        {
-            get;
-            set;
-        }
-        #endregion
     }
 }

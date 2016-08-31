@@ -6,8 +6,8 @@
              xmlns:local="clr-namespace:MiniEditor"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <Grid SizeChanged="Grid_SizeChanged" Background="#0C000000" MouseWheel="Grid_MouseWheel" MouseMove="Grid_MouseMove">
-        <Canvas x:Name="mCanvas">
+    <Grid ClipToBounds="True" SizeChanged="Grid_SizeChanged" Background="#0C000000" MouseWheel="Grid_MouseWheel" MouseMove="Grid_MouseMove">
+        <Canvas x:Name="mCanvas" >
             <Rectangle Width="500" Height="500" Stroke="#FFB6B6B6" Canvas.Left="-250" Canvas.Top="-250"/>
         </Canvas>
     </Grid>

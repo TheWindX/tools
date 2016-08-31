@@ -9,9 +9,9 @@
     <Grid>
         <Rectangle RadiusX="5" RadiusY="5" StrokeThickness="5" Stroke="#FF212121"></Rectangle>
         <StackPanel>
-            <Grid Height="20">
-                <Rectangle StrokeThickness="2" Fill="Black"/>
-                <CheckBox x:Name="mHead" Content="com name" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="14" Foreground="#FFD6D6D6" IsChecked="True" IsEnabled="False"/>
+            <Grid x:Name="mHead" Height="20">
+                <Rectangle Stroke="#FF376F80"/>
+                <CheckBox x:Name="mName" Content="com name" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="14" Foreground="#FFD6D6D6" IsChecked="True" IsEnabled="False"/>
                 <Button Width="20" HorizontalAlignment="Right" Margin="0,0,5,0" Content="..." Click="Button_Click"></Button>
             </Grid>
             <StackPanel x:Name="mProps">

@@ -7,7 +7,7 @@ using System.Windows.Controls;
 
 namespace MiniEditor.viewModel
 {
-    [ComponentCustom(path = "global")]
+    [ComponentCustom(path = "global", name ="坐标")]
     public class MapObject : MComponent
     {
         public int x

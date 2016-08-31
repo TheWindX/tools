@@ -53,17 +53,17 @@ namespace MiniEditor
             {
                 mScale.ScaleX = mScale.ScaleX * 1.1f;
                 mScale.ScaleY = mScale.ScaleY * 1.1f;
-                MLogger.info(">0 wheel:{0}", p);
+                x = p.X * 1.1f;
+                y = p.Y * 1.1f;
             }
             else
             {
                 mScale.ScaleX = mScale.ScaleX / 1.1f;
                 mScale.ScaleY = mScale.ScaleY / 1.1f;
-
-                MLogger.info("<0 wheel:{0}", p);
+                x = p.X / 1.1f;
+                y = p.Y / 1.1f;
             }
-            var x = p.X * 1.1f;
-            var y = p.Y * 1.1f;
+            
             mTranslate.X = mTranslate.X - (x - p.X) * mScale.ScaleX;
             mTranslate.Y = mTranslate.Y - (p.Y - y) * mScale.ScaleX;
         }

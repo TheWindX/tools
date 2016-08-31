@@ -27,7 +27,7 @@ namespace MiniEditor
 
         public void addEditorItem(EditObject item)
         {
-            addItem(item.getComponent<editorUICOM>().getMenuItem());
+            addItem(item.getComponent<editorCOM>().getMenuItem());
             foreach(var sub in item.children)
             {
                 addEditorItem(sub);
@@ -48,13 +48,13 @@ namespace MiniEditor
         {
             if(currentItem == null)
             {
-                addItem(item.getComponent<editorUICOM>().getMenuItem());
+                addItem(item.getComponent<editorCOM>().getMenuItem());
             }
             else
             {
                 item.parent = currentItem.editObject.parent;
-                addItemAfter(getLast(currentItem.editObject).getComponent<editorUICOM>().getMenuItem(),
-                        item.getComponent<editorUICOM>().getMenuItem());
+                addItemAfter(getLast(currentItem.editObject).getComponent<editorCOM>().getMenuItem(),
+                        item.getComponent<editorCOM>().getMenuItem());
             }
         }
 
@@ -62,14 +62,14 @@ namespace MiniEditor
         {
             if (item == null) return;
             m_object_list.Children.Add(item);
-            item.evtOnPick = () => onPick(item);
+            item.evtOnPick = () => pickUI(item);
             item.evtOnExpand = isExpand => expand(item, isExpand);
         }
 
         public void showItem(listItem itemToShow, bool isShow)
         {
             var eo = itemToShow.editObject;
-            var ui = eo.getComponent<editorUICOM>().getMenuItem();
+            var ui = eo.getComponent<editorCOM>().getMenuItem();
             if (isShow)
             {
                 ui.Visibility = Visibility.Visible;
@@ -78,7 +78,7 @@ namespace MiniEditor
                 {
                     foreach (var sub in eo.children)
                     {
-                        var subUI = sub.getComponent<editorUICOM>().getMenuItem();
+                        var subUI = sub.getComponent<editorCOM>().getMenuItem();
                         showItem(subUI, isShow);
                     }
                 }
@@ -90,7 +90,7 @@ namespace MiniEditor
                 {
                     foreach (var sub in eo.children)
                     {
-                        var subUI = sub.getComponent<editorUICOM>().getMenuItem();
+                        var subUI = sub.getComponent<editorCOM>().getMenuItem();
                         showItem(subUI, isShow);
                     }
                 }
@@ -105,7 +105,7 @@ namespace MiniEditor
             
             foreach (var sub in eo.children)
             {
-                var subUI = sub.getComponent<editorUICOM>().getMenuItem();
+                var subUI = sub.getComponent<editorCOM>().getMenuItem();
                 showItem(subUI, isExpand);
             }
         }
@@ -124,7 +124,7 @@ namespace MiniEditor
             }
             i = i + 1;
             m_object_list.Children.Insert(i, item);
-            item.evtOnPick = () => onPick(item);
+            item.evtOnPick = () => pickUI(item);
             item.evtOnExpand = isExpand => expand(item, isExpand);
         }
 
@@ -140,12 +140,12 @@ namespace MiniEditor
                 }
             }
             m_object_list.Children.Insert(i, item);
-            item.evtOnPick = () => onPick(item);
+            item.evtOnPick = () => pickUI(item);
             item.evtOnExpand = isExpand => expand(item, isExpand);
         }
 
         listItem currentItem = null;
-        public void onPick(listItem item)
+        public void pickUI(listItem item)
         {
             if(item == currentItem)
             {
@@ -157,6 +157,14 @@ namespace MiniEditor
             }
             item.isPick = true;
             currentItem = item;
+
+            EditorFuncs.instance().getComponentPage().reflush();
+        }
+
+        public void pickEditObject(EditObject obj)
+        {
+            var item = obj.getComponent<editorCOM>().getMenuItem();
+            pickUI(item);
         }
 
         public EditObject getCurrentObj()

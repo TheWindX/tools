@@ -44,13 +44,31 @@ namespace MiniEditor
 
         private MComponent mCom = null;
 
-        void reflush()
-        { 
+        public ComponentCustomAttribute getAttr()
+        {
             var attr = mCom.GetType().GetCustomAttribute<ComponentCustomAttribute>();
+            return attr;
+        }
+
+        void reflush()
+        {
+            var attr = getAttr();
             if(attr!=null)
             {
-                mHead.Content = attr.name;
+                mName.Content = attr.name;
                 EditorWorld.addTypeControl(mCom, mProps);
+                if(!attr.removable)
+                {
+                    mHead.IsEnabled = false;
+                }
+                //if (!attr.isMain)
+                //{
+                //    mHead.IsEnabled = false;
+                //}
+                if (!attr.editable)
+                {
+                    mProps.IsEnabled = false;
+                }
             }
         }
 

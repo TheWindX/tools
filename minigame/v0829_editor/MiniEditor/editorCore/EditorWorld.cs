@@ -13,7 +13,7 @@ namespace MiniEditor
         public static EditObject createObject(EditObject parent, string name)
         {
             var eo = MWorld.createObject(parent, name);
-            eo.addComponent<editorUICOM>();
+            eo.addComponent<editorCOM>();
             return eo;
         }
 
