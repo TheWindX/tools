@@ -32,7 +32,7 @@ namespace MiniEditor
             {
                 if (typeof(MComponent).IsAssignableFrom(t))
                 {
-                    var attrs = t.GetCustomAttribute<ModuleCustomAttribute>();
+                    var attrs = t.GetCustomAttribute<ComponentCustomAttribute>();
                     if (attrs != null)
                     {
                         //MModule instance = (MModule)Activator.CreateInstance(t);
@@ -64,7 +64,7 @@ namespace MiniEditor
                         panel.Children.Add(v);
                         //EditorFuncs.instance().getPropWindow().Children.Add(v);
                     }
-                    else if (p.PropertyType == typeof(Boolean))
+                    else if (p.PropertyType == typeof(bool))
                     {
                         var v = new boolField();
                         v.Lable = p.Name;
@@ -74,7 +74,26 @@ namespace MiniEditor
                         };
                         panel.Children.Add(v);
                     }
-                    MLogger.info(String.Format("name:{0}, value:{1}", p.Name, p.GetValue(com)));
+                    else if (p.PropertyType == typeof(double))
+                    {
+                        var v = new doubleField();
+                        v.Lable = p.Name;
+                        v.Val = (double)p.GetValue(com);
+                        v.evtValueChanged += () => {
+                            p.SetValue(com, v.Val);
+                        };
+                        panel.Children.Add(v);
+                    }
+                    else if (p.PropertyType == typeof(string))
+                    {
+                        var v = new stringField();
+                        v.Lable = p.Name;
+                        v.Val = (string)p.GetValue(com);
+                        v.evtValueChanged += () => {
+                            p.SetValue(com, v.Val);
+                        };
+                        panel.Children.Add(v);
+                    }
                 }
             }
         }

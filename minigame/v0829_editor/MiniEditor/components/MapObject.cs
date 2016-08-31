@@ -7,7 +7,7 @@ using System.Windows.Controls;
 
 namespace MiniEditor.viewModel
 {
-    [ModuleCustom("global")]
+    [ComponentCustom(path = "global")]
     public class MapObject : MComponent
     {
         public int x
@@ -24,7 +24,6 @@ namespace MiniEditor.viewModel
         {
             get; set;
         }
-
         public Control getMapItem()
         {
             return null;

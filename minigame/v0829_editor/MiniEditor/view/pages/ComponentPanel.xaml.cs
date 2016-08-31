@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -44,9 +45,13 @@ namespace MiniEditor
         private MComponent mCom = null;
 
         void reflush()
-        {
-            mHead.Content = mCom.GetType().Name;
-            EditorWorld.addTypeControl(mCom, mProps);
+        { 
+            var attr = mCom.GetType().GetCustomAttribute<ComponentCustomAttribute>();
+            if(attr!=null)
+            {
+                mHead.Content = attr.name;
+                EditorWorld.addTypeControl(mCom, mProps);
+            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

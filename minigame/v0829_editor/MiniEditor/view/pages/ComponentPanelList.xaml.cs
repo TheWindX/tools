@@ -46,7 +46,7 @@ namespace MiniEditor
             {
                 if (typeof(MComponent).IsAssignableFrom(t))
                 {
-                    var attrs = t.GetCustomAttribute<ModuleCustomAttribute>();
+                    var attrs = t.GetCustomAttribute<ComponentCustomAttribute>();
                     if (attrs != null)
                     {
                         //MModule instance = (MModule)Activator.CreateInstance(t);

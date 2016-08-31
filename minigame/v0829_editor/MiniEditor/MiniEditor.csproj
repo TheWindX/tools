@@ -53,7 +53,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <ApplicationDefinition Include="view\App.xaml">
+    <ApplicationDefinition Include="view\windows\App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
@@ -67,82 +67,103 @@
     <Compile Include="core\MTimer.cs" />
     <Compile Include="components\MapObject.cs" />
     <Compile Include="editorCore\EditorWorld.cs" />
-    <Compile Include="viewModel\ModuleTestListItem.cs" />
+    <Compile Include="modules\ModuleTestListItem.cs" />
     <Compile Include="components\editorUICOM.cs" />
-    <Compile Include="view\boolField.xaml.cs" />
-    <Compile Include="view\ComponentPanel.xaml.cs">
+    <Compile Include="view\widgets\boolField.xaml.cs" />
+    <Compile Include="view\pages\ComponentPanel.xaml.cs">
       <DependentUpon>ComponentPanel.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\ComponentPanelList.xaml.cs">
+    <Compile Include="view\pages\ComponentPanelList.xaml.cs">
       <DependentUpon>ComponentPanelList.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\editorMap.xaml.cs">
+    <Compile Include="view\widgets\doubleField.xaml.cs">
+      <DependentUpon>doubleField.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view\pages\editorMap.xaml.cs">
       <DependentUpon>editorMap.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\intField.xaml.cs" />
-    <Compile Include="view\itemList.xaml.cs">
+    <Compile Include="view\widgets\intField.xaml.cs" />
+    <Compile Include="view\pages\itemList.xaml.cs">
       <DependentUpon>itemList.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\listItem.xaml.cs">
+    <Compile Include="view\widgets\LableBreak.xaml.cs">
+      <DependentUpon>LableBreak.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view\pages\listItem.xaml.cs">
       <DependentUpon>listItem.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\WindowsF1.xaml.cs">
+    <Compile Include="view\widgets\stringField.xaml.cs">
+      <DependentUpon>stringField.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view\windows\WindowsF1.xaml.cs">
       <DependentUpon>WindowsF1.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\StatusPage.xaml.cs">
+    <Compile Include="view\pages\StatusPage.xaml.cs">
       <DependentUpon>StatusPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="view\WPFUtil.cs" />
-    <Page Include="view\boolField.xaml">
+    <Page Include="view\widgets\boolField.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="view\ComponentPanel.xaml">
+    <Page Include="view\pages\ComponentPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="view\ComponentPanelList.xaml">
+    <Page Include="view\pages\ComponentPanelList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="view\editorMap.xaml">
+    <Page Include="view\widgets\doubleField.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="view\intField.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="view\itemList.xaml">
+    <Page Include="view\pages\editorMap.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="view\listItem.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="view\MainWindow.xaml">
+    <Page Include="view\widgets\intField.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="view\App.xaml.cs">
+    <Page Include="view\pages\itemList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="view\widgets\LableBreak.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="view\pages\listItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="view\windows\MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="view\windows\App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="view\EditorFuncs.cs" />
-    <Compile Include="view\MainWindow.xaml.cs">
+    <Compile Include="view\utils\EditorFuncs.cs" />
+    <Compile Include="view\windows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="view\Theme.xaml">
+    <Page Include="view\widgets\stringField.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="view\WindowsF1.xaml">
+    <Page Include="view\windows\Theme.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="view\StatusPage.xaml">
+    <Page Include="view\windows\WindowsF1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="view\pages\StatusPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -174,9 +195,7 @@
   <ItemGroup>
     <None Include="view\App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="view\util\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

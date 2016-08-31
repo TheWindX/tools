@@ -120,12 +120,20 @@ namespace MiniEditor
     }
 
     [System.AttributeUsage(System.AttributeTargets.Class, Inherited = true)]
-    public class ModuleCustomAttribute : System.Attribute
+    public class ComponentCustomAttribute : System.Attribute
     {
-        public string path;
-        public ModuleCustomAttribute(string path)
+        public string path
         {
-            this.path = path;
+            get;set;
+        }
+
+        public string name
+        {
+            get;set;
+        }
+
+        public ComponentCustomAttribute()
+        {
         }
     }
 }
