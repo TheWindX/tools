@@ -111,7 +111,7 @@ namespace MiniEditor
                     }
                     catch (Exception ex)
                     {
-                        MLogger.error(ex.Message);
+                        MLogger.error(ex.ToString());
                         mod.state = MRuntime.ModuleState.EState.eInvalid;
                     }
                 }
@@ -124,7 +124,7 @@ namespace MiniEditor
                     }
                     catch (Exception ex)
                     {
-                        MLogger.error(ex.Message);
+                        MLogger.error(ex.ToString());
                         mod.state = MRuntime.ModuleState.EState.eInvalid;
                     }
                 }
@@ -136,7 +136,7 @@ namespace MiniEditor
                     }
                     catch (Exception ex)
                     {
-                        MLogger.error(ex.Message);
+                        MLogger.error(ex.ToString());
                         //mod.state = MRuntime.ModuleState.EState.eInvalid;
                     }
                 }
@@ -158,7 +158,7 @@ namespace MiniEditor
             }
             catch (Exception ex)
             {
-                MLogger.error(ex.Message);
+                MLogger.error(ex.ToString());
             }
 
             foreach (var mod in MRuntime.modules)
@@ -171,7 +171,7 @@ namespace MiniEditor
                     }
                     catch (Exception ex)
                     {
-                        MLogger.error(ex.Message);
+                        MLogger.error(ex.ToString());
                         mod.state = MRuntime.ModuleState.EState.eInvalid;
                     }
                 }
@@ -183,7 +183,7 @@ namespace MiniEditor
                     }
                     catch (Exception ex)
                     {
-                        MLogger.error(ex.Message);
+                        MLogger.error(ex.ToString());
                         mod.state = MRuntime.ModuleState.EState.eInvalid;
                     }
                 }

@@ -76,6 +76,9 @@
     <Compile Include="view\ComponentPanelList.xaml.cs">
       <DependentUpon>ComponentPanelList.xaml</DependentUpon>
     </Compile>
+    <Compile Include="view\editorMap.xaml.cs">
+      <DependentUpon>editorMap.xaml</DependentUpon>
+    </Compile>
     <Compile Include="view\intField.xaml.cs" />
     <Compile Include="view\itemList.xaml.cs">
       <DependentUpon>itemList.xaml</DependentUpon>
@@ -99,6 +102,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="view\ComponentPanelList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="view\editorMap.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

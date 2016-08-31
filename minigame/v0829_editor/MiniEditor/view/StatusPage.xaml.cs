@@ -37,7 +37,6 @@ namespace MiniEditor
             //lb.IsReadOnly = true;
             //lb.Background = new SolidColorBrush(Color.FromArgb(1, 0, 0, 0));
             //m_infoview.Children.Add(lb);
-
             m_infotext.Text = m_infos.Aggregate("", (acc, item) =>
             {
                 return acc + item + "\n";

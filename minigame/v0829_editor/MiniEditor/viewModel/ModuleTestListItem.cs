@@ -16,7 +16,7 @@ namespace MiniEditor.viewModel
 
         public void onInit()
         {
-            var p = EditorFuncs.instance().getItemListWindow();
+            var p = EditorFuncs.instance().getItemListPage();
             MTimer.get().setTimeout(t =>
             {
                 var root = EditorWorld.createObject(null, "root");

@@ -47,30 +47,23 @@ namespace MiniEditor
         //    statWindow.Top = mMainWindow.Top + (mMainWindow.Height - statWindow.ActualHeight) / 2;
         //    statWindow.Activate();
         //}
-
-        StatusPage mStatWindow = null;
-        public StatusPage getStat()
+        public StatusPage getStatPage()
         {
-            if (mStatWindow == null)
-            {
-                mStatWindow = new StatusPage();
-                mStatWindow.evtClear += () => {
-                    mMainWindow.m_statbar.Content = "";
-                    mMainWindow.m_statbar.Foreground = new SolidColorBrush(Color.FromArgb(255, 200, 200, 200));
-                };
-            }
-
-            return mStatWindow;
+            init();
+            return mMainWindow.mStatusPage;
         }
 
         private MainWindow mMainWindow = null;
         private void init()
         {
-            mMainWindow = (App.Current.MainWindow as MainWindow);
+            if (mMainWindow == null)
+            {
+                mMainWindow = (App.Current.MainWindow as MainWindow);
+            }
             return;
         }
 
-        public ComponentPanelList getComponentWindow()
+        public ComponentPanelList getComponentPage()
         {
             if(mMainWindow != null)
             {
@@ -79,7 +72,7 @@ namespace MiniEditor
             return mMainWindow.mListComponent;
         }
 
-        public itemList getItemListWindow()
+        public itemList getItemListPage()
         {
             if (mMainWindow != null)
             {
