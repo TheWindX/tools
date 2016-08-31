@@ -32,7 +32,6 @@ namespace MiniEditor.viewModel
                 var a4 = EditorWorld.createObject(null, "a4");
                 p.insertEditorItem(a4);
             }, 4000);
-                
         }
 
         public void onUpdate()

@@ -7,6 +7,7 @@ using System.Windows.Controls;
 
 namespace MiniEditor
 {
+    [ModuleCustom("global")]
     class editorUICOM : MComponent
     {
         listItem mItem = null;
@@ -31,5 +32,7 @@ namespace MiniEditor
         {
 
         }
+        
+
     }
 }

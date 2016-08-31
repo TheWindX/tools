@@ -46,14 +46,14 @@ namespace MiniEditor
 
         public void insertEditorItem(EditObject item)
         {
-            if(itemPicked == null)
+            if(currentItem == null)
             {
                 addItem(item.getComponent<editorUICOM>().getMenuItem());
             }
             else
             {
-                item.parent = itemPicked.editObject.parent;
-                addItemAfter(getLast(itemPicked.editObject).getComponent<editorUICOM>().getMenuItem(),
+                item.parent = currentItem.editObject.parent;
+                addItemAfter(getLast(currentItem.editObject).getComponent<editorUICOM>().getMenuItem(),
                         item.getComponent<editorUICOM>().getMenuItem());
             }
         }
@@ -144,19 +144,29 @@ namespace MiniEditor
             item.evtOnExpand = isExpand => expand(item, isExpand);
         }
 
-        listItem itemPicked = null;
+        listItem currentItem = null;
         public void onPick(listItem item)
         {
-            if(item == itemPicked)
+            if(item == currentItem)
             {
                 return;
             }
-            if(itemPicked != null)
+            if(currentItem != null)
             {
-                itemPicked.isPick = false;
+                currentItem.isPick = false;
             }
             item.isPick = true;
-            itemPicked = item;
+            currentItem = item;
+        }
+
+        public EditObject getCurrentObj()
+        {
+            if(currentItem == null)
+            {
+                return null;
+            }
+
+            return currentItem.editObject;
         }
     }
 }

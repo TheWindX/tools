@@ -18,9 +18,9 @@ namespace MiniEditor
     /// <summary>
     /// WindowStaus.xaml 的交互逻辑
     /// </summary>
-    public partial class WindowStaus : Window
+    public partial class StatusPage : UserControl
     {
-        public WindowStaus()
+        public StatusPage()
         {
             InitializeComponent();
         }
@@ -77,10 +77,15 @@ namespace MiniEditor
             clear();
         }
 
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void MenuItem_Click_1(object sender, RoutedEventArgs e)
         {
-            e.Cancel = true;
-            this.Hide();
+
         }
+
+        //private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        //{
+        //    e.Cancel = true;
+        //    this.Hide();
+        //}
     }
 }

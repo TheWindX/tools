@@ -25,12 +25,7 @@ namespace MiniEditor
         {
             InitializeComponent();
         }
-
-        private void m_statbar_PreviewMouseUp(object sender, MouseButtonEventArgs e)
-        {
-            EditorFuncs.instance().openStat();
-        }
-
+        
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
             EditorFuncs.instance().openHELP();

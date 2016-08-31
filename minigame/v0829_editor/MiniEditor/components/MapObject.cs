@@ -7,24 +7,25 @@ using System.Windows.Controls;
 
 namespace MiniEditor.viewModel
 {
+    [ModuleCustom("global")]
     public class MapObject : MComponent
     {
-        int x
+        public int x
         {
             get; set;
         }
 
-        int y
+        public int y
         {
             get; set;
         }
 
-        int radius
+        public int radius
         {
             get; set;
         }
 
-        Control getMapItem()
+        public Control getMapItem()
         {
             return null;
         }

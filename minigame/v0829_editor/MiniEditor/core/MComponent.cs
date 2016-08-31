@@ -113,9 +113,23 @@ namespace MiniEditor
                 mComponents.Remove(com);
         }
 
+        public void removeComponent(MComponent com)
+        {
+            if (com != null)
+                mComponents.Remove(com);
+        }
+
         public void removeComponent<T>() where T:MComponent
         {
             removeComponent(typeof(T));
+        }
+
+        public IEnumerable<MComponent> components
+        {
+            get
+            {
+                return mComponents;
+            }
         }
     }
 
@@ -145,25 +159,25 @@ namespace MiniEditor
             go.removeComponent<T>();
         }
 
-        internal static IEnumerable<RequireCom> getDependcy(Type t)
+        internal static IEnumerable<RequireComAttribute> getDependcy(Type t)
         {
             var attrs = t.GetCustomAttributes(true);
             foreach(var attr in attrs)
             {
-                if(attr is RequireCom)
+                if(attr is RequireComAttribute)
                 {
-                    yield return attr as RequireCom;
+                    yield return attr as RequireComAttribute;
                 }
             }
         }
     }
 
     [System.AttributeUsage(System.AttributeTargets.Class, AllowMultiple = true,  Inherited = true)]
-    public class RequireCom : System.Attribute
+    public class RequireComAttribute : System.Attribute
     {
         public Type com;
 
-        public RequireCom(Type com)
+        public RequireComAttribute(Type com)
         {
             this.com = com;
         }

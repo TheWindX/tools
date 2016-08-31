@@ -38,22 +38,22 @@ namespace MiniEditor
             mHelpWindow.Activate();
         }
 
-        public void openStat()
-        {
-            var statWindow = getStatWindow();
-            mStatWindow.Owner = mMainWindow;
-            statWindow.Show();
-            statWindow.Left = mMainWindow.Left + (mMainWindow.Width - statWindow.ActualWidth) / 2;
-            statWindow.Top = mMainWindow.Top + (mMainWindow.Height - statWindow.ActualHeight) / 2;
-            statWindow.Activate();
-        }
+        //public void openStat()
+        //{
+        //    var statWindow = getStatWindow();
+        //    mStatWindow.Owner = mMainWindow;
+        //    statWindow.Show();
+        //    statWindow.Left = mMainWindow.Left + (mMainWindow.Width - statWindow.ActualWidth) / 2;
+        //    statWindow.Top = mMainWindow.Top + (mMainWindow.Height - statWindow.ActualHeight) / 2;
+        //    statWindow.Activate();
+        //}
 
-        WindowStaus mStatWindow = null;
-        public WindowStaus getStatWindow()
+        StatusPage mStatWindow = null;
+        public StatusPage getStat()
         {
             if (mStatWindow == null)
             {
-                mStatWindow = new WindowStaus();
+                mStatWindow = new StatusPage();
                 mStatWindow.evtClear += () => {
                     mMainWindow.m_statbar.Content = "";
                     mMainWindow.m_statbar.Foreground = new SolidColorBrush(Color.FromArgb(255, 200, 200, 200));
@@ -70,13 +70,13 @@ namespace MiniEditor
             return;
         }
 
-        public StackPanel getPropWindow()
+        public ComponentPanelList getComponentWindow()
         {
             if(mMainWindow != null)
             {
                 init();
             }
-            return mMainWindow.m_propertys;
+            return mMainWindow.mListComponent;
         }
 
         public itemList getItemListWindow()
@@ -85,7 +85,7 @@ namespace MiniEditor
             {
                 init();
             }
-            return mMainWindow.mListView;
+            return mMainWindow.mListObjects;
         }
     }
 }

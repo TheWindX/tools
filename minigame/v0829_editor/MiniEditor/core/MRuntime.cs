@@ -118,4 +118,14 @@ namespace MiniEditor
             this.level = level;
         }
     }
+
+    [System.AttributeUsage(System.AttributeTargets.Class, Inherited = true)]
+    public class ModuleCustomAttribute : System.Attribute
+    {
+        public string path;
+        public ModuleCustomAttribute(string path)
+        {
+            this.path = path;
+        }
+    }
 }

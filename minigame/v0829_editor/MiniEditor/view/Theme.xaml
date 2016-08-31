@@ -211,6 +211,8 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    
     <Style TargetType="{x:Type CheckBox}">
         <Setter Property="SnapsToDevicePixels" Value="true" />
         <Setter Property="FocusVisualStyle" Value="{DynamicResource CheckBoxFocusVisual}" />
