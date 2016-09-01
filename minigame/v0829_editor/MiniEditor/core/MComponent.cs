@@ -52,13 +52,39 @@ namespace MiniEditor
             }
         }
 
-        public MComponent addComponent(Type t)
+        public EditObject preview
         {
+            get
+            {
+                if (mParent == null) return this;
+                int idx = mParent.mChildren.IndexOf(this);
+                idx--;
+                if (idx < 0) idx = mParent.mChildren.Count-1;
+                return mParent.mChildren.ElementAt(idx);
+            }
+        }
+
+        public EditObject next
+        {
+            get
+            {
+                if (mParent == null) return this;
+                int idx = mParent.mChildren.IndexOf(this);
+                idx++;
+                if (idx >= mParent.mChildren.Count) idx = 0;
+                return mParent.mChildren.ElementAt(idx);
+            }
+        }
+
+
+        public IEnumerable<MComponent> addComponent(Type t)
+        {
+            List<MComponent> coms = new List<MComponent>();
             foreach (var com in mComponents)
             {
                 if (t.IsAssignableFrom(com.GetType()))
                 {
-                    return com;
+                    return coms;
                 }
             }
             var c = (MComponent)Activator.CreateInstance(t);
@@ -67,15 +93,16 @@ namespace MiniEditor
             var dps = MComponent.getDependcy(t);
             foreach (var d in dps)
             {
-                addComponent(d.com);
+                coms.AddRange(addComponent(d.com));
             }
             this.mComponents.Add(c);
-            return c;
+            coms.Add(c);
+            return coms;
         }
 
-        public T addComponent<T>() where T: MComponent
+        public IEnumerable<MComponent> addComponent<T>() where T: MComponent
         {
-            return addComponent(typeof(T)) as T;
+            return addComponent(typeof(T));
         }
 
         public MComponent getComponent(Type t)
@@ -95,38 +122,31 @@ namespace MiniEditor
             return getComponent(typeof(T)) as T;
         }
 
-        public T getOrAddComponent<T>() where T: MComponent
+        public IEnumerable<MComponent> removeComponent(Type t)
         {
-            var t = getComponent<T>();
-            if(t == null)
-            {
-                return addComponent<T>();
-            }
-            return t;
-        }
-
-        public void removeComponent(Type t)
-        {
+            List<MComponent> coms = new List<MComponent>();
             var com = getComponent(t);
+            if (com == null) return coms;
 
             var dps = MComponent.getDependcy(t);
             foreach (var d in dps)
             {
-                removeComponent(d.com);
+                coms.AddRange(removeComponent(d.com));
             }
             if (com != null)
                 mComponents.Remove(com);
+            coms.Add(com);
+            return coms;
         }
 
-        public void removeComponent(MComponent com)
+        public IEnumerable<MComponent> removeComponent(MComponent com)
         {
-            if (com != null)
-                mComponents.Remove(com);
+            return removeComponent(com.GetType());
         }
 
-        public void removeComponent<T>() where T:MComponent
+        public IEnumerable<MComponent> removeComponent<T>() where T:MComponent
         {
-            removeComponent(typeof(T));
+            return removeComponent(typeof(T));
         }
 
         public IEnumerable<MComponent> components
@@ -144,12 +164,27 @@ namespace MiniEditor
         internal Action evtAdd = null;
         internal Action evtRemove = null;
 
+        public virtual void editorInit()
+        {
+            MLogger.info("editorInit: {0}", GetType().Name);
+        }
+
+        public virtual void editorUpdate()
+        {
+            //MLogger.info("editorUpdate: {0}", GetType().Name);
+        }
+
+        public virtual void editorExit()
+        {
+            MLogger.info("editorExit: {0}", GetType().Name);
+        }
+
         public EditObject getObject()
         {
             return go;
         }
 
-        public T addComponent<T>() where T : MComponent
+        public IEnumerable<MComponent> addComponent<T>() where T : MComponent
         {
             return go.addComponent<T>();
         }

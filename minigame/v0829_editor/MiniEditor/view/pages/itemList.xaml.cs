@@ -176,5 +176,42 @@ namespace MiniEditor
 
             return currentItem.editObject;
         }
+
+        private void ScrollViewer_Loaded(object sender, RoutedEventArgs e)
+        {
+            PreviewKeyDown += ItemList_KeyDown;
+        }
+
+        private void ItemList_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.Key == Key.Up)
+            {
+                var obj = getCurrentObj();
+                if (obj == null) return;
+                pickEditObject(obj.preview);
+            }
+            else if(e.Key == Key.Down)
+            {
+                var obj = getCurrentObj();
+                if (obj == null) return;
+                pickEditObject(obj.next);
+            }
+            else if (e.Key == Key.Left)
+            {
+                var obj = getCurrentObj();
+                if (obj == null) return;
+                if (obj.parent == null) return;
+                pickEditObject(obj.parent);
+            }
+            else if (e.Key == Key.Right)
+            {
+                var obj = getCurrentObj();
+                if (obj == null) return;
+                foreach (var c in obj.children)
+                {
+                    pickEditObject(c);
+                }
+            }
+        }
     }
 }

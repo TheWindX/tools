@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-        <ScrollViewer Grid.Row="0" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Background="#FF2A2A2A">
+        <ScrollViewer Grid.Row="0" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Background="#FF2A2A2A" Loaded="ScrollViewer_Loaded">
             <StackPanel>
                 <StackPanel x:Name="m_object_list">
                 </StackPanel>

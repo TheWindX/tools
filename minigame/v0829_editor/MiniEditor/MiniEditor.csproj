@@ -65,7 +65,6 @@
     <Compile Include="core\MLogger.cs" />
     <Compile Include="core\MModule.cs" />
     <Compile Include="core\MObjectManager.cs" />
-    <Compile Include="core\ModuleTest.cs" />
     <Compile Include="core\MRuntime.cs" />
     <Compile Include="core\MTimer.cs" />
     <Compile Include="components\mapObject.cs" />

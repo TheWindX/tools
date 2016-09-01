@@ -104,7 +104,59 @@ namespace MiniEditor
             {
                 if (value) mBG.Fill = pickbrush;
                 else mBG.Fill = unpickbrush;
+
+                if(mIsPick == false)
+                {
+                    if(value)
+                    {
+                        foreach (var com in editObject.components)
+                        {
+                            try
+                            {
+                                com.editorInit();
+                            }
+                            catch(Exception ex)
+                            {
+                                MLogger.error(ex.ToString());
+                            }
+                        }
+                        MRuntime.evtFrame += MRuntime_evtFrame;
+                    }
+                }
+                else
+                {
+                    if(!value)
+                    {
+                        foreach (var com in editObject.components)
+                        {
+                            try
+                            {
+                                com.editorExit();
+                            }
+                            catch (Exception ex)
+                            {
+                                MLogger.error(ex.ToString());
+                            }
+                        }
+                        MRuntime.evtFrame -= MRuntime_evtFrame;
+                    }
+                }
                 mIsPick = value;
+            }
+        }
+
+        private void MRuntime_evtFrame()
+        {
+            foreach (var com in editObject.components)
+            {
+                try
+                {
+                    com.editorUpdate();
+                }
+                catch (Exception ex)
+                {
+                    MLogger.error(ex.ToString());
+                }
             }
         }
     }

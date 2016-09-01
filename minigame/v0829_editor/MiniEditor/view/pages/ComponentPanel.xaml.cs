@@ -76,14 +76,27 @@ namespace MiniEditor
         {
             //弹出右键菜单
             var mContextMenu = new ContextMenu();
-            var coms = EditorWorld.getAssemblyModules();
+            var coms = EditorWorld.getAssemblyComponents();
             MenuItem mi = new MenuItem();
             mi.Header = "remove";
             mContextMenu.Items.Add(mi);
             mi.Click += new RoutedEventHandler((obj, arg) =>
             {
                 var editObj = EditorFuncs.instance().getItemListPage().getCurrentObj();
-                editObj.removeComponent(component.GetType());
+                var comInstances = editObj.removeComponent(component);
+
+                foreach(var comIns in comInstances)
+                {
+                    try
+                    {
+                        comIns.editorExit();
+                    }
+                    catch (Exception ex)
+                    {
+                        MLogger.error(ex.ToString());
+                    }
+                }
+
                 EditorFuncs.instance().getComponentPage().reflush();
             });
             mContextMenu.IsOpen = true;

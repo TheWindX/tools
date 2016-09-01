@@ -36,32 +36,11 @@ namespace MiniEditor
             InitializeComponent();
         }
 
-        static List<Type> getAssemblyComponents()
-        {
-            Assembly myAssembly = Assembly.GetExecutingAssembly();
-            var ts = myAssembly.GetTypes();
-
-            List<Type> mComponents = new List<Type>();
-            foreach (var t in ts)
-            {
-                if (typeof(MComponent).IsAssignableFrom(t))
-                {
-                    var attrs = t.GetCustomAttribute<CustomComponentAttribute>();
-                    if (attrs != null)
-                    {
-                        //MModule instance = (MModule)Activator.CreateInstance(t);
-                        mComponents.Add(t);
-                    }
-                }
-            }
-            return mComponents;
-        }
-
         private void mAddComponent_Click(object sender, RoutedEventArgs e)
         {
             //弹出右键菜单
             var mContextMenu = new ContextMenu();
-            var coms = getAssemblyComponents();
+            var coms = EditorWorld.getAssemblyComponents();
             foreach(var com in coms)
             {
                 var comCopy = com;
@@ -73,7 +52,18 @@ namespace MiniEditor
                 {
                     var editObj = EditorFuncs.instance().getItemListPage().getCurrentObj();
                     if (editObj == null) return;
-                    editObj.addComponent(comCopy);
+                    var comInstances = editObj.addComponent(comCopy);
+                    foreach(var comInstance in comInstances)
+                    {
+                        try
+                        {
+                            comInstance.editorInit();
+                        }
+                        catch (Exception ex)
+                        {
+                            MLogger.error(ex.ToString());
+                        }
+                    }
                     reflush();
                 });
             }

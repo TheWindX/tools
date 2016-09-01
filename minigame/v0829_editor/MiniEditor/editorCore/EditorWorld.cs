@@ -22,7 +22,7 @@ namespace MiniEditor
             MWorld.removeObject(obj);
         }
         
-        public static List<Type> getAssemblyModules()
+        public static List<Type> getAssemblyComponents()
         {
             Assembly myAssembly = Assembly.GetExecutingAssembly();
             var ts = myAssembly.GetTypes();
