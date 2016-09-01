@@ -30,7 +30,48 @@ namespace MiniEditor
             group.Children.Add(mTranslate);
             
             mCanvas.RenderTransform = group;
+
+            createGrids();
         }
+
+
+        void createGrids()
+        {
+            //<Rectangle Width="500" Height="500" Stroke="#FFB6B6B6" Canvas.Left="-250" Canvas.Top="-250"/>
+            float startX = -250;
+            float startY = -250;
+            float space = 50;
+            float x = startX;
+            float y = startY;
+            int lines = 10;
+            Brush stroke = new SolidColorBrush(Colors.LightBlue);
+            Brush strokeCenter = new SolidColorBrush(Colors.Red);
+            for (int xi = 0; xi < lines+1; ++xi)
+            {
+                x = startX + xi * space;
+                Brush s = stroke;
+                if(xi == lines/2)
+                {
+                    s = strokeCenter;
+                }
+                var line = new Line() { X1 = x, X2 = x, Y1 = startY, Y2 = startY + lines * space, Stroke = s };
+                mCanvas.Children.Add(line);
+            }
+            for (int yi = 0; yi < lines+1; ++yi)
+            {
+                y = startY + yi * space;
+                Brush s = stroke;
+                if (yi == lines / 2)
+                {
+                    s = strokeCenter;
+                }
+                var line = new Line() { X1 = startX, X2 = startX + lines * space, Y1 = y, Y2 = y, Stroke = s };
+                mCanvas.Children.Add(line);
+            }
+
+
+        }
+        
 
         public void setCenter()
         {
@@ -38,7 +79,7 @@ namespace MiniEditor
             var h = ActualHeight;
             mTranslate.X = w/2;
             mTranslate.Y = h/2;
-            mScale.ScaleY = -1;
+            //mScale.ScaleY = -1;
         }
 
         private void Grid_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -65,7 +106,7 @@ namespace MiniEditor
             }
             
             mTranslate.X = mTranslate.X - (x - p.X) * mScale.ScaleX;
-            mTranslate.Y = mTranslate.Y - (p.Y - y) * mScale.ScaleX;
+            mTranslate.Y = mTranslate.Y - (y - p.Y) * mScale.ScaleY;
         }
 
         double x = 0;

@@ -36,7 +36,7 @@ namespace MiniEditor
             InitializeComponent();
         }
 
-        static List<Type> getAssemblyModules()
+        static List<Type> getAssemblyComponents()
         {
             Assembly myAssembly = Assembly.GetExecutingAssembly();
             var ts = myAssembly.GetTypes();
@@ -46,7 +46,7 @@ namespace MiniEditor
             {
                 if (typeof(MComponent).IsAssignableFrom(t))
                 {
-                    var attrs = t.GetCustomAttribute<ComponentCustomAttribute>();
+                    var attrs = t.GetCustomAttribute<CustomComponentAttribute>();
                     if (attrs != null)
                     {
                         //MModule instance = (MModule)Activator.CreateInstance(t);
@@ -61,12 +61,13 @@ namespace MiniEditor
         {
             //弹出右键菜单
             var mContextMenu = new ContextMenu();
-            var coms = getAssemblyModules();
+            var coms = getAssemblyComponents();
             foreach(var com in coms)
             {
                 var comCopy = com;
+                var attr = comCopy.GetCustomAttribute<CustomComponentAttribute>();
                 MenuItem mi = new MenuItem();
-                mi.Header = comCopy.Name;
+                mi.Header = attr.name;
                 mContextMenu.Items.Add(mi);
                 mi.Click += new RoutedEventHandler((obj, arg) =>
                 {

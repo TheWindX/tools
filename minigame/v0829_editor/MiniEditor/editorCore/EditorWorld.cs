@@ -13,7 +13,7 @@ namespace MiniEditor
         public static EditObject createObject(EditObject parent, string name)
         {
             var eo = MWorld.createObject(parent, name);
-            eo.addComponent<editorCOM>();
+            eo.addComponent<editorObject>();
             return eo;
         }
 
@@ -32,7 +32,7 @@ namespace MiniEditor
             {
                 if (typeof(MComponent).IsAssignableFrom(t))
                 {
-                    var attrs = t.GetCustomAttribute<ComponentCustomAttribute>();
+                    var attrs = t.GetCustomAttribute<CustomComponentAttribute>();
                     if (attrs != null)
                     {
                         //MModule instance = (MModule)Activator.CreateInstance(t);
@@ -49,52 +49,106 @@ namespace MiniEditor
             Type t = com.GetType();
             if (t.IsClass)
             {
-                //var o = Activator.CreateInstance(t);
-                var fs = t.GetProperties();
-                foreach (var p in fs)
+                var ms = t.GetMethods();
+                MethodInfo inspector = null;
+                foreach (var m in ms)
                 {
-                    if (p.PropertyType == typeof(int))
+                    var inspectorProp = m.GetCustomAttribute<CustomInspectorAttribute>();
+                    if(inspectorProp != null)
                     {
-                        var v = new intField();
-                        v.Lable = p.Name;
-                        v.Val = (int)p.GetValue(com);
-                        v.evtValueChanged += () => {
-                            p.SetValue(com, v.Val);
-                        };
-                        panel.Children.Add(v);
-                        //EditorFuncs.instance().getPropWindow().Children.Add(v);
-                    }
-                    else if (p.PropertyType == typeof(bool))
-                    {
-                        var v = new boolField();
-                        v.Lable = p.Name;
-                        v.Val = (bool)p.GetValue(com);
-                        v.evtValueChanged += () => {
-                            p.SetValue(com, v.Val);
-                        };
-                        panel.Children.Add(v);
-                    }
-                    else if (p.PropertyType == typeof(double))
-                    {
-                        var v = new doubleField();
-                        v.Lable = p.Name;
-                        v.Val = (double)p.GetValue(com);
-                        v.evtValueChanged += () => {
-                            p.SetValue(com, v.Val);
-                        };
-                        panel.Children.Add(v);
-                    }
-                    else if (p.PropertyType == typeof(string))
-                    {
-                        var v = new stringField();
-                        v.Lable = p.Name;
-                        v.Val = (string)p.GetValue(com);
-                        v.evtValueChanged += () => {
-                            p.SetValue(com, v.Val);
-                        };
-                        panel.Children.Add(v);
+                        inspector = m;
+                        break;
                     }
                 }
+
+                if(inspector != null)
+                {
+                    inspector.Invoke(com, null);
+
+                    //description
+                    var fs = t.GetProperties();
+                    foreach (var p in fs)
+                    {
+                        if (p.PropertyType == typeof(string))
+                        {
+                            var descProp = p.GetCustomAttribute<DescriptionAttribute>();
+                            if (descProp != null)
+                            {
+                                var v = new DiscriptionCtrl();
+                                v.text = (string)p.GetValue(com);
+                                panel.Children.Add(v);
+                            }
+                        }
+                    }
+                }
+                else //property to gen inpector
+                {
+                    var fs = t.GetProperties();
+                    foreach (var p in fs)
+                    {
+                        var editorProp = p.GetCustomAttribute<EditorPropertyAttribute>();
+                        if (p.PropertyType == typeof(int))
+                        {
+                            var v = new intField();
+                            v.Lable = p.Name;
+                            v.Val = (int)p.GetValue(com);
+                            v.evtValueChanged += () => {
+                                p.SetValue(com, v.Val);
+                            };
+                            panel.Children.Add(v);
+                            if (editorProp != null)
+                                v.IsEnabled = false;
+                        }
+                        else if (p.PropertyType == typeof(bool))
+                        {
+                            var v = new boolField();
+                            v.Lable = p.Name;
+                            v.Val = (bool)p.GetValue(com);
+                            v.evtValueChanged += () => {
+                                p.SetValue(com, v.Val);
+                            };
+                            panel.Children.Add(v);
+                            if (editorProp != null)
+                                v.IsEnabled = false;
+                        }
+                        else if (p.PropertyType == typeof(double))
+                        {
+                            var v = new doubleField();
+                            v.Lable = p.Name;
+                            v.Val = (double)p.GetValue(com);
+                            v.evtValueChanged += () => {
+                                p.SetValue(com, v.Val);
+                            };
+                            panel.Children.Add(v);
+                            if (editorProp != null)
+                                v.IsEnabled = false;
+                        }
+                        else if (p.PropertyType == typeof(string))
+                        {
+                            var descProp = p.GetCustomAttribute<DescriptionAttribute>();
+                            if (descProp != null)
+                            {//description
+                                var v = new DiscriptionCtrl();
+                                v.text = (string)p.GetValue(com);
+                                panel.Children.Add(v);
+                            }
+                            else
+                            {
+                                var v = new stringField();
+                                v.Lable = p.Name;
+                                v.Val = (string)p.GetValue(com);
+                                v.evtValueChanged += () => {
+                                    p.SetValue(com, v.Val);
+                                };
+                                panel.Children.Add(v);
+                                if (editorProp != null)
+                                    v.IsEnabled = false;
+                            }
+                        }
+                    }
+                }
+                //var o = Activator.CreateInstance(t);
+                
             }
         }
     }

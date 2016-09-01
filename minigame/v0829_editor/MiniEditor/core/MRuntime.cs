@@ -1,4 +1,9 @@
-﻿using System;
+﻿/*
+ * author: xiaofeng.li
+ * mail: 453588006@qq.com
+ * desc: 
+ * */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -120,7 +125,7 @@ namespace MiniEditor
     }
 
     [System.AttributeUsage(System.AttributeTargets.Class, Inherited = true)]
-    public class ComponentCustomAttribute : System.Attribute
+    public class CustomComponentAttribute : System.Attribute
     {
         public string mPath = "";
         public string path
@@ -186,10 +191,20 @@ namespace MiniEditor
                 mIsMain = value;
             }
         }
+    }
+    
+    [System.AttributeUsage(System.AttributeTargets.Property)]
+    public class EditorPropertyAttribute : System.Attribute
+    {
+    }
 
+    [System.AttributeUsage(System.AttributeTargets.Property)]
+    public class DescriptionAttribute : System.Attribute
+    {
+    }
 
-        public ComponentCustomAttribute()
-        {
-        }
+    [System.AttributeUsage(System.AttributeTargets.Method)]
+    public class CustomInspectorAttribute : System.Attribute
+    {
     }
 }

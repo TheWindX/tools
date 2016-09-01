@@ -29,10 +29,10 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="0.5*"></RowDefinition>
                 </Grid.RowDefinitions>
-                <local:itemList Grid.Row="0" x:Name="mListObjects">
+                <local:itemList Grid.Row="2" x:Name="mListObjects">
                 </local:itemList>
                 <GridSplitter Grid.Row="1" HorizontalContentAlignment="Stretch" Height="5" HorizontalAlignment="Stretch"/>
-                <local:ComponentPanelList Grid.Row="2" x:Name="mListComponent"></local:ComponentPanelList>
+                <local:ComponentPanelList Grid.Row="0" x:Name="mListComponent"></local:ComponentPanelList>
             </Grid>
             <GridSplitter Grid.Column="1" VerticalContentAlignment="Stretch" Width="5" HorizontalAlignment="Stretch"/>
             <Grid>

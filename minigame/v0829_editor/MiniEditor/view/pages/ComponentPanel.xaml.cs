@@ -44,9 +44,9 @@ namespace MiniEditor
 
         private MComponent mCom = null;
 
-        public ComponentCustomAttribute getAttr()
+        public CustomComponentAttribute getAttr()
         {
-            var attr = mCom.GetType().GetCustomAttribute<ComponentCustomAttribute>();
+            var attr = mCom.GetType().GetCustomAttribute<CustomComponentAttribute>();
             return attr;
         }
 

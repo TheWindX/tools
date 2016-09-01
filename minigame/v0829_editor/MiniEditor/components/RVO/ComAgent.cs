@@ -3,30 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Controls;
 
 namespace MiniEditor
 {
-    [CustomComponent(path = "global", name ="地图物体")]
-    public class mapObject : MComponent
+    [RequireCom(typeof(mapObject))]
+    [CustomComponent(editable = false, isMain = true, name ="agent物体")]
+    class ComAgent : MComponent
     {
-        public int x
+        public double targetX
         {
             get; set;
         }
-
-        public int y
+        public double targetY
         {
             get; set;
         }
-
-        public int radius
+        public double targetZ
         {
             get; set;
-        }
-        public Control getMapItem()
-        {
-            return null;
         }
     }
 }

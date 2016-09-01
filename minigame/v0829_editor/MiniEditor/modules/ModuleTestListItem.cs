@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MiniEditor.viewModel
+namespace MiniEditor
 {
     [MiniEditor.ModuleInstance(1)]
     class ModuleTestListItem : MModule

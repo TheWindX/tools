@@ -27,7 +27,7 @@ namespace MiniEditor
 
         public void addEditorItem(EditObject item)
         {
-            addItem(item.getComponent<editorCOM>().getMenuItem());
+            addItem(item.getComponent<editorObject>().getMenuItem());
             foreach(var sub in item.children)
             {
                 addEditorItem(sub);
@@ -48,13 +48,13 @@ namespace MiniEditor
         {
             if(currentItem == null)
             {
-                addItem(item.getComponent<editorCOM>().getMenuItem());
+                addItem(item.getComponent<editorObject>().getMenuItem());
             }
             else
             {
                 item.parent = currentItem.editObject.parent;
-                addItemAfter(getLast(currentItem.editObject).getComponent<editorCOM>().getMenuItem(),
-                        item.getComponent<editorCOM>().getMenuItem());
+                addItemAfter(getLast(currentItem.editObject).getComponent<editorObject>().getMenuItem(),
+                        item.getComponent<editorObject>().getMenuItem());
             }
         }
 
@@ -69,7 +69,7 @@ namespace MiniEditor
         public void showItem(listItem itemToShow, bool isShow)
         {
             var eo = itemToShow.editObject;
-            var ui = eo.getComponent<editorCOM>().getMenuItem();
+            var ui = eo.getComponent<editorObject>().getMenuItem();
             if (isShow)
             {
                 ui.Visibility = Visibility.Visible;
@@ -78,7 +78,7 @@ namespace MiniEditor
                 {
                     foreach (var sub in eo.children)
                     {
-                        var subUI = sub.getComponent<editorCOM>().getMenuItem();
+                        var subUI = sub.getComponent<editorObject>().getMenuItem();
                         showItem(subUI, isShow);
                     }
                 }
@@ -90,7 +90,7 @@ namespace MiniEditor
                 {
                     foreach (var sub in eo.children)
                     {
-                        var subUI = sub.getComponent<editorCOM>().getMenuItem();
+                        var subUI = sub.getComponent<editorObject>().getMenuItem();
                         showItem(subUI, isShow);
                     }
                 }
@@ -105,7 +105,7 @@ namespace MiniEditor
             
             foreach (var sub in eo.children)
             {
-                var subUI = sub.getComponent<editorCOM>().getMenuItem();
+                var subUI = sub.getComponent<editorObject>().getMenuItem();
                 showItem(subUI, isExpand);
             }
         }
@@ -163,7 +163,7 @@ namespace MiniEditor
 
         public void pickEditObject(EditObject obj)
         {
-            var item = obj.getComponent<editorCOM>().getMenuItem();
+            var item = obj.getComponent<editorObject>().getMenuItem();
             pickUI(item);
         }
 
