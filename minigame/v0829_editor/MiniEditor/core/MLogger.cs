@@ -16,20 +16,20 @@ namespace MiniEditor
         public static void info(string str, params object[] values)
         {
             if (values.Count() == 0)
-                EditorFuncs.instance().getStatPage().addInfo(str);
+                EditorFuncs.getStatPage().addInfo(str);
             else
             {
-                EditorFuncs.instance().getStatPage().addInfo(string.Format(str, values));
+                EditorFuncs.getStatPage().addInfo(string.Format(str, values));
             }
         }
 
         public static void error(string str, params object[] values)
         {
             if (values.Count() == 0)
-                EditorFuncs.instance().getStatPage().addError(str);
+                EditorFuncs.getStatPage().addError(str);
             else
             {
-                EditorFuncs.instance().getStatPage().addError(string.Format(str, values));
+                EditorFuncs.getStatPage().addError(string.Format(str, values));
             }
         }
     }

@@ -26,7 +26,7 @@ namespace MiniEditor
         {
             get
             {
-                return EditorFuncs.instance().getItemListPage().getCurrentObj();
+                return EditorFuncs.getItemListPage().getCurrentObj();
             }
         }
         #endregion
@@ -50,7 +50,7 @@ namespace MiniEditor
                 mContextMenu.Items.Add(mi);
                 mi.Click += new RoutedEventHandler((obj, arg) =>
                 {
-                    var editObj = EditorFuncs.instance().getItemListPage().getCurrentObj();
+                    var editObj = EditorFuncs.getItemListPage().getCurrentObj();
                     if (editObj == null) return;
                     var comInstances = editObj.addComponent(comCopy);
                     foreach(var comInstance in comInstances)

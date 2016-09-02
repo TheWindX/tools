@@ -90,7 +90,7 @@ namespace MiniEditor
         private void Grid_MouseWheel(object sender, MouseWheelEventArgs e)
         {
             Point p = //Mouse.GetPosition(mCanvas);
-                EditorFuncs.instance().getMousePositionInMap();
+                EditorFuncs.getMousePositionInMap();
 
             if (e.Delta > 0)
             {
@@ -150,7 +150,7 @@ namespace MiniEditor
                 {
                     dx = p.X - x;
                     dy = p.Y - y;
-                    var obj = EditorFuncs.instance().getItemListPage().getCurrentObj();
+                    var obj = EditorFuncs.getItemListPage().getCurrentObj();
                     if (obj == null) return;
                     var mo = obj.getComponent<COMMapObject>();
                     if (mo == null) return;

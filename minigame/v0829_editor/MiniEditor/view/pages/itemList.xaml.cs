@@ -25,7 +25,8 @@ namespace MiniEditor
             InitializeComponent();
         }
 
-        public void addEditorItem(EditorObject item)
+        //增加到最后
+        private void addEditorItem(EditorObject item)
         {
             addItem(item.getComponent<COMEditorObject>().getMenuItem());
             foreach(var sub in item.children)
@@ -52,9 +53,10 @@ namespace MiniEditor
             }
             else
             {
-                item.parent = currentItem.editObject.parent;
-                addItemAfter(getLast(currentItem.editObject).getComponent<COMEditorObject>().getMenuItem(),
-                        item.getComponent<COMEditorObject>().getMenuItem());
+                //item.parent = currentItem.editObject.parent;
+                addItemAfter(item.parent.getComponent<COMEditorObject>().getMenuItem(), item.getComponent<COMEditorObject>().getMenuItem());
+                //addItemAfter(getLast(currentItem.editObject).getComponent<COMEditorObject>().getMenuItem(),
+                //        item.getComponent<COMEditorObject>().getMenuItem());
             }
         }
 
@@ -163,7 +165,7 @@ namespace MiniEditor
             item.isPick = true;
             currentItem = item;
 
-            EditorFuncs.instance().getComponentPage().reflush();
+            EditorFuncs.getComponentPage().reflush();
             var uimapObject1 = currentItem.editObject.getComponent<COMMapObject>();
             if(uimapObject1 != null)
             {
@@ -177,6 +179,7 @@ namespace MiniEditor
             pickUI(item);
         }
 
+        //todo, no in UI
         public EditorObject getCurrentObj()
         {
             if(currentItem == null)
@@ -198,13 +201,13 @@ namespace MiniEditor
             {
                 var obj = getCurrentObj();
                 if (obj == null) return;
-                pickEditObject(obj.preview);
+                pickEditObject(obj.next);
             }
             else if(e.Key == Key.Down)
             {
                 var obj = getCurrentObj();
                 if (obj == null) return;
-                pickEditObject(obj.next);
+                pickEditObject(obj.preview);
             }
             else if (e.Key == Key.Left)
             {
@@ -222,6 +225,13 @@ namespace MiniEditor
                     pickEditObject(c);
                 }
             }
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            var obj = EditorWorld.getRootEditorObject();
+            addEditorItem(obj);
+            pickEditObject(obj);
         }
     }
 }

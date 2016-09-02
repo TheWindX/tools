@@ -19,7 +19,7 @@ namespace MiniEditor
             EditorObject obj = new EditorObject();
             obj.parent = parent;
             obj.name = name;
-            mObjects.Add(obj);
+            mObjects.Insert(0, obj);
             return obj;
         }
 

@@ -10,6 +10,12 @@ namespace MiniEditor
 {
     class EditorWorld
     {
+        static EditorObject mRootObject = createObject(null, "root");
+        public static EditorObject getRootEditorObject()
+        {
+            return mRootObject;
+        }
+
         public static EditorObject createObject(EditorObject parent, string name)
         {
             var eo = MWorld.createObject(parent, name);

@@ -81,7 +81,7 @@ namespace MiniEditor
             {
                 uiObj = new UIMapObj() { x=0, y=0, radius = 15};
                 uiObj.editorObject = getEditorObject();
-                EditorFuncs.instance().getMapPage().addItem(uiObj);
+                EditorFuncs.getMapPage().addItem(uiObj);
             }
             return uiObj;
         }

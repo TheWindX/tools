@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace MiniEditor
 {
-    [MiniEditor.ModuleInstance(0)]
-    class moduleConsole : MModule
+    [ModuleInstance(0)]
+    class ModuleConsole : MModule
     {
         public void onExit()
         {

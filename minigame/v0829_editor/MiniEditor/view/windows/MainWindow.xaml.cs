@@ -28,7 +28,7 @@ namespace MiniEditor
         
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
-            EditorFuncs.instance().openHELP();
+            EditorFuncs.openHELP();
         }
 
         private void Window_Initialized(object sender, EventArgs e)
@@ -46,6 +46,11 @@ namespace MiniEditor
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             MDriver.exit();
+        }
+
+        private void Window_PreviewKeyUp(object sender, KeyEventArgs e)
+        {
+            EditorFuncs.doKeyUp(e.Key);
         }
     }
 }

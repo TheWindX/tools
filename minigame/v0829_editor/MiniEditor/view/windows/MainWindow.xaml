@@ -3,10 +3,11 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:wpfTool="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
+        
         xmlns:local="clr-namespace:MiniEditor"
         mc:Ignorable="d"
-        Title="MainWindow" Height="1024" Width="1024" Initialized="Window_Initialized" Closing="Window_Closing" Background="{x:Null}">
+        Title="MainWindow" Height="1024" Width="1024" Initialized="Window_Initialized" Closing="Window_Closing" Background="{x:Null}" PreviewKeyUp="Window_PreviewKeyUp">
+    <!--:wpfTool="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"-->
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>

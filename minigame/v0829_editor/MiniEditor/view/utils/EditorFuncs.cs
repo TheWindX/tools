@@ -15,20 +15,10 @@ namespace MiniEditor
     //编辑器控制器
     class EditorFuncs
     {
-        private static EditorFuncs ins = null;
-        public static EditorFuncs instance()
+        static WindowsF1 mHelpWindow = null;
+        public static void openHELP()
         {
-            if (ins == null)
-            {
-                ins = new EditorFuncs();
-                ins.init();
-            }
-            return ins;
-        }
-
-        WindowsF1 mHelpWindow = null;
-        public void openHELP()
-        {
+            init();
             if (mHelpWindow == null)
                 mHelpWindow = new WindowsF1();
             mHelpWindow.Owner = mMainWindow;
@@ -38,24 +28,15 @@ namespace MiniEditor
             mHelpWindow.Top = mMainWindow.Top + (mMainWindow.Height - mHelpWindow.ActualHeight) / 2;
             mHelpWindow.Activate();
         }
-
-        //public void openStat()
-        //{
-        //    var statWindow = getStatWindow();
-        //    mStatWindow.Owner = mMainWindow;
-        //    statWindow.Show();
-        //    statWindow.Left = mMainWindow.Left + (mMainWindow.Width - statWindow.ActualWidth) / 2;
-        //    statWindow.Top = mMainWindow.Top + (mMainWindow.Height - statWindow.ActualHeight) / 2;
-        //    statWindow.Activate();
-        //}
-        public StatusPage getStatPage()
+        
+        public static StatusPage getStatPage()
         {
             init();
             return mMainWindow.mStatusPage;
         }
 
-        private MainWindow mMainWindow = null;
-        private void init()
+        private static MainWindow mMainWindow = null;
+        private static void init()
         {
             if (mMainWindow == null)
             {
@@ -64,37 +45,68 @@ namespace MiniEditor
             return;
         }
 
-        public ComponentPanelList getComponentPage()
+        public static ComponentPanelList getComponentPage()
         {
-            if(mMainWindow != null)
-            {
-                init();
-            }
+            init();
             return mMainWindow.mListComponent;
         }
 
-        public editorMap getMapPage()
+        public static editorMap getMapPage()
         {
-            if (mMainWindow != null)
-            {
-                init();
-            }
+            init();
             return mMainWindow.mMapPage;
         }
 
-        public itemList getItemListPage()
+        public static itemList getItemListPage()
         {
-            if (mMainWindow != null)
-            {
-                init();
-            }
+            init();
             return mMainWindow.mListObjects;
         }
 
-        public Point getMousePositionInMap()
+        public static Point getMousePositionInMap()
         {
             Point p = Mouse.GetPosition(getMapPage().mCanvas);
             return p;
+        }
+
+        internal static void doKeyUp(Key k)
+        {
+            if(evtKey != null)
+            {
+                evtKey(k);
+            }
+        }
+
+        public static event System.Action<Key> evtKey = null;
+
+        public static bool isLeftControlPressed()
+        {
+            return Keyboard.IsKeyDown(Key.LeftCtrl);
+        }
+
+        public static bool isLeftShiftPressed()
+        {
+            return Keyboard.IsKeyDown(Key.LeftShift);
+        }
+
+        public static bool isRightControlPressed()
+        {
+            return Keyboard.IsKeyDown(Key.RightCtrl);
+        }
+
+        public static bool isRightShiftPressed()
+        {
+            return Keyboard.IsKeyDown(Key.RightShift);
+        }
+
+        public static EditorObject getRootEditorObject()
+        {
+            return EditorWorld.getRootEditorObject();
+        }
+
+        public static EditorObject getCurrentEditorObject()
+        {
+            return getItemListPage().getCurrentObj();
         }
     }
 }

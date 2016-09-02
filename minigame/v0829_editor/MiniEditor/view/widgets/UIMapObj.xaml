@@ -13,7 +13,7 @@
             <ColumnDefinition Width="4*"></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <Ellipse x:Name="mBody" Fill="#FF959595" Grid.ColumnSpan="2" StrokeThickness="3"/>
+        <Ellipse x:Name="mBody" Fill="#FF959595" Grid.ColumnSpan="2" StrokeThickness="1"/>
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="2*"></RowDefinition>

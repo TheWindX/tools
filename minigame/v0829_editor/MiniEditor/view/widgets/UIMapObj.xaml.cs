@@ -102,7 +102,7 @@ namespace MiniEditor
 
         private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            EditorFuncs.instance().getItemListPage().pickEditObject(editorObject);
+            EditorFuncs.getItemListPage().pickEditObject(editorObject);
         }
 
     }

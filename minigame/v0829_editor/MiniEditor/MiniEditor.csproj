@@ -111,8 +111,8 @@
     <Compile Include="components\COMMapObject.cs" />
     <Compile Include="editorCore\EditorWorld.cs" />
     <Compile Include="editorCore\exportFunctions.cs" />
-    <Compile Include="modules\moduleConsole.cs" />
-    <Compile Include="modules\ModuleTestListItem.cs" />
+    <Compile Include="modules\ModuleShortcut.cs" />
+    <Compile Include="modules\ModuleConsole.cs" />
     <Compile Include="view\widgets\boolField.xaml.cs" />
     <Compile Include="view\pages\ComponentPanel.xaml.cs">
       <DependentUpon>ComponentPanel.xaml</DependentUpon>

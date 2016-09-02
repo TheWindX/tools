@@ -82,7 +82,7 @@ namespace MiniEditor
             mContextMenu.Items.Add(mi);
             mi.Click += new RoutedEventHandler((obj, arg) =>
             {
-                var editObj = EditorFuncs.instance().getItemListPage().getCurrentObj();
+                var editObj = EditorFuncs.getItemListPage().getCurrentObj();
                 var comInstances = editObj.removeComponent(component);
 
                 foreach(var comIns in comInstances)
@@ -97,7 +97,7 @@ namespace MiniEditor
                     }
                 }
 
-                EditorFuncs.instance().getComponentPage().reflush();
+                EditorFuncs.getComponentPage().reflush();
             });
             mContextMenu.IsOpen = true;
         }
