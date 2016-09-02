@@ -8,21 +8,21 @@ using System.Windows.Controls;
 namespace MiniEditor
 {
     [CustomComponent(path = "global", name = "编辑器物体", removable = false)]
-    class editorObject : MComponent
+    class COMEditorObject : MComponent
     {
         listItem mItem = null;
         int getLevel()
         {
-            if (getObject().parent == null) return 0;
-            else return getObject().parent.getComponent<editorObject>().getLevel() + 1;
+            if (getEditorObject().parent == null) return 0;
+            else return getEditorObject().parent.getComponent<COMEditorObject>().getLevel() + 1;
         }
 
         public virtual listItem getMenuItem()
         {
-            if(mItem == null)
-            {   
-                mItem = new listItem() { expand = true, isPick = false, level = getLevel(), name = getObject().name };
-                mItem.editObject = getObject();
+            if (mItem == null)
+            {
+                mItem = new listItem() { expand = true, isPick = false, level = getLevel(), name = getEditorObject().name };
+                mItem.editObject = getEditorObject();
             }
             mItem.level = getLevel();
             return mItem;
@@ -41,7 +41,7 @@ namespace MiniEditor
             }
             set
             {
-                getObject().name = value;
+                getEditorObject().name = value;
                 getMenuItem().name = value;
             }
         }
@@ -59,7 +59,7 @@ namespace MiniEditor
         {
             get
             {
-                if(mID == null)
+                if (mID == null)
                 {
                     mID = genID();
                 }

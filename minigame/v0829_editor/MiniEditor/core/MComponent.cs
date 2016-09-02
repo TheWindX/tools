@@ -11,11 +11,11 @@ using System.Threading.Tasks;
 
 namespace MiniEditor
 {
-    public class EditObject
+    public class EditorObject
     {
         List<MComponent> mComponents = new List<MComponent>();
-        List<EditObject> mChildren = new List<EditObject>();
-        EditObject mParent = null;
+        List<EditorObject> mChildren = new List<EditorObject>();
+        EditorObject mParent = null;
 
         public string name
         {
@@ -23,7 +23,7 @@ namespace MiniEditor
             set;
         }
 
-        public IEnumerable<EditObject> children
+        public IEnumerable<EditorObject> children
         {
             get
             {
@@ -31,7 +31,7 @@ namespace MiniEditor
             }
         }
 
-        public EditObject parent
+        public EditorObject parent
         {
             get
             {
@@ -52,7 +52,7 @@ namespace MiniEditor
             }
         }
 
-        public EditObject preview
+        public EditorObject preview
         {
             get
             {
@@ -64,7 +64,7 @@ namespace MiniEditor
             }
         }
 
-        public EditObject next
+        public EditorObject next
         {
             get
             {
@@ -160,13 +160,13 @@ namespace MiniEditor
 
     public class MComponent
     {
-        internal EditObject go = null;
+        internal EditorObject go = null;
         internal Action evtAdd = null;
         internal Action evtRemove = null;
 
         public virtual void editorInit()
         {
-            MLogger.info("editorInit: {0}", GetType().Name);
+            //MLogger.info("editorInit: {0}", GetType().Name);
         }
 
         public virtual void editorUpdate()
@@ -176,10 +176,10 @@ namespace MiniEditor
 
         public virtual void editorExit()
         {
-            MLogger.info("editorExit: {0}", GetType().Name);
+            //MLogger.info("editorExit: {0}", GetType().Name);
         }
 
-        public EditObject getObject()
+        public EditorObject getEditorObject()
         {
             return go;
         }

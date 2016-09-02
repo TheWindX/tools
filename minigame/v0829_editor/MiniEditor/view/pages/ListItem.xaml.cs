@@ -41,7 +41,7 @@ namespace MiniEditor
         public System.Action<bool> evtOnExpand;
         public System.Action evtOnPick;
 
-        public EditObject editObject
+        public EditorObject editObject
         {
             get;
             set;

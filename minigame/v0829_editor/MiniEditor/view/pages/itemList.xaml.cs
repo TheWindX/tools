@@ -25,16 +25,16 @@ namespace MiniEditor
             InitializeComponent();
         }
 
-        public void addEditorItem(EditObject item)
+        public void addEditorItem(EditorObject item)
         {
-            addItem(item.getComponent<editorObject>().getMenuItem());
+            addItem(item.getComponent<COMEditorObject>().getMenuItem());
             foreach(var sub in item.children)
             {
                 addEditorItem(sub);
             }
         }
 
-        private EditObject getLast(EditObject item)
+        private EditorObject getLast(EditorObject item)
         {
             var items = item.children.ToArray();
             if(items.Count() == 0)
@@ -44,17 +44,17 @@ namespace MiniEditor
             return getLast(items.Last());
         }
 
-        public void insertEditorItem(EditObject item)
+        public void insertEditorItem(EditorObject item)
         {
             if(currentItem == null)
             {
-                addItem(item.getComponent<editorObject>().getMenuItem());
+                addItem(item.getComponent<COMEditorObject>().getMenuItem());
             }
             else
             {
                 item.parent = currentItem.editObject.parent;
-                addItemAfter(getLast(currentItem.editObject).getComponent<editorObject>().getMenuItem(),
-                        item.getComponent<editorObject>().getMenuItem());
+                addItemAfter(getLast(currentItem.editObject).getComponent<COMEditorObject>().getMenuItem(),
+                        item.getComponent<COMEditorObject>().getMenuItem());
             }
         }
 
@@ -69,7 +69,7 @@ namespace MiniEditor
         public void showItem(listItem itemToShow, bool isShow)
         {
             var eo = itemToShow.editObject;
-            var ui = eo.getComponent<editorObject>().getMenuItem();
+            var ui = eo.getComponent<COMEditorObject>().getMenuItem();
             if (isShow)
             {
                 ui.Visibility = Visibility.Visible;
@@ -78,7 +78,7 @@ namespace MiniEditor
                 {
                     foreach (var sub in eo.children)
                     {
-                        var subUI = sub.getComponent<editorObject>().getMenuItem();
+                        var subUI = sub.getComponent<COMEditorObject>().getMenuItem();
                         showItem(subUI, isShow);
                     }
                 }
@@ -90,7 +90,7 @@ namespace MiniEditor
                 {
                     foreach (var sub in eo.children)
                     {
-                        var subUI = sub.getComponent<editorObject>().getMenuItem();
+                        var subUI = sub.getComponent<COMEditorObject>().getMenuItem();
                         showItem(subUI, isShow);
                     }
                 }
@@ -105,7 +105,7 @@ namespace MiniEditor
             
             foreach (var sub in eo.children)
             {
-                var subUI = sub.getComponent<editorObject>().getMenuItem();
+                var subUI = sub.getComponent<COMEditorObject>().getMenuItem();
                 showItem(subUI, isExpand);
             }
         }
@@ -154,20 +154,30 @@ namespace MiniEditor
             if(currentItem != null)
             {
                 currentItem.isPick = false;
+                var uimapObject = currentItem.editObject.getComponent<COMMapObject>();
+                if (uimapObject != null)
+                {
+                    uimapObject.getMapUIItem().isPicked = false;
+                }
             }
             item.isPick = true;
             currentItem = item;
 
             EditorFuncs.instance().getComponentPage().reflush();
+            var uimapObject1 = currentItem.editObject.getComponent<COMMapObject>();
+            if(uimapObject1 != null)
+            {
+                uimapObject1.getMapUIItem().isPicked = true;
+            }
         }
 
-        public void pickEditObject(EditObject obj)
+        public void pickEditObject(EditorObject obj)
         {
-            var item = obj.getComponent<editorObject>().getMenuItem();
+            var item = obj.getComponent<COMEditorObject>().getMenuItem();
             pickUI(item);
         }
 
-        public EditObject getCurrentObj()
+        public EditorObject getCurrentObj()
         {
             if(currentItem == null)
             {

@@ -10,14 +10,14 @@ namespace MiniEditor
 {
     class EditorWorld
     {
-        public static EditObject createObject(EditObject parent, string name)
+        public static EditorObject createObject(EditorObject parent, string name)
         {
             var eo = MWorld.createObject(parent, name);
-            eo.addComponent<editorObject>();
+            eo.addComponent<COMEditorObject>();
             return eo;
         }
 
-        public static void removeObject(EditObject obj)
+        public static void removeObject(EditorObject obj)
         {
             MWorld.removeObject(obj);
         }

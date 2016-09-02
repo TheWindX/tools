@@ -153,7 +153,7 @@ namespace MiniEditor
             }
         }
 
-        private bool mRemovable = true;
+        private bool mRemovable = false;
         public bool removable
         {
             get

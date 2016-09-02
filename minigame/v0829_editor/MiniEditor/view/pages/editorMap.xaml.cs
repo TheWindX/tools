@@ -79,7 +79,7 @@ namespace MiniEditor
             var h = ActualHeight;
             mTranslate.X = w/2;
             mTranslate.Y = h/2;
-            //mScale.ScaleY = -1;
+            mScale.ScaleY = -1;
         }
 
         private void Grid_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -89,8 +89,10 @@ namespace MiniEditor
 
         private void Grid_MouseWheel(object sender, MouseWheelEventArgs e)
         {
-            Point p = Mouse.GetPosition(mCanvas);
-            if(e.Delta > 0)
+            Point p = //Mouse.GetPosition(mCanvas);
+                EditorFuncs.instance().getMousePositionInMap();
+
+            if (e.Delta > 0)
             {
                 mScale.ScaleX = mScale.ScaleX * 1.1f;
                 mScale.ScaleY = mScale.ScaleY * 1.1f;
@@ -113,15 +115,15 @@ namespace MiniEditor
         double y = 0;
         double dx = 0;
         double dy = 0;
-        bool mosuePress = false;
+        bool mousePress = false;
         private void Grid_MouseMove(object sender, MouseEventArgs e)
         {
             if(e.MiddleButton == MouseButtonState.Pressed)
             {
                 Point p = Mouse.GetPosition(this);
-                if (!mosuePress)
+                if (!mousePress)
                 {
-                    mosuePress = true;
+                    mousePress = true;
                     x = p.X;
                     y = p.Y;
                 }
@@ -135,10 +137,43 @@ namespace MiniEditor
                     y = p.Y;
                 }
             }
-            else
+            else if (e.LeftButton == MouseButtonState.Pressed)
             {
-                mosuePress = false;
+                Point p = Mouse.GetPosition(this);
+                if (!mousePress)
+                {
+                    mousePress = true;
+                    x = p.X;
+                    y = p.Y;
+                }
+                else
+                {
+                    dx = p.X - x;
+                    dy = p.Y - y;
+                    var obj = EditorFuncs.instance().getItemListPage().getCurrentObj();
+                    if (obj == null) return;
+                    var mo = obj.getComponent<COMMapObject>();
+                    if (mo == null) return;
+                    mo.x = mo.x + dx / mScale.ScaleX;
+                    mo.y = mo.y + dy / mScale.ScaleY;
+                    x = p.X;
+                    y = p.Y;
+                }
             }
+            else if (mousePress)
+            {
+                mousePress = false;
+            }
+        }
+
+        public void addItem(UIMapObj obj)
+        {
+            mCanvas.Children.Add(obj);
+        }
+
+        public void clear(UIMapObj obj)
+        {
+            mCanvas.Children.Clear();
         }
     }
 }

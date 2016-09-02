@@ -22,7 +22,7 @@ namespace MiniEditor
     public partial class ComponentPanelList : UserControl
     {
         #region props
-        public EditObject editObject
+        public EditorObject editObject
         {
             get
             {

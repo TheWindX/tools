@@ -1,12 +1,12 @@
-﻿<UserControl x:Class="MiniEditor.editorMap"
+﻿<UserControl x:Class="MiniEditor.UIMapObjectTarget"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MiniEditor"
-             mc:Ignorable="d" 
-             d:DesignHeight="632" d:DesignWidth="650">
-    <Grid ClipToBounds="True" SizeChanged="Grid_SizeChanged" Background="#0C000000" MouseWheel="Grid_MouseWheel" MouseMove="Grid_MouseMove">
-        <Canvas x:Name="mCanvas" />
+             mc:Ignorable="d" Width="10" Height="10"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <Border BorderBrush="#FFD60000" BorderThickness="2"/>
     </Grid>
 </UserControl>

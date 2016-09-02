@@ -6,19 +6,16 @@ using System.Threading.Tasks;
 
 namespace MiniEditor
 {
-    [RequireCom(typeof(mapObject))]
-    [CustomComponent(editable = false, isMain = true, name ="agent物体")]
+    [RequireCom(typeof(COMMapObject))]
+    [CustomComponent(isMain = true, name ="agent物体", removable=false)]
     class ComAgent : MComponent
     {
         public double targetX
         {
             get; set;
         }
+
         public double targetY
-        {
-            get; set;
-        }
-        public double targetZ
         {
             get; set;
         }

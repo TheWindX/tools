@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 
 
@@ -72,6 +73,15 @@ namespace MiniEditor
             return mMainWindow.mListComponent;
         }
 
+        public editorMap getMapPage()
+        {
+            if (mMainWindow != null)
+            {
+                init();
+            }
+            return mMainWindow.mMapPage;
+        }
+
         public itemList getItemListPage()
         {
             if (mMainWindow != null)
@@ -79,6 +89,12 @@ namespace MiniEditor
                 init();
             }
             return mMainWindow.mListObjects;
+        }
+
+        public Point getMousePositionInMap()
+        {
+            Point p = Mouse.GetPosition(getMapPage().mCanvas);
+            return p;
         }
     }
 }
