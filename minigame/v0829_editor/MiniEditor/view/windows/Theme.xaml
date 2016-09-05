@@ -3350,7 +3350,7 @@
         <Setter Property="BorderThickness" Value="2"/>
         <Setter Property="BorderBrush">
             <Setter.Value>
-                <SolidColorBrush Color="#FF617584" />
+                <SolidColorBrush Color="{StaticResource BorderColor}" />
                 <!--LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FFA3AEB9" Offset="0" />
                     <GradientStop Color="#FF8399A9" Offset="0.375" />

@@ -15,7 +15,7 @@
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
         <Menu Grid.Row="0">
-            <MenuItem Header="Start"></MenuItem>
+            <!--MenuItem Header="Start"></-->
             <MenuItem Header="Help" Click="MenuItem_Click"></MenuItem>
         </Menu>
         <Grid  Grid.Row="1">
