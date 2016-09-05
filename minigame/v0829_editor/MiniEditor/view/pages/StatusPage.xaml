@@ -29,7 +29,7 @@
             <TabItem Header="info">
                 <ScrollViewer>
                     <StackPanel x:Name="m_infoview">
-                        <TextBox x:Name="m_infotext" BorderThickness="0"  IsReadOnly="True" TextWrapping="Wrap" AcceptsReturn="True" Background="#02000000" Text="asdfasdf"></TextBox>
+                        <TextBox x:Name="m_infotext" BorderThickness="0"  IsReadOnly="True" TextWrapping="Wrap" AcceptsReturn="True" Background="#02000000" Text=""></TextBox>
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>
