@@ -8,7 +8,7 @@ namespace MiniEditor
 {
     [RequireCom(typeof(COMMapObject))]
     [CustomComponent(path ="DEMO/RVO", isMain = true, name ="agent物体", removable=false)]
-    class ComAgent : MComponent
+    class COMAgent : MComponent
     {
         public double targetX
         {

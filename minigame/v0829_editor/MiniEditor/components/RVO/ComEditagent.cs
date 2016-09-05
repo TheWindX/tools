@@ -9,9 +9,9 @@ using System.Windows.Shapes;
 
 namespace MiniEditor
 {
-    [RequireCom(typeof(ComAgent))]
+    [RequireCom(typeof(COMAgent))]
     [CustomComponent(path = "DEMO/RVO", name = "agent物体编辑")]
-    class ComEditagent : MComponent
+    class COMEditagent : MComponent
     {
         [Description]
         public string desc
@@ -51,7 +51,7 @@ namespace MiniEditor
 
         public override void editorUpdate()
         {
-            var agent = getComponent<ComAgent>();
+            var agent = getComponent<COMAgent>();
             var mapObj = getComponent<COMMapObject>();
             var targetUI = getTargetUI();
             var lineUI = getTargetLineUI();
@@ -74,7 +74,7 @@ namespace MiniEditor
         private void MapUI_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             Point p = EditorFuncs.getMousePositionInMap();
-            var agent = getComponent<ComAgent>();
+            var agent = getComponent<COMAgent>();
             agent.targetX = p.X;
             agent.targetY = p.Y;
         }

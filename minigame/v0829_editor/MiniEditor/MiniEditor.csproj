@@ -98,8 +98,8 @@
     </ApplicationDefinition>
     <Compile Include="components\COMEditorObject.cs" />
     <Compile Include="components\ComponentRepository.cs" />
-    <Compile Include="components\RVO\ComAgent.cs" />
-    <Compile Include="components\RVO\ComEditagent.cs" />
+    <Compile Include="components\RVO\COMAgent.cs" />
+    <Compile Include="components\RVO\COMEditagent.cs" />
     <Compile Include="components\RVO\COMRVORunner.cs" />
     <Compile Include="components\RVO\COMRVOScenario.cs" />
     <Compile Include="editorCore\CSRepl.cs" />

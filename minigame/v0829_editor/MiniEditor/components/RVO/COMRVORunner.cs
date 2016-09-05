@@ -18,7 +18,7 @@ namespace MiniEditor
                 return () =>
                 {
                     var obj = EditorWorld.createObject(getEditorObject(), "agent");
-                    obj.addComponent<ComEditagent>();
+                    obj.addComponent<COMEditagent>();
                     EditorFuncs.getItemListPage().insertEditorItem(obj);
                 };
             }
@@ -40,7 +40,7 @@ namespace MiniEditor
                     var nodes = getEditorObject().children;
                     foreach (var node in nodes)
                     {
-                        var agent = node.getComponent<ComAgent>();
+                        var agent = node.getComponent<COMAgent>();
                         var agentMapObj = node.getComponent<COMMapObject>();
                         int id = Simulator.Instance.addAgent(new Vector2((float)agentMapObj.x, (float)agentMapObj.y));
                         agent.agentID = id;
@@ -63,7 +63,7 @@ namespace MiniEditor
                 var nodes = getEditorObject().children;
                 foreach (var node in nodes)
                 {
-                    var agent = node.getComponent<ComAgent>();
+                    var agent = node.getComponent<COMAgent>();
                     var agentMapObj = node.getComponent<COMMapObject>();
                     var pos = Simulator.Instance.getAgentPosition(agent.agentID);
                     agentMapObj.x = (double)pos.x();
@@ -74,7 +74,7 @@ namespace MiniEditor
                 //update prevelocity
                 foreach (var node in nodes)
                 {
-                    var agent = node.getComponent<ComAgent>();
+                    var agent = node.getComponent<COMAgent>();
                     var agentMapObj = node.getComponent<COMMapObject>();
 
                     var goal = new Vector2((float)agent.targetX, (float)agent.targetY);
