@@ -161,11 +161,13 @@ namespace MiniEditor
     public class MComponent
     {
         internal EditorObject go = null;
-        internal Action evtAdd = null;
+        internal Action evtInit = null;
+        internal Action evtUpdate = null;
         internal Action evtRemove = null;
 
         public virtual void editorInit()
         {
+
             //MLogger.info("editorInit: {0}", GetType().Name);
         }
 

@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Controls;
 
 namespace MiniEditor
@@ -28,10 +24,9 @@ namespace MiniEditor
             MWorld.removeObject(obj);
         }
         
-
-
-        public static void addTypeControl(MComponent com, Panel panel)
+        public static void addTypeControl(MComponent com, ComponentPanel comPanel)
         {
+            var panel = comPanel.mProps;
             panel.Children.Clear();
             Type t = com.GetType();
             if (t.IsClass)
@@ -51,7 +46,6 @@ namespace MiniEditor
                 if(inspector != null)
                 {
                     inspector.Invoke(com, null);
-
                     //description
                     var fs = t.GetProperties();
                     foreach (var p in fs)
@@ -85,6 +79,21 @@ namespace MiniEditor
                             panel.Children.Add(v);
                             if (editorProp != null)
                                 v.IsEnabled = false;
+
+                            Action act = () =>
+                            {
+                                var checkValue = (int)p.GetValue(com);
+                                if(checkValue != v.Val)
+                                {
+                                    v.Val = checkValue;
+                                }
+                            };
+
+                            com.evtUpdate += act;
+                            com.evtRemove += () =>
+                            {
+                                com.evtUpdate -= act;
+                            };
                         }
                         else if (p.PropertyType == typeof(bool))
                         {
@@ -109,6 +118,21 @@ namespace MiniEditor
                             panel.Children.Add(v);
                             if (editorProp != null)
                                 v.IsEnabled = false;
+
+                            Action act = () =>
+                            {
+                                var checkValue = (double)p.GetValue(com);
+                                if (checkValue != v.Val)
+                                {
+                                    v.Val = checkValue;
+                                }
+                            };
+
+                            com.evtUpdate += act;
+                            com.evtRemove += () =>
+                            {
+                                com.evtUpdate -= act;
+                            };
                         }
                         else if (p.PropertyType == typeof(string))
                         {

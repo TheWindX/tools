@@ -56,7 +56,7 @@ namespace MiniEditor
             if(attr!=null)
             {
                 mName.Content = attr.name;
-                EditorWorld.addTypeControl(mCom, mProps);
+                EditorWorld.addTypeControl(mCom, this);
                 if(!attr.removable)
                 {
                     mHead.IsEnabled = false;

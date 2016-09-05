@@ -151,6 +151,10 @@ namespace MiniEditor
             {
                 try
                 {
+                    if (com.evtUpdate != null)
+                    {
+                        com.evtUpdate();
+                    }
                     com.editorUpdate();
                 }
                 catch (Exception ex)
