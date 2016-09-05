@@ -44,8 +44,8 @@ namespace MiniEditor
             float x = startX;
             float y = startY;
             int lines = 10;
-            Brush stroke = new SolidColorBrush(Colors.LightBlue);
-            Brush strokeCenter = new SolidColorBrush(Colors.Red);
+            Brush stroke = new SolidColorBrush(Color.FromArgb(200, 102, 102, 153));
+            Brush strokeCenter = new SolidColorBrush(Color.FromArgb(200, 255, 0, 0));
             for (int xi = 0; xi < lines+1; ++xi)
             {
                 x = startX + xi * space;
@@ -79,7 +79,8 @@ namespace MiniEditor
             var h = ActualHeight;
             mTranslate.X = w/2;
             mTranslate.Y = h/2;
-            mScale.ScaleY = -1;
+            mScale.ScaleY = -mScale.ScaleX;
+
         }
 
         private void Grid_SizeChanged(object sender, SizeChangedEventArgs e)

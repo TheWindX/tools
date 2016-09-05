@@ -129,8 +129,7 @@ namespace MiniEditor
                 {
                     var attrs = t.GetCustomAttribute<CustomComponentAttribute>();
                     if (attrs != null)
-                    {
-                        //MModule instance = (MModule)Activator.CreateInstance(t);
+                    {  
                         mComponents.Add(t);
                     }
                 }

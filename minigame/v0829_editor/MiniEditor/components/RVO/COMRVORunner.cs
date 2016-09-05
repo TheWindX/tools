@@ -35,8 +35,11 @@ namespace MiniEditor
                     if (!mInit) return;
 
                     var scenario = getComponent<COMRVOScenario>();
-                    Simulator.Instance.setTimeStep(0.25f);
-                    Simulator.Instance.setAgentDefaults(15.0f, 10, 10.0f, 10.0f, 11.5f, 2.0f, new Vector2(1.0f, 0.0f));
+                    Simulator.Instance.setTimeStep((float)scenario.timeStep);
+                    Simulator.Instance.setAgentDefaults((float)scenario.neighbordist, (int)scenario.maxNeighbors,
+                        (float)scenario.timeHorizon, (float)scenario.timeHorizonObst, (float)scenario.radius,
+                        (float)scenario.maxSpeed,
+                        new Vector2(0.0f, 0.0f));
                     var nodes = getEditorObject().children;
                     foreach (var node in nodes)
                     {

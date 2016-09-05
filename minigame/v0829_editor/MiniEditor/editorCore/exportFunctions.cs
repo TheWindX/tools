@@ -12,5 +12,15 @@ namespace MiniEditor
         {
             MLogger.info(text);
         }
+
+        public static void help()
+        {
+            EditorFuncs.openHELP();
+        }
+
+        public static void printCurrent()
+        {
+            EditorWorld.getRootEditorObject().printOBJ();
+        }
     }
 }

@@ -78,9 +78,5 @@ namespace MiniEditor
             agent.targetX = p.X;
             agent.targetY = p.Y;
         }
-
-        
     }
-
-
 }

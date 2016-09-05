@@ -26,7 +26,9 @@ namespace MiniEditor
         public static void error(string str, params object[] values)
         {
             if (values.Count() == 0)
+            {
                 EditorFuncs.getStatPage().addError(str);
+            }   
             else
             {
                 EditorFuncs.getStatPage().addError(string.Format(str, values));

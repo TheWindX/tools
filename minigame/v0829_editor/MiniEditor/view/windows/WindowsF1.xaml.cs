@@ -37,7 +37,7 @@ namespace MiniEditor
         public void init()
         {
             addItem("F1:帮助");
-            //addItem("");
+            addItem("INSERT:测试增加子物件");
         }
 
         public void clear()

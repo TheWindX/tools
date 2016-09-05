@@ -24,13 +24,16 @@ namespace MiniEditor
 
         }
 
-        int icount = 0;
         private void EditorFuncs_evtKey(System.Windows.Input.Key k)
         {
             if(k == System.Windows.Input.Key.Insert)
             {
-                var obj = EditorWorld.createObject(EditorFuncs.getCurrentEditorObject(), "magic"+icount++.ToString());
+                var obj = EditorWorld.createObject(EditorFuncs.getCurrentEditorObject(), "[null]");
                 EditorFuncs.getItemListPage().insertEditorItem(obj);
+            }
+            else if(k == System.Windows.Input.Key.F1)
+            {
+                EditorFuncs.openHELP();
             }
         }
 

@@ -97,7 +97,7 @@ namespace MiniEditor
             foreach (var com in editObject.components)
             {
                 var comP = new ComponentPanel() { component = com };
-                if(comP.getAttr().isMain)
+                if(com.getAttr().isMain)
                 {
                     mainPanel = comP;
                 }

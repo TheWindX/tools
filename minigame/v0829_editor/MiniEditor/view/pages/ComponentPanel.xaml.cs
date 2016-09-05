@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MiniEditor;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -44,15 +45,15 @@ namespace MiniEditor
 
         private MComponent mCom = null;
 
-        public CustomComponentAttribute getAttr()
-        {
-            var attr = mCom.GetType().GetCustomAttribute<CustomComponentAttribute>();
-            return attr;
-        }
+        //public CustomComponentAttribute getAttr()
+        //{
+        //    var attr = mCom.GetType().GetCustomAttribute<CustomComponentAttribute>();
+        //    return attr;
+        //}
 
         void reflush()
         {
-            var attr = getAttr();
+            var attr = mCom.getAttr();// getAttr();
             if(attr!=null)
             {
                 mName.Content = attr.name;
