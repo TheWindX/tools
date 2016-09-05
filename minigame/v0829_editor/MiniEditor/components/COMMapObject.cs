@@ -8,7 +8,7 @@ using System.Windows.Media;
 
 namespace MiniEditor
 {
-    [CustomComponent(path = "global", name ="地图物体")]
+    [CustomComponent(path = "CORE", name ="地图物体")]
     public class COMMapObject : MComponent
     {
         private double mX = 20;

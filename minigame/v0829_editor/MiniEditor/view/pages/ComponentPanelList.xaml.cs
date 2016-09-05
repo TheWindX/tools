@@ -36,37 +36,53 @@ namespace MiniEditor
             InitializeComponent();
         }
 
+        private void AddMenuItem(ItemsControl itemUI, IEnumerable<RepoNode> items)
+        {
+            foreach (var item in items)
+            {
+                if (item is RepoBranch)
+                {
+                    var b = item as RepoBranch;
+                    var mi = new MenuItem();
+                    mi.Header = b.name;
+                    AddMenuItem(mi, b.children);
+                    itemUI.Items.Add(mi);
+                }
+                else if (item is RepoLeaf)
+                {
+                    var l = item as RepoLeaf;
+                    var comType = l.component;
+                    var attr = comType.GetCustomAttribute<CustomComponentAttribute>();
+                    MenuItem mi = new MenuItem();
+                    mi.Header = attr.name;
+                    itemUI.Items.Add(mi);
+                    mi.Click += new RoutedEventHandler((obj, arg) =>
+                    {
+                        var editObj = EditorFuncs.getItemListPage().getCurrentObj();
+                        if (editObj == null) return;
+                        var comInstances = editObj.addComponent(comType);
+                        foreach (var comInstance in comInstances)
+                        {
+                            try
+                            {
+                                comInstance.editorInit();
+                            }
+                            catch (Exception ex)
+                            {
+                                MLogger.error(ex.ToString());
+                            }
+                        }
+                        reflush();
+                    });
+                }
+            }
+        }
+
         private void mAddComponent_Click(object sender, RoutedEventArgs e)
         {
-            //弹出右键菜单
             var mContextMenu = new ContextMenu();
-            var coms = EditorWorld.getAssemblyComponents();
-            foreach(var com in coms)
-            {
-                var comCopy = com;
-                var attr = comCopy.GetCustomAttribute<CustomComponentAttribute>();
-                MenuItem mi = new MenuItem();
-                mi.Header = attr.name;
-                mContextMenu.Items.Add(mi);
-                mi.Click += new RoutedEventHandler((obj, arg) =>
-                {
-                    var editObj = EditorFuncs.getItemListPage().getCurrentObj();
-                    if (editObj == null) return;
-                    var comInstances = editObj.addComponent(comCopy);
-                    foreach(var comInstance in comInstances)
-                    {
-                        try
-                        {
-                            comInstance.editorInit();
-                        }
-                        catch (Exception ex)
-                        {
-                            MLogger.error(ex.ToString());
-                        }
-                    }
-                    reflush();
-                });
-            }
+            var items = Repository.subItems;
+            AddMenuItem(mContextMenu, items);
             mContextMenu.IsOpen = true;
         }
 

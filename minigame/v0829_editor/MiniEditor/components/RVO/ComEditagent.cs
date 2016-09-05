@@ -10,7 +10,7 @@ using System.Windows.Shapes;
 namespace MiniEditor
 {
     [RequireCom(typeof(ComAgent))]
-    [CustomComponent(editable = false, name = "agent物体编辑")]
+    [CustomComponent(path = "DEMO/RVO", editable = false, name = "agent物体编辑")]
     class ComEditagent : MComponent
     {
         [Description]
@@ -18,7 +18,7 @@ namespace MiniEditor
         {
             get
             {
-                return "双击创建 target";
+                return "map双击修改 target";
             }
         }
 

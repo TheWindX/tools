@@ -28,26 +28,7 @@ namespace MiniEditor
             MWorld.removeObject(obj);
         }
         
-        public static List<Type> getAssemblyComponents()
-        {
-            Assembly myAssembly = Assembly.GetExecutingAssembly();
-            var ts = myAssembly.GetTypes();
 
-            List<Type> mComponents = new List<Type>();
-            foreach (var t in ts)
-            {
-                if (typeof(MComponent).IsAssignableFrom(t))
-                {
-                    var attrs = t.GetCustomAttribute<CustomComponentAttribute>();
-                    if (attrs != null)
-                    {
-                        //MModule instance = (MModule)Activator.CreateInstance(t);
-                        mComponents.Add(t);
-                    }
-                }
-            }
-            return mComponents;
-        }
 
         public static void addTypeControl(MComponent com, Panel panel)
         {

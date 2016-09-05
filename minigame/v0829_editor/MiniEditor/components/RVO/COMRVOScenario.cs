@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MiniEditor
 {
-    [CustomComponent(removable =false, name = "RVO全局")]
+    [CustomComponent(path = "DEMO/RVO", removable =false, name = "RVO全局")]
     class COMRVOScenario : MComponent
     {
         public double timeStep

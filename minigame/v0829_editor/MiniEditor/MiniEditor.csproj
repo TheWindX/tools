@@ -97,6 +97,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="components\COMEditorObject.cs" />
+    <Compile Include="components\Repository.cs" />
     <Compile Include="components\RVO\ComAgent.cs" />
     <Compile Include="components\RVO\ComEditagent.cs" />
     <Compile Include="components\RVO\COMRVOScenario.cs" />

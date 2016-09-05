@@ -76,7 +76,6 @@ namespace MiniEditor
         {
             //弹出右键菜单
             var mContextMenu = new ContextMenu();
-            var coms = EditorWorld.getAssemblyComponents();
             MenuItem mi = new MenuItem();
             mi.Header = "remove";
             mContextMenu.Items.Add(mi);

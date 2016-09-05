@@ -7,7 +7,7 @@ using System.Windows.Controls;
 
 namespace MiniEditor
 {
-    [CustomComponent(path = "global", name = "编辑器物体", removable = false)]
+    [CustomComponent(path = "CORE", name = "编辑器物体", removable = false)]
     class COMEditorObject : MComponent
     {
         listItem mItem = null;
