@@ -7,10 +7,10 @@
              d:DesignHeight="37" d:DesignWidth="316">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
-        <TextBlock x:Name="m_label" Margin="5,7,0,7" TextWrapping="Wrap" Text="volumn" HorizontalAlignment="Left" FontSize="14" Foreground="White" Height="23" Width="83" VerticalAlignment="Center"/>
+        <TextBlock x:Name="m_label" Margin="5,7,0,7" TextWrapping="Wrap" Text="volumn" HorizontalAlignment="Left" FontSize="14" Foreground="White" Height="23" VerticalAlignment="Center"/>
         <Rectangle x:Name="m_value" Grid.Column="1" Margin="5,0" Grid.ColumnSpan="2" VerticalAlignment="Center" Fill="#FFCDCDCD" Height="2"/>
     </Grid>
 </UserControl>

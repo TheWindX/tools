@@ -7,11 +7,11 @@
              d:DesignHeight="37" d:DesignWidth="316">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
-        <TextBlock x:Name="m_label" Margin="5,5,0,0" TextWrapping="Wrap" Text="volumn" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="14" Foreground="White" Height="23" Width="83" MouseLeftButtonDown="m_label_MouseLeftButtonDown" MouseLeftButtonUp="m_label_MouseLeftButtonUp" MouseMove="m_label_MouseMove"/>
+        <TextBlock x:Name="m_label" Margin="5,5,0,0" TextWrapping="Wrap" Text="volumn" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="14" Foreground="White" Height="23" MouseLeftButtonDown="m_label_MouseLeftButtonDown" MouseLeftButtonUp="m_label_MouseLeftButtonUp" MouseMove="m_label_MouseMove"/>
         <TextBox x:Name="m_value" Grid.Column="1" Margin="5,0" TextWrapping="Wrap" Text="1" Background="Black" Foreground="White" Height="22" BorderThickness="1" Grid.ColumnSpan="2" FontSize="14" PreviewTextInput="textInput"/>
     </Grid>
 </UserControl>

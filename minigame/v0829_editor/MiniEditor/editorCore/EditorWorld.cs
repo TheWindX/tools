@@ -156,6 +156,13 @@ namespace MiniEditor
                                     v.IsEnabled = false;
                             }
                         }
+                        else if(p.PropertyType == typeof(System.Action))
+                        {
+                            var v = new UIAction();
+                            v.Lable = p.Name;
+                            v.Val = (System.Action)p.GetValue(com);
+                            panel.Children.Add(v);
+                        }
                     }
                 }
                 //var o = Activator.CreateInstance(t);

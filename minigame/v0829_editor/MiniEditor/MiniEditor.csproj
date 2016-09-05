@@ -97,9 +97,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="components\COMEditorObject.cs" />
-    <Compile Include="components\Repository.cs" />
+    <Compile Include="components\ComponentRepository.cs" />
     <Compile Include="components\RVO\ComAgent.cs" />
     <Compile Include="components\RVO\ComEditagent.cs" />
+    <Compile Include="components\RVO\COMRVORunner.cs" />
     <Compile Include="components\RVO\COMRVOScenario.cs" />
     <Compile Include="editorCore\CSRepl.cs" />
     <Compile Include="core\MComponent.cs" />
@@ -114,6 +115,9 @@
     <Compile Include="editorCore\exportFunctions.cs" />
     <Compile Include="modules\ModuleShortcut.cs" />
     <Compile Include="modules\ModuleConsole.cs" />
+    <Compile Include="view\widgets\UIAction.xaml.cs">
+      <DependentUpon>UIAction.xaml</DependentUpon>
+    </Compile>
     <Compile Include="view\widgets\boolField.xaml.cs" />
     <Compile Include="view\pages\ComponentPanel.xaml.cs">
       <DependentUpon>ComponentPanel.xaml</DependentUpon>
@@ -156,6 +160,10 @@
       <DependentUpon>StatusPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="view\WPFUtil.cs" />
+    <Page Include="view\widgets\UIAction.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="view\widgets\boolField.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

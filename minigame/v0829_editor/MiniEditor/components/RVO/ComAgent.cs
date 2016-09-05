@@ -19,5 +19,10 @@ namespace MiniEditor
         {
             get; set;
         }
+
+        public int agentID
+        {
+            get; set;
+        }
     }
 }

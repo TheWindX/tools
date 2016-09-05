@@ -81,7 +81,7 @@ namespace MiniEditor
         private void mAddComponent_Click(object sender, RoutedEventArgs e)
         {
             var mContextMenu = new ContextMenu();
-            var items = Repository.subItems;
+            var items = ComponentRepository.subItems;
             AddMenuItem(mContextMenu, items);
             mContextMenu.IsOpen = true;
         }

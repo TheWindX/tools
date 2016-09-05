@@ -78,7 +78,7 @@ namespace MiniEditor
         }
     }
     
-    class Repository
+    class ComponentRepository
     {
         public static RepoBranch root = new RepoBranch() { name = "root" };
         public static void addComponent(Type com)
@@ -152,7 +152,5 @@ namespace MiniEditor
                 mInit = true;
             }
         }
-
-
     }
 }

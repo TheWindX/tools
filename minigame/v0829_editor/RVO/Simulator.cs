@@ -301,7 +301,9 @@ namespace RVO
                 ThreadPool.QueueUserWorkItem(workers_[block].step);
             }
 
-            WaitHandle.WaitAll(doneEvents_);
+            foreach (var v in doneEvents_)
+                v.WaitOne();
+            //WaitHandle.WaitAll(doneEvents_);
 
             for (int block = 0; block < workers_.Length; ++block)
             {
@@ -309,7 +311,9 @@ namespace RVO
                 ThreadPool.QueueUserWorkItem(workers_[block].update);
             }
 
-            WaitHandle.WaitAll(doneEvents_);
+            foreach (var v in doneEvents_)
+                v.WaitOne();
+            //WaitHandle.WaitAll(doneEvents_);
 
             globalTime_ += timeStep_;
 

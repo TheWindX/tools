@@ -71,5 +71,16 @@ namespace MiniEditor
             get;
             set;
         }
+
+        public System.Action printme
+        {
+            get
+            {
+                return () =>
+                {
+                    MLogger.info("action from COMRVOScenario");
+                };
+            }
+        }
     }
 }

@@ -10,7 +10,7 @@ using System.Windows.Shapes;
 namespace MiniEditor
 {
     [RequireCom(typeof(ComAgent))]
-    [CustomComponent(path = "DEMO/RVO", editable = false, name = "agent物体编辑")]
+    [CustomComponent(path = "DEMO/RVO", name = "agent物体编辑")]
     class ComEditagent : MComponent
     {
         [Description]
