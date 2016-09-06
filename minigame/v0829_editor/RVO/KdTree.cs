@@ -41,6 +41,11 @@ namespace RVO
      */
     internal class KdTree
     {
+        Simulator mOwner = null;
+        internal KdTree(Simulator owner)
+        {
+            mOwner = owner;
+        }
         /**
          * <summary>Defines a node of an agent k-D tree.</summary>
          */
@@ -163,13 +168,13 @@ namespace RVO
          */
         internal void buildAgentTree()
         {
-            if (agents_ == null || agents_.Length != Simulator.Instance.agents_.Count)
+            if (agents_ == null || agents_.Length != mOwner.agents_.Count)
             {
-                agents_ = new Agent[Simulator.Instance.agents_.Count];
-
+                agents_ = new Agent[mOwner.agents_.Count];
+                
                 for (int i = 0; i < agents_.Length; ++i)
                 {
-                    agents_[i] = Simulator.Instance.agents_[i];
+                    agents_[i] = mOwner.agents_[i];
                 }
 
                 agentTree_ = new AgentTreeNode[2 * agents_.Length];
@@ -193,11 +198,11 @@ namespace RVO
         {
             obstacleTree_ = new ObstacleTreeNode();
 
-            IList<Obstacle> obstacles = new List<Obstacle>(Simulator.Instance.obstacles_.Count);
+            IList<Obstacle> obstacles = new List<Obstacle>(mOwner.obstacles_.Count);
 
-            for (int i = 0; i < Simulator.Instance.obstacles_.Count; ++i)
+            for (int i = 0; i < mOwner.obstacles_.Count; ++i)
             {
-                obstacles.Add(Simulator.Instance.obstacles_[i]);
+                obstacles.Add(mOwner.obstacles_[i]);
             }
 
             obstacleTree_ = buildObstacleTreeRecursive(obstacles);
@@ -448,9 +453,9 @@ namespace RVO
                         newObstacle.convex_ = true;
                         newObstacle.direction_ = obstacleJ1.direction_;
 
-                        newObstacle.id_ = Simulator.Instance.obstacles_.Count;
+                        newObstacle.id_ = mOwner.obstacles_.Count;
 
-                        Simulator.Instance.obstacles_.Add(newObstacle);
+                        mOwner.obstacles_.Add(newObstacle);
 
                         obstacleJ1.next_ = newObstacle;
                         obstacleJ2.previous_ = newObstacle;

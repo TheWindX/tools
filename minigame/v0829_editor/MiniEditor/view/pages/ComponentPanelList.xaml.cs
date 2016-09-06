@@ -26,7 +26,7 @@ namespace MiniEditor
         {
             get
             {
-                return EditorFuncs.getItemListPage().getCurrentObj();
+                return EditorWorld.getCurrentObj();
             }
         }
         #endregion
@@ -58,7 +58,7 @@ namespace MiniEditor
                     itemUI.Items.Add(mi);
                     mi.Click += new RoutedEventHandler((obj, arg) =>
                     {
-                        var editObj = EditorFuncs.getItemListPage().getCurrentObj();
+                        var editObj = EditorWorld.getCurrentObj();
                         if (editObj == null) return;
                         var comInstances = editObj.addComponent(comType);
                         foreach (var comInstance in comInstances)

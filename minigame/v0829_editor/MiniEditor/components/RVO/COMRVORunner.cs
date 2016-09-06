@@ -19,24 +19,26 @@ namespace MiniEditor
                 {
                     var obj = EditorWorld.createObject(getEditorObject(), "agent");
                     obj.addComponent<COMEditagent>();
-                    EditorFuncs.getItemListPage().insertEditorItem(obj);
+                    EditorFuncs.getItemListPage().insertEditorObject(obj);
                 };
             }
         }
 
         private bool mInit = false;
+        private Simulator mRunner = null;
         public System.Action run
         {
             get
             {
                 return () =>
                 {
+                    mRunner = new Simulator();
                     mInit = !mInit;
                     if (!mInit) return;
 
                     var scenario = getComponent<COMRVOScenario>();
-                    Simulator.Instance.setTimeStep((float)scenario.timeStep);
-                    Simulator.Instance.setAgentDefaults((float)scenario.neighbordist, (int)scenario.maxNeighbors,
+                    mRunner.setTimeStep((float)scenario.timeStep);
+                    mRunner.setAgentDefaults((float)scenario.neighbordist, (int)scenario.maxNeighbors,
                         (float)scenario.timeHorizon, (float)scenario.timeHorizonObst, (float)scenario.radius,
                         (float)scenario.maxSpeed,
                         new Vector2(0.0f, 0.0f));
@@ -45,7 +47,7 @@ namespace MiniEditor
                     {
                         var agent = node.getComponent<COMAgent>();
                         var agentMapObj = node.getComponent<COMMapObject>();
-                        int id = Simulator.Instance.addAgent(new Vector2((float)agentMapObj.x, (float)agentMapObj.y));
+                        int id = mRunner.addAgent(new Vector2((float)agentMapObj.x, (float)agentMapObj.y));
                         agent.agentID = id;
                     }
                 };
@@ -62,13 +64,13 @@ namespace MiniEditor
             if(mInit)
             {
                 //update agent pos
-                Console.WriteLine(Simulator.Instance.getGlobalTime());
+                Console.WriteLine(mRunner.getGlobalTime());
                 var nodes = getEditorObject().children;
                 foreach (var node in nodes)
                 {
                     var agent = node.getComponent<COMAgent>();
                     var agentMapObj = node.getComponent<COMMapObject>();
-                    var pos = Simulator.Instance.getAgentPosition(agent.agentID);
+                    var pos = mRunner.getAgentPosition(agent.agentID);
                     agentMapObj.x = (double)pos.x();
                     agentMapObj.y = (double)pos.y();
                     //Console.WriteLine("{0}, {1}", agentMapObj.x, agentMapObj.y);
@@ -87,9 +89,9 @@ namespace MiniEditor
                     //{
                     //    goalVector = RVOMath.normalize(goalVector);
                     //}
-                    Simulator.Instance.setAgentPrefVelocity(agent.agentID, goalVector);
+                    mRunner.setAgentPrefVelocity(agent.agentID, goalVector);
                 }
-                Simulator.Instance.doStep();
+                mRunner.doStep();
                 //update prevelocity
             }
         }

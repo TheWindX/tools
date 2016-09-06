@@ -1,17 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace MiniEditor
 {
@@ -45,7 +36,7 @@ namespace MiniEditor
             return getLast(items.Last());
         }
 
-        public void insertEditorItem(EditorObject item)
+        public void insertEditorObject(EditorObject item)
         {
             if(currentItem == null)
             {
@@ -66,6 +57,54 @@ namespace MiniEditor
             m_object_list.Children.Add(item);
             item.evtOnPick = () => pickUI(item);
             item.evtOnExpand = isExpand => expand(item, isExpand);
+        }
+
+
+        public void removeEditorObject(EditorObject obj)
+        {
+            var uiItem = obj.getComponent<COMEditorObject>().getMenuItem();
+            removeItem(uiItem);
+        }
+
+        public void removeEditorObjectChildren(EditorObject obj)
+        {
+            var uiItem = obj.getComponent<COMEditorObject>().getMenuItem();
+            removeChildren(uiItem);
+        }
+
+        public void removeItem(listItem item)
+        {
+            if (item == null) return;
+            m_object_list.Children.Remove(item);
+            item.evtOnPick = null;
+            item.evtOnExpand = null;
+
+            //删除所有component
+            try
+            {
+                var eo = item.editObject;
+                eo.parent = null;
+                foreach (var com in eo.components.ToArray())
+                {
+                    eo.removeComponent(com);
+                }
+            }
+            catch(Exception ex)
+            {
+                MLogger.error(ex.ToString());
+            }
+
+            removeChildren(item);
+        }
+        
+        public void removeChildren(listItem item)
+        {
+            var eo = item.editObject;
+            foreach (var sub in eo.children.ToArray())
+            {
+                var subUI = sub.getComponent<COMEditorObject>().getMenuItem();
+                removeItem(subUI);
+            }
         }
 
         public void showItem(listItem itemToShow, bool isShow)

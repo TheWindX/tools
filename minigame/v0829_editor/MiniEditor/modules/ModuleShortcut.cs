@@ -29,7 +29,7 @@ namespace MiniEditor
             if(k == System.Windows.Input.Key.Insert)
             {
                 var obj = EditorWorld.createObject(EditorFuncs.getCurrentEditorObject(), "[null]");
-                EditorFuncs.getItemListPage().insertEditorItem(obj);
+                EditorFuncs.getItemListPage().insertEditorObject(obj);
             }
             else if(k == System.Windows.Input.Key.F1)
             {

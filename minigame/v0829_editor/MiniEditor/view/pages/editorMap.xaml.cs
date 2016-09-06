@@ -151,7 +151,7 @@ namespace MiniEditor
                 {
                     dx = p.X - x;
                     dy = p.Y - y;
-                    var obj = EditorFuncs.getItemListPage().getCurrentObj();
+                    var obj = EditorWorld.getCurrentObj();
                     if (obj == null) return;
                     var mo = obj.getComponent<COMMapObject>();
                     if (mo == null) return;
@@ -170,6 +170,11 @@ namespace MiniEditor
         public void addItem(UIMapObj obj)
         {
             mCanvas.Children.Add(obj);
+        }
+
+        public void removeItem(UIMapObj obj)
+        {
+            mCanvas.Children.Remove(obj);
         }
 
         public void clear(UIMapObj obj)

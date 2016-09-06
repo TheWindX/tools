@@ -89,6 +89,14 @@ namespace MiniEditor
             }
             var c = (MComponent)Activator.CreateInstance(t);
             c.go = this;
+            try
+            {
+                c.editorAwake(); //todo, 是否加到队列
+            }
+            catch(Exception ex)
+            {
+                MLogger.error(ex.ToString());
+            }
 
             var dps = MComponent.getDependcy(t);
             foreach (var d in dps)
@@ -127,14 +135,24 @@ namespace MiniEditor
             List<MComponent> coms = new List<MComponent>();
             var com = getComponent(t);
             if (com == null) return coms;
-
+            
             var dps = MComponent.getDependcy(t);
             foreach (var d in dps)
             {
                 coms.AddRange(removeComponent(d.com));
             }
             if (com != null)
+            {
+                try
+                {
+                    com.editorSleep(); //todo, 是否加到队列
+                }
+                catch (Exception ex)
+                {
+                    MLogger.error(ex.ToString());
+                }
                 mComponents.Remove(com);
+            }   
             coms.Add(com);
             return coms;
         }
@@ -165,17 +183,31 @@ namespace MiniEditor
         internal Action evtUpdate = null;
         internal Action evtRemove = null;
 
+        //add component或enable时回调
+        public virtual void editorAwake()
+        {
+            MLogger.info("editorAwake: {0}", GetType().Name);   
+        }
+
+        //remove component或disable时回调
+        public virtual void editorSleep()
+        {
+            MLogger.info("editorSleep: {0}", GetType().Name);
+        }
+
+        //进入editor object时回调
         public virtual void editorInit()
         {
-
             //MLogger.info("editorInit: {0}", GetType().Name);
         }
 
+        //当前editor object时每祯循环回调
         public virtual void editorUpdate()
         {
             //MLogger.info("editorUpdate: {0}", GetType().Name);
         }
 
+        //离开editor object时回调
         public virtual void editorExit()
         {
             //MLogger.info("editorExit: {0}", GetType().Name);
