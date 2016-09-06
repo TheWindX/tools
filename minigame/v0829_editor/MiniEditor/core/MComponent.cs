@@ -6,8 +6,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MiniEditor
 {
@@ -84,6 +82,7 @@ namespace MiniEditor
             {
                 if (t.IsAssignableFrom(com.GetType()))
                 {
+                    coms.Add(com);
                     return coms;
                 }
             }

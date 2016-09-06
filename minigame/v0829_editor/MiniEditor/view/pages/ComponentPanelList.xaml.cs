@@ -93,23 +93,25 @@ namespace MiniEditor
             mComponents.Children.Clear();
             mObjectName.Text = editObject.name;
             List<ComponentPanel> panels = new List<ComponentPanel>();
-            ComponentPanel mainPanel = null;
+            //ComponentPanel mainPanel = null;
             foreach (var com in editObject.components)
             {
                 var comP = new ComponentPanel() { component = com };
-                if(com.getAttr().isMain)
-                {
-                    mainPanel = comP;
-                }
-                else
-                {
-                    panels.Add(comP);
-                }
+                panels.Add(comP);
+                //var comP = new ComponentPanel() { component = com };
+                //if(com.getAttr().isMain)
+                //{
+                //    mainPanel = comP;
+                //}
+                //else
+                //{
+                //    panels.Add(comP);
+                //}
             }
-            if(mainPanel != null)
-            {
-                mComponents.Children.Add(mainPanel);
-            }
+            //if(mainPanel != null)
+            //{
+            //    mComponents.Children.Add(mainPanel);
+            //}
             foreach (var p in panels)
             {
                 mComponents.Children.Add(p);

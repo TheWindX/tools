@@ -28,7 +28,7 @@ namespace MiniEditor
         {
             MWorld.removeObject(obj);
         }
-        
+
         public static void addTypeControl(MComponent com, ComponentPanel comPanel)
         {
             var panel = comPanel.mProps;

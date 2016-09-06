@@ -84,6 +84,7 @@ namespace MiniEditor
             {
                 var eo = item.editObject;
                 eo.parent = null;
+                EditorWorld.removeObject(eo);
                 foreach (var com in eo.components.ToArray())
                 {
                     eo.removeComponent(com);
@@ -271,6 +272,13 @@ namespace MiniEditor
             var obj = EditorWorld.getRootEditorObject();
             addEditorItem(obj);
             pickEditObject(obj);
+        }
+
+        public void reflushEditorObject()
+        {
+            m_object_list.Children.Clear();
+            var obj = EditorWorld.getRootEditorObject();
+            addEditorItem(obj);
         }
     }
 }
