@@ -12,6 +12,11 @@ namespace MiniEditor
             return mRootObject;
         }
 
+        public static EditorObject getCurrentObj()
+        {
+            return EditorFuncs.getItemListPage().getCurrentObj();
+        }
+
         public static EditorObject createObject(EditorObject parent, string name)
         {
             var eo = MWorld.createObject(parent, name);
@@ -23,7 +28,7 @@ namespace MiniEditor
         {
             MWorld.removeObject(obj);
         }
-        
+
         public static void addTypeControl(MComponent com, ComponentPanel comPanel)
         {
             var panel = comPanel.mProps;

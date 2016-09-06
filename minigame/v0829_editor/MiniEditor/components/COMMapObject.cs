@@ -69,7 +69,7 @@ namespace MiniEditor
                 }
                 catch(Exception ex)
                 {
-
+                    
                 }
             }
         }
@@ -81,9 +81,18 @@ namespace MiniEditor
             {
                 uiObj = new UIMapObj() { x=0, y=0, radius = 15};
                 uiObj.editorObject = getEditorObject();
-                EditorFuncs.getMapPage().addItem(uiObj);
             }
             return uiObj;
+        }
+
+        public override void editorAwake()
+        {   
+            EditorFuncs.getMapPage().addItem(getMapUIItem());
+        }
+
+        public override void editorSleep()
+        {
+            EditorFuncs.getMapPage().removeItem(getMapUIItem());
         }
 
         public override void editorInit()

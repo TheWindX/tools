@@ -41,6 +41,19 @@ namespace MiniEditor
             return mTargeUI;
         }
 
+        public override void editorAwake()
+        {
+            
+        }
+
+        public override void editorSleep()
+        {
+            var mapUI = EditorFuncs.getMapPage();
+            mapUI.MouseDoubleClick -= MapUI_MouseDoubleClick;
+            mapUI.mCanvas.Children.Remove(getTargetUI());
+            mapUI.mCanvas.Children.Remove(getTargetLineUI());
+        }
+
         public override void editorInit()
         {
             var mapUI = EditorFuncs.getMapPage();

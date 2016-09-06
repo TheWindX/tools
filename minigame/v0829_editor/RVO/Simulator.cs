@@ -49,7 +49,7 @@ namespace RVO
             private ManualResetEvent doneEvent_;
             private int end_;
             private int start_;
-
+            internal Simulator mOwner = null;
             /**
              * <summary>Constructs and initializes a worker.</summary>
              *
@@ -57,8 +57,9 @@ namespace RVO
              * <param name="end">End.</param>
              * <param name="doneEvent">Done event.</param>
              */
-            internal Worker(int start, int end, ManualResetEvent doneEvent)
+            internal Worker(Simulator owner, int start, int end, ManualResetEvent doneEvent)
             {
+                mOwner = owner;
                 start_ = start;
                 end_ = end;
                 doneEvent_ = doneEvent;
@@ -73,8 +74,8 @@ namespace RVO
             {
                 for (int agentNo = start_; agentNo < end_; ++agentNo)
                 {
-                    Simulator.Instance.agents_[agentNo].computeNeighbors();
-                    Simulator.Instance.agents_[agentNo].computeNewVelocity();
+                    mOwner.agents_[agentNo].computeNeighbors();
+                    mOwner.agents_[agentNo].computeNewVelocity();
                 }
 
                 doneEvent_.Set();
@@ -90,7 +91,7 @@ namespace RVO
             {
                 for (int agentNo = start_; agentNo < end_; ++agentNo)
                 {
-                    Simulator.Instance.agents_[agentNo].update();
+                    mOwner.agents_[agentNo].update();
                 }
 
                 doneEvent_.Set();
@@ -110,13 +111,13 @@ namespace RVO
         private int numWorkers_;
         private float globalTime_;
 
-        public static Simulator Instance
-        {
-            get
-            {
-                return instance_;
-            }
-        }
+        //public static Simulator Instance
+        //{
+        //    get
+        //    {
+        //        return instance_;
+        //    }
+        //}
 
         /**
          * <summary>Adds a new agent with default properties to the simulation.
@@ -136,6 +137,7 @@ namespace RVO
             }
 
             Agent agent = new Agent();
+            agent.mOwner = this;
             agent.id_ = agents_.Count;
             agent.maxNeighbors_ = defaultAgent_.maxNeighbors_;
             agent.maxSpeed_ = defaultAgent_.maxSpeed_;
@@ -265,7 +267,7 @@ namespace RVO
         {
             agents_ = new List<Agent>();
             defaultAgent_ = null;
-            kdTree_ = new KdTree();
+            kdTree_ = new KdTree(this);
             obstacles_ = new List<Obstacle>();
             globalTime_ = 0.0f;
             timeStep_ = 0.1f;
@@ -289,7 +291,7 @@ namespace RVO
                 for (int block = 0; block < workers_.Length; ++block)
                 {
                     doneEvents_[block] = new ManualResetEvent(false);
-                    workers_[block] = new Worker(block * getNumAgents() / workers_.Length, (block + 1) * getNumAgents() / workers_.Length, doneEvents_[block]);
+                    workers_[block] = new Worker(this, block * getNumAgents() / workers_.Length, (block + 1) * getNumAgents() / workers_.Length, doneEvents_[block]);
                 }
             }
 
@@ -870,7 +872,7 @@ namespace RVO
         /**
          * <summary>Constructs and initializes a simulation.</summary>
          */
-        private Simulator()
+        public Simulator()
         {
             Clear();
         }

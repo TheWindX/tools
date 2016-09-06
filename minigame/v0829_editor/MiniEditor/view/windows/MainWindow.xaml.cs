@@ -52,5 +52,25 @@ namespace MiniEditor
         {
             EditorFuncs.doKeyUp(e.Key);
         }
+
+        string mFilePath = "";
+        private void MenuItem_save(object sender, RoutedEventArgs e)
+        {
+            if(string.IsNullOrEmpty(mFilePath))
+            {
+                mFilePath = System.AppDomain.CurrentDomain.SetupInformation.ApplicationBase;
+            }
+
+        }
+
+        private void MenuItem_load(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void MenuItem_save_as(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

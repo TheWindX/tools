@@ -26,7 +26,7 @@ namespace MiniEditor
         {
             get
             {
-                return EditorFuncs.getItemListPage().getCurrentObj();
+                return EditorWorld.getCurrentObj();
             }
         }
         #endregion
@@ -58,7 +58,7 @@ namespace MiniEditor
                     itemUI.Items.Add(mi);
                     mi.Click += new RoutedEventHandler((obj, arg) =>
                     {
-                        var editObj = EditorFuncs.getItemListPage().getCurrentObj();
+                        var editObj = EditorWorld.getCurrentObj();
                         if (editObj == null) return;
                         var comInstances = editObj.addComponent(comType);
                         foreach (var comInstance in comInstances)
@@ -93,23 +93,25 @@ namespace MiniEditor
             mComponents.Children.Clear();
             mObjectName.Text = editObject.name;
             List<ComponentPanel> panels = new List<ComponentPanel>();
-            ComponentPanel mainPanel = null;
+            //ComponentPanel mainPanel = null;
             foreach (var com in editObject.components)
             {
                 var comP = new ComponentPanel() { component = com };
-                if(com.getAttr().isMain)
-                {
-                    mainPanel = comP;
-                }
-                else
-                {
-                    panels.Add(comP);
-                }
+                panels.Add(comP);
+                //var comP = new ComponentPanel() { component = com };
+                //if(com.getAttr().isMain)
+                //{
+                //    mainPanel = comP;
+                //}
+                //else
+                //{
+                //    panels.Add(comP);
+                //}
             }
-            if(mainPanel != null)
-            {
-                mComponents.Children.Add(mainPanel);
-            }
+            //if(mainPanel != null)
+            //{
+            //    mComponents.Children.Add(mainPanel);
+            //}
             foreach (var p in panels)
             {
                 mComponents.Children.Add(p);

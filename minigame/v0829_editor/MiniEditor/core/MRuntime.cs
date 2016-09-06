@@ -179,18 +179,18 @@ namespace MiniEditor
             }
         }
 
-        private bool mIsMain = false;
-        public bool isMain
-        {
-            get
-            {
-                return mIsMain;
-            }
-            set
-            {
-                mIsMain = value;
-            }
-        }
+        //private bool mIsMain = false;
+        //public bool isMain
+        //{
+        //    get
+        //    {
+        //        return mIsMain;
+        //    }
+        //    set
+        //    {
+        //        mIsMain = value;
+        //    }
+        //}
     }
     
     [System.AttributeUsage(System.AttributeTargets.Property)]

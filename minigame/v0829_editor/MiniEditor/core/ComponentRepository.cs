@@ -116,7 +116,34 @@ namespace MiniEditor
                 return root.children;
             }
         }
-        
+
+        private static RepoLeaf getComponentByNameFromRepoBranch(RepoBranch b, string name)
+        {
+            foreach(var node in b.children)
+            {
+                if(node is RepoLeaf)
+                {
+                    var leaf = node as RepoLeaf;
+                    if (leaf.component.Name == name || leaf.component.Name == "COM"+name)
+                    {
+                        return node as RepoLeaf;
+                    }
+                }
+                else if(node is RepoBranch)
+                {
+                    var l =  getComponentByNameFromRepoBranch(node as RepoBranch, name);
+                    if (l != null) return l;
+                }
+            }
+            return null;
+        }
+
+        public static RepoLeaf getComponentByName(string name)
+        {
+            init();
+            return getComponentByNameFromRepoBranch(root, name);
+        }
+
         static List<Type> getAssemblyComponents()
         {
             Assembly myAssembly = Assembly.GetExecutingAssembly();

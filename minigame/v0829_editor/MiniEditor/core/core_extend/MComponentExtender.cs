@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -32,55 +33,145 @@ namespace MiniEditor
             return r;
         }
 
+        public static MComponent componentFromXML(EditorObject obj, XmlElement elem)
+        {
+            var name = elem.Name;
+            var leaf = ComponentRepository.getComponentByName(name);
+            if (leaf == null)
+            {
+                MLogger.error("cannot find component name of {0}", name);
+                return null;
+            }
+            var props = leaf.component.GetProperties();
+            var instances = obj.addComponent(leaf.component);
+            var instance = instances.Last();
+            foreach (var prop in props)
+            {
+                var value = elem.GetAttribute(prop.Name);
+                if(prop.PropertyType == typeof(bool))
+                {
+                    prop.SetValue(instance, Convert.ToBoolean(value));
+                }
+                else if (prop.PropertyType == typeof(int))
+                {
+                    prop.SetValue(instance, Convert.ToInt32(value));
+                }
+                else if (prop.PropertyType == typeof(double))
+                {
+                    Double d = double.Parse(value, CultureInfo.InvariantCulture);
+                    prop.SetValue(instance, d);
+                }
+                else if (prop.PropertyType == typeof(string))
+                {
+                    if(prop.GetCustomAttribute<DescriptionAttribute>() == null)
+                    {
+                        prop.SetValue(instance, value);
+                    }
+                }
+            }
+            return instance;
+        }
+
         public static CustomComponentAttribute getAttr(this MComponent component)
         {
             return component.GetType().GetCustomAttribute<CustomComponentAttribute>();
         }
 
 
-        public static XmlElement toXML(this EditorObject obj, XmlDocument doc)
+        public static EditorObject editorObjectFromXML(EditorObject parent, XmlElement elem)
         {
-            var coms = obj.components;
-            MComponent mainCom = null;
-            List<MComponent> sortedComs = new List<MComponent>();
-            List<MComponent> noMainComs = new List<MComponent>();
-            foreach (var com in coms)
+            EditorObject obj = null;
+            if (elem.Name == "root")
             {
-                if (com.getAttr().isMain)
+                obj = EditorWorld.getRootEditorObject();
+            }
+            else if(elem.Name != "node")
+            {
+                var name = elem.GetAttribute("name");
+                obj = EditorWorld.createObject(parent, name);
+            }
+            else
+            {
+                var name = elem.GetAttribute("name");
+                obj = EditorWorld.createObject(parent, name);
+            }
+
+            //children
+            foreach (XmlElement sub in elem.ChildNodes)
+            {   
+                if(sub.Name == "children")
                 {
-                    mainCom = com;
+                    //children = EditorWorld.createObject(obj, "children");
+                    foreach (XmlElement childElement in sub.ChildNodes)
+                    {
+                        editorObjectFromXML(obj, childElement);
+                    }
                 }
                 else
                 {
-                    noMainComs.Add(com);
+                    var com = componentFromXML(obj, sub);
                 }
             }
-            if (mainCom != null)
-            {
-                sortedComs.Add(mainCom);
-            }
-            sortedComs.AddRange(noMainComs);
-            mainCom = sortedComs[0];
-            var restCom = sortedComs.Skip(1);
-            var r = mainCom.toXML(doc);
-            foreach (var com in restCom)
-            {
-                r.AppendChild(com.toXML(doc));
-            }
-
-            if (obj.children.Count() != 0)
-            {
-                var children = doc.CreateElement("children");
-                foreach (var subObj in obj.children)
-                {
-                    children.AppendChild(subObj.toXML(doc));
-                }
-                r.AppendChild(children);
-            }
-            return r;
+            return obj;
         }
 
-        public static void printOBJ(this EditorObject obj)
+        public static XmlElement toXML(this EditorObject obj, XmlDocument doc)
+        {
+            var coms = obj.components;
+            var r = doc.CreateElement("node");
+            foreach (var com in coms)
+            {
+                var elem = com.toXML(doc);
+                r.AppendChild(elem);
+            }
+            var children = doc.CreateElement("children");
+            foreach (var subObj in obj.children)
+            {
+                children.AppendChild(subObj.toXML(doc));
+            }
+            if(children.ChildNodes.Count != 0)
+                r.AppendChild(children);
+            return r;
+            //MComponent mainCom = null;
+            //List<MComponent> sortedComs = new List<MComponent>();
+            //List<MComponent> noMainComs = new List<MComponent>();
+            //foreach (var com in coms)
+            //{
+            //    if (com.getAttr().isMain)
+            //    {
+            //        mainCom = com;
+            //    }
+            //    else
+            //    {
+            //        noMainComs.Add(com);
+            //    }
+            //}
+            //if (mainCom != null)
+            //{
+            //    sortedComs.Add(mainCom);
+            //}
+            //sortedComs.AddRange(noMainComs);
+            //mainCom = sortedComs[0];
+            //var restCom = sortedComs.Skip(1);
+            //var r = mainCom.toXML(doc);
+            //foreach (var com in restCom)
+            //{
+            //    r.AppendChild(com.toXML(doc));
+            //}
+
+            //if (obj.children.Count() != 0)
+            //{
+            //    var children = doc.CreateElement("children");
+            //    foreach (var subObj in obj.children)
+            //    {
+            //        children.AppendChild(subObj.toXML(doc));
+            //    }
+            //    r.AppendChild(children);
+            //}
+            //return r;
+        }
+
+        public static string toString(this EditorObject obj)
         {
             XmlDocument doc = new XmlDocument();
             XmlDeclaration xmlDeclaration = doc.CreateXmlDeclaration("1.0", "UTF-8", null);
@@ -96,8 +187,13 @@ namespace MiniEditor
             {
                 doc.WriteTo(xmlTextWriter);
                 xmlTextWriter.Flush();
-                MLogger.info(stringWriter.GetStringBuilder().ToString());
+                return stringWriter.GetStringBuilder().ToString();
             }
+        }
+
+        public static void printOBJ(this EditorObject obj)
+        {
+            MLogger.info(obj.toString());
         }
     }
 }

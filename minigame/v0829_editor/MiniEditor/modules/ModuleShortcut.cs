@@ -28,15 +28,13 @@ namespace MiniEditor
         {
             if(k == System.Windows.Input.Key.Insert)
             {
-                var obj = EditorWorld.createObject(EditorFuncs.getCurrentEditorObject(), "[null]");
-                EditorFuncs.getItemListPage().insertEditorItem(obj);
+                var obj = EditorWorld.createObject(EditorFuncs.getCurrentEditorObject(), "magic");
+                EditorFuncs.getItemListPage().insertEditorObject(obj);
             }
             else if(k == System.Windows.Input.Key.F1)
             {
                 EditorFuncs.openHELP();
             }
         }
-
-
     }
 }
