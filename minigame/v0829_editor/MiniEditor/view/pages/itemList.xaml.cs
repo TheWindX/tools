@@ -58,8 +58,7 @@ namespace MiniEditor
             item.evtOnPick = () => pickUI(item);
             item.evtOnExpand = isExpand => expand(item, isExpand);
         }
-
-
+        
         public void removeEditorObject(EditorObject obj)
         {
             var uiItem = obj.getComponent<COMEditorObject>().getMenuItem();
@@ -87,6 +86,7 @@ namespace MiniEditor
                 EditorWorld.removeObject(eo);
                 foreach (var com in eo.components.ToArray())
                 {
+                    if (com.GetType() == typeof(COMEditorObject)) continue;
                     eo.removeComponent(com);
                 }
             }

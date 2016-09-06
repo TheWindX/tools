@@ -27,7 +27,15 @@ namespace MiniEditor
 
         public static void clear()
         {
-            EditorFuncs.getItemListPage().removeEditorObjectChildren(EditorWorld.getRootEditorObject());
+            var rootObject = EditorWorld.getRootEditorObject();
+            EditorFuncs.getItemListPage().removeEditorObjectChildren(rootObject);
+
+            foreach (var com in rootObject.components.ToArray())
+            {
+                if (com.GetType() == typeof(COMEditorObject)) continue;
+                rootObject.removeComponent(com);
+            }
+            EditorFuncs.getComponentPage().reflush();
         }
 
         public static void clearCurrent()
@@ -59,13 +67,6 @@ namespace MiniEditor
             {
                 path = System.AppDomain.CurrentDomain.SetupInformation.ApplicationBase + "root.xml";
             }
-
-            //if(!File.Exists(path) )
-            //{
-            //    MLogger.error("path of {0} is not exist", path);
-            //    return;
-            //}
-
             try
             {
                 string text = System.IO.File.ReadAllText(path);

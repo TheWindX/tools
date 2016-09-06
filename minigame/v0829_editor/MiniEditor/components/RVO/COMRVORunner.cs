@@ -24,33 +24,34 @@ namespace MiniEditor
             }
         }
 
-        private bool mInit = false;
+        private bool mTurnOn = false;
         private Simulator mRunner = null;
-        public System.Action run
+        public bool play
         {
             get
             {
-                return () =>
-                {
-                    mRunner = new Simulator();
-                    mInit = !mInit;
-                    if (!mInit) return;
+                return mTurnOn;
+            }
+            set
+            {
+                mRunner = new Simulator();
+                mTurnOn = value;
+                if (!mTurnOn) return;
 
-                    var scenario = getComponent<COMRVOScenario>();
-                    mRunner.setTimeStep((float)scenario.timeStep);
-                    mRunner.setAgentDefaults((float)scenario.neighbordist, (int)scenario.maxNeighbors,
-                        (float)scenario.timeHorizon, (float)scenario.timeHorizonObst, (float)scenario.radius,
-                        (float)scenario.maxSpeed,
-                        new Vector2(0.0f, 0.0f));
-                    var nodes = getEditorObject().children;
-                    foreach (var node in nodes)
-                    {
-                        var agent = node.getComponent<COMAgent>();
-                        var agentMapObj = node.getComponent<COMMapObject>();
-                        int id = mRunner.addAgent(new Vector2((float)agentMapObj.x, (float)agentMapObj.y));
-                        agent.agentID = id;
-                    }
-                };
+                var scenario = getComponent<COMRVOScenario>();
+                mRunner.setTimeStep((float)scenario.timeStep);
+                mRunner.setAgentDefaults((float)scenario.neighbordist, (int)scenario.maxNeighbors,
+                    (float)scenario.timeHorizon, (float)scenario.timeHorizonObst, (float)scenario.radius,
+                    (float)scenario.maxSpeed,
+                    new Vector2(0.0f, 0.0f));
+                var nodes = getEditorObject().children;
+                foreach (var node in nodes)
+                {
+                    var agent = node.getComponent<COMAgent>();
+                    var agentMapObj = node.getComponent<COMMapObject>();
+                    int id = mRunner.addAgent(new Vector2((float)agentMapObj.x, (float)agentMapObj.y));
+                    agent.agentID = id;
+                }
             }
         }
 
@@ -61,7 +62,7 @@ namespace MiniEditor
 
         public override void editorUpdate()
         {
-            if(mInit)
+            if(mTurnOn)
             {
                 //update agent pos
                 Console.WriteLine(mRunner.getGlobalTime());

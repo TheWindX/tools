@@ -77,20 +77,14 @@ namespace MiniEditor
             return component.GetType().GetCustomAttribute<CustomComponentAttribute>();
         }
 
-
         public static EditorObject editorObjectFromXML(EditorObject parent, XmlElement elem)
         {
             EditorObject obj = null;
-            if (elem.Name == "root")
+            if (parent == null)
             {
                 obj = EditorWorld.getRootEditorObject();
             }
-            else if(elem.Name != "node")
-            {
-                var name = elem.GetAttribute("name");
-                obj = EditorWorld.createObject(parent, name);
-            }
-            else
+            else if(elem.Name == "node")
             {
                 var name = elem.GetAttribute("name");
                 obj = EditorWorld.createObject(parent, name);

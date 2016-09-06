@@ -13,6 +13,6 @@
             <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
         <TextBlock x:Name="m_label" Margin="5,7,0,7" TextWrapping="Wrap" Text="action" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="14" Foreground="White" Height="23"/>
-        <Button x:Name="m_value" Content="push me" Grid.Column="1" Margin="5,0" Height="22" BorderThickness="1" Grid.ColumnSpan="2" FontSize="14" />
+        <Button x:Name="m_value" Content="action" Grid.Column="1" Margin="5,0" Height="22" BorderThickness="1" Grid.ColumnSpan="2" FontSize="14" />
     </Grid>
 </UserControl>

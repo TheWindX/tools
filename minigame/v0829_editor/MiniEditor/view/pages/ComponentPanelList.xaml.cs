@@ -86,6 +86,34 @@ namespace MiniEditor
             mContextMenu.IsOpen = true;
         }
 
+        public void removeComponent(MComponent com)
+        {
+            var editObj = EditorWorld.getCurrentObj();
+            var comInstances = editObj.removeComponent(com);
+
+            foreach (var comIns in comInstances)
+            {
+                try
+                {
+                    comIns.editorExit();
+                }
+                catch (Exception ex)
+                {
+                    MLogger.error(ex.ToString());
+                }
+            }
+        }
+
+        public void clearComponent()
+        {
+            var editObj = EditorWorld.getCurrentObj();
+            foreach(var com in editObj.components.ToArray())
+            {
+                if (com.GetType() == typeof(COMEditorObject)) continue;
+                removeComponent(com);
+            }
+        }
+
         //这里刷新prop显示
         public void reflush()
         {
