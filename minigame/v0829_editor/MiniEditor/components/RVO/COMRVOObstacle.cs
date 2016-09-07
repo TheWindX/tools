@@ -118,7 +118,7 @@ namespace MiniEditor
             }
         }
 
-        List<RVO.Vector2> mObstacle = new List<RVO.Vector2>();
+        public List<RVO.Vector2> mObstacle = new List<RVO.Vector2>();
         public void addPoint(Double x, Double y)
         {
             mObstacle.Add(new RVO.Vector2((float)x, (float)y));

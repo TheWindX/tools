@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<node>
+	<EditorObject name="root" ID="0" />
+	<RVOScenario timeStep="0.23" description="agent defaults" neighbordist="33" maxNeighbors="33" timeHorizon="3" timeHorizonObst="5.51" radius="15" maxSpeed="10" velocityX="0.98" velocityY="0.26" printme="System.Action" />
+	<RVORunner addManager="System.Action" play="False" />
+	<children>
+		<node>
+			<EditorObject name="obstacleM" ID="4" />
+			<ObstacleManager addObstacle="System.Action" />
+			<children>
+				<node>
+					<EditorObject name="obstacle" ID="1" />
+					<RVOObstacle edit="False" pickable="False" points="67.50 -55.92|54.50 114.08|-53.50 50.08|-70.50 -66.92" color="#FF110000" />
+				</node>
+			</children>
+		</node>
+		<node>
+			<EditorObject name="agentM" ID="5" />
+			<AgentManager addAgent="System.Action" />
+			<children>
+				<node>
+					<EditorObject name="agent" ID="2" />
+					<MapObject x="-151.38" y="102.39" radius="19.81" color="#FF959595" />
+					<Agent targetX="149.41" targetY="-113.25" agentID="0" />
+					<Editagent desc="map双击修改 target" />
+				</node>
+				<node>
+					<EditorObject name="agent" ID="3" />
+					<MapObject x="186.66" y="-123.85" radius="20.07" color="#FF959595" />
+					<Agent targetX="-196.65" targetY="135.65" agentID="1" />
+					<Editagent desc="map双击修改 target" />
+				</node>
+				<node>
+					<EditorObject name="agent" ID="6" />
+					<MapObject x="169.38" y="178.25" radius="19.66" color="#FF959595" />
+					<Agent targetX="-170.03" targetY="-119.9" agentID="2" />
+					<Editagent desc="map双击修改 target" />
+				</node>
+			</children>
+		</node>
+	</children>
+</node>

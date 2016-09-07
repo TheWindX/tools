@@ -87,7 +87,7 @@ namespace MiniEditor
                 }
             }
             var c = (MComponent)Activator.CreateInstance(t);
-            c.go = this;
+            c.eo = this;
             try
             {
                 c.editorAwake(); //todo, 是否加到队列
@@ -177,7 +177,7 @@ namespace MiniEditor
 
     public class MComponent
     {
-        internal EditorObject go = null;
+        internal EditorObject eo = null;
         internal Action evtInit = null;
         internal Action evtUpdate = null;
         internal Action evtRemove = null;
@@ -214,22 +214,22 @@ namespace MiniEditor
 
         public EditorObject getEditorObject()
         {
-            return go;
+            return eo;
         }
 
         public IEnumerable<MComponent> addComponent<T>() where T : MComponent
         {
-            return go.addComponent<T>();
+            return eo.addComponent<T>();
         }
 
         public T getComponent<T>() where T : MComponent
         {
-            return go.getComponent<T>();
+            return eo.getComponent<T>();
         }
 
         public void removeComponent<T>() where T : MComponent
         {
-            go.removeComponent<T>();
+            eo.removeComponent<T>();
         }
 
         internal static IEnumerable<RequireComAttribute> getDependcy(Type t)

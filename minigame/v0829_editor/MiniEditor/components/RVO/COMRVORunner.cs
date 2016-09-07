@@ -48,13 +48,46 @@ namespace MiniEditor
                     (float)scenario.timeHorizon, (float)scenario.timeHorizonObst, (float)scenario.radius,
                     (float)scenario.maxSpeed,
                     new Vector2(0.0f, 0.0f));
-                var nodes = getEditorObject().children;
-                foreach (var node in nodes)
+
+                var agents = getChildrenCom<COMAgent>(getEditorObject() );
+                var obstacles = getChildrenCom<COMRVOObstacle>(getEditorObject());
+
+                foreach (var agent in agents)
                 {
-                    var agent = node.getComponent<COMAgent>();
-                    var agentMapObj = node.getComponent<COMMapObject>();
+                    var agentMapObj = agent.getComponent<COMMapObject>();
                     int id = mRunner.addAgent(new Vector2((float)agentMapObj.x, (float)agentMapObj.y));
                     agent.agentID = id;
+                }
+
+                foreach(var obs in obstacles)
+                {
+                    mRunner.addObstacle(obs.mObstacle);
+                }
+
+                mRunner.processObstacles();
+            }
+        }
+
+        public static IEnumerable<T> getChildrenCom<T>(EditorObject obj) where T:MComponent
+        {
+            foreach(var o in obj.children)
+            {
+                bool found = false;
+                foreach(var c in o.components)
+                {
+                    if(c is T)
+                    {
+                        yield return c as T;
+                        found = true;
+                        break;
+                    }
+                }
+                if(!found)
+                {
+                    foreach(var a in getChildrenCom<T>(o))
+                    {
+                        yield return a;
+                    }
                 }
             }
         }
@@ -70,11 +103,11 @@ namespace MiniEditor
             {
                 //update agent pos
                 Console.WriteLine(mRunner.getGlobalTime());
-                var nodes = getEditorObject().children;
-                foreach (var node in nodes)
+
+                var agents = getChildrenCom<COMAgent>(getEditorObject());
+                foreach (var agent in agents)
                 {
-                    var agent = node.getComponent<COMAgent>();
-                    var agentMapObj = node.getComponent<COMMapObject>();
+                    var agentMapObj = agent.getComponent<COMMapObject>();
                     var pos = mRunner.getAgentPosition(agent.agentID);
                     agentMapObj.x = (double)pos.x();
                     agentMapObj.y = (double)pos.y();
@@ -82,10 +115,9 @@ namespace MiniEditor
                 }
 
                 //update prevelocity
-                foreach (var node in nodes)
+                foreach (var agent in agents)
                 {
-                    var agent = node.getComponent<COMAgent>();
-                    var agentMapObj = node.getComponent<COMMapObject>();
+                    var agentMapObj = agent.getComponent<COMMapObject>();
 
                     var goal = new Vector2((float)agent.targetX, (float)agent.targetY);
                     var now = new Vector2((float)agentMapObj.x, (float)agentMapObj.y);
