@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MiniEditor
 {
-    [CustomComponent(path = "TEST", name = "test1", removable = false)]
+    [CustomComponent(path = "TEST", name = "test1")]
     class COMTest1 : MComponent
     {
         public bool boolValue { get; set; }
@@ -16,16 +16,5 @@ namespace MiniEditor
 
         [Description]
         public string descripValue { get { return "description from test1"; } }
-
-        public Action act
-        {
-            get
-            {
-                return () =>
-                {
-                    MLogger.info("log from COMTest1");
-                };
-            }
-        }
     }
 }

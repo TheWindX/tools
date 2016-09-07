@@ -136,7 +136,7 @@ namespace MiniEditor
             if(mPolygon == null)
             {
                 mPolygon = new Polygon();
-                mPolygon.Fill = new SolidColorBrush(Colors.LightYellow);
+                mPolygon.Fill = new SolidColorBrush(Colors.Blue);
                 mPolygon.Stroke = new SolidColorBrush(Colors.White);
                 mPolygon.StrokeThickness = 1;
             }
