@@ -100,6 +100,8 @@
     <Compile Include="components\RVO\COMAgentManager.cs" />
     <Compile Include="components\RVO\COMObstacleManager.cs" />
     <Compile Include="components\RVO\COMRVOObstacle.cs" />
+    <Compile Include="components\TEST\COMTest1.cs" />
+    <Compile Include="components\TEST\COMTest2.cs" />
     <Compile Include="core\ComponentRepository.cs" />
     <Compile Include="components\RVO\COMAgent.cs" />
     <Compile Include="components\RVO\COMEditagent.cs" />
