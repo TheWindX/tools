@@ -11,15 +11,19 @@ namespace MiniEditor
     [CustomComponent(path = "DEMO/RVO", editable = true, name = "RVO 测试")]
     class COMRVORunner : MComponent
     {
-        public System.Action addAgent
+        public System.Action addManager
         {
             get
             {
                 return () =>
                 {
-                    var obj = EditorWorld.createObject(getEditorObject(), "agent");
-                    obj.addComponent<COMEditagent>();
+                    var obj = EditorWorld.createObject(getEditorObject(), "obstacleM");
+                    obj.addComponent<COMObstacleManager>();
                     EditorFuncs.getItemListPage().insertEditorObject(obj);
+
+                    var obj1 = EditorWorld.createObject(getEditorObject(), "agentM");
+                    obj1.addComponent<COMAgentManager>();
+                    EditorFuncs.getItemListPage().insertEditorObject(obj1);
                 };
             }
         }

@@ -97,6 +97,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="components\COMEditorObject.cs" />
+    <Compile Include="components\RVO\COMAgentManager.cs" />
+    <Compile Include="components\RVO\COMObstacleManager.cs" />
     <Compile Include="components\RVO\COMRVOObstacle.cs" />
     <Compile Include="core\ComponentRepository.cs" />
     <Compile Include="components\RVO\COMAgent.cs" />
