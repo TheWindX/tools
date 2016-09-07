@@ -93,11 +93,19 @@ namespace MiniEditor
         public override void editorSleep()
         {
             EditorFuncs.getMapPage().removeItem(getMapUIItem());
+            EditorFuncs.evtLeftMouseDrag -= EditorFuncs_evtLeftMouseDrag;
         }
 
         public override void editorInit()
         {
             getMapUIItem().isPicked = true;
+            EditorFuncs.evtLeftMouseDrag += EditorFuncs_evtLeftMouseDrag;
+        }
+
+        private void EditorFuncs_evtLeftMouseDrag(double arg1, double arg2)
+        {
+            x += arg1;
+            y += arg2;
         }
 
         public override void editorUpdate()
@@ -108,6 +116,7 @@ namespace MiniEditor
         public override void editorExit()
         {
             getMapUIItem().isPicked = false;
+            EditorFuncs.evtLeftMouseDrag -= EditorFuncs_evtLeftMouseDrag;
         }
     }
 }

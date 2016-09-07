@@ -28,7 +28,7 @@ namespace MiniEditor
         {
             if (mLineUI == null)
             {
-                mLineUI = new Line() { Stroke = new SolidColorBrush(Colors.Blue), StrokeThickness = 2 };
+                mLineUI = new Line() { Stroke = new SolidColorBrush(Colors.LightBlue), StrokeThickness = 2 };
             }
             return mLineUI;
         }

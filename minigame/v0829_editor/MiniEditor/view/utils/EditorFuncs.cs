@@ -69,15 +69,126 @@ namespace MiniEditor
             return p;
         }
 
+        public static Point getMousePositionInMapWindow()
+        {
+            Point p = Mouse.GetPosition(getMapPage());
+            return p;
+        }
+
         internal static void doKeyUp(Key k)
         {
             if(evtKey != null)
             {
-                evtKey(k);
+                try
+                {
+                    evtKey(k);
+                }
+                catch (Exception e)
+                {
+                    MLogger.error(e.ToString());
+                }
+
+            }
+        }
+
+        internal static void doLeftMouseUp(double x, double y)
+        {
+            if (evtLeftMouseUp != null)
+            {
+                try
+                {
+                    evtLeftMouseUp(x, y);
+                }
+                catch (Exception e)
+                {
+                    MLogger.error(e.ToString());
+                }
+            }
+        }
+
+        internal static void doLeftMouseDown(double x, double y)
+        {
+            if (evtLeftMouseDown != null)
+            {
+                try
+                {
+                    evtLeftMouseDown(x, y);
+                }
+                catch (Exception e)
+                {
+                    MLogger.error(e.ToString());
+                }
+            }
+        }
+
+        internal static void doLeftMouseDrag(double x, double y)
+        {
+            if (evtLeftMouseDrag != null)
+            {
+                try
+                {
+                    evtLeftMouseDrag(x, y);
+                }
+                catch (Exception e)
+                {
+                    MLogger.error(e.ToString());
+                }
+            }
+        }
+
+        internal static void doRightMouseUp(double x, double y)
+        {
+            if (evtRightMouseUp != null)
+            {
+                try
+                {
+                    evtRightMouseUp(x, y);
+                }
+                catch (Exception e)
+                {
+                    MLogger.error(e.ToString());
+                }
+            }
+        }
+
+        internal static void doRightMouseDown(double x, double y)
+        {
+            if (evtRightMouseDown != null)
+            {
+                try
+                {
+                    evtRightMouseDown(x, y);
+                }
+                catch (Exception e)
+                {
+                    MLogger.error(e.ToString());
+                }
+            }
+        }
+
+        internal static void doRightMouseDrag(double x, double y)
+        {
+            if (evtRightMouseDrag != null)
+            {
+                try
+                {
+                    evtRightMouseDrag(x, y);
+                }
+                catch(Exception e)
+                {
+                    MLogger.error(e.ToString());
+                }
             }
         }
 
         public static event System.Action<Key> evtKey = null;
+        public static event System.Action<double, double> evtLeftMouseUp = null;
+        public static event System.Action<double, double> evtLeftMouseDown = null;
+        public static event System.Action<double, double> evtLeftMouseDrag = null;
+
+        public static event System.Action<double, double> evtRightMouseUp = null;
+        public static event System.Action<double, double> evtRightMouseDown = null;
+        public static event System.Action<double, double> evtRightMouseDrag = null;
 
         public static bool isLeftControlPressed()
         {
