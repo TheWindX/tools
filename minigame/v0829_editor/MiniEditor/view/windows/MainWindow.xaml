@@ -6,7 +6,7 @@
         
         xmlns:local="clr-namespace:MiniEditor"
         mc:Ignorable="d"
-        Title="MainWindow" Height="1024" Width="1024" Initialized="Window_Initialized" Closing="Window_Closing" Background="{x:Null}" PreviewKeyUp="Window_PreviewKeyUp">
+        Title="minity" Height="1024" Width="1024" Initialized="Window_Initialized" Closing="Window_Closing" Background="{x:Null}" PreviewKeyUp="Window_PreviewKeyUp">
     <!--:wpfTool="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"-->
     <Grid>
         <Grid.RowDefinitions>
@@ -16,11 +16,13 @@
         </Grid.RowDefinitions>
         <Menu Grid.Row="0">
             <MenuItem Header="_File">
-                <MenuItem Header="Save" Click="MenuItem_save">
+                <MenuItem Header="_Open" Click="MenuItem_open">
                 </MenuItem>
-                <MenuItem Header="Load" Click="MenuItem_load">
+                <MenuItem Header="_Save as" Click="MenuItem_save_as">
                 </MenuItem>
-                <MenuItem Header="Save as" Click="MenuItem_save_as">
+                <MenuItem Header="_Save" Click="MenuItem_save">
+                </MenuItem>
+                <MenuItem Header="_Load" Click="MenuItem_load">
                 </MenuItem>
             </MenuItem>
             <MenuItem Header="_Help" Click="MenuItem_Click"></MenuItem>

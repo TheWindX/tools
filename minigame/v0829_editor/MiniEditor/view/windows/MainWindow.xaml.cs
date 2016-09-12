@@ -1,4 +1,5 @@
-﻿using MiniEditor;
+﻿using Microsoft.Win32;
+using MiniEditor;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -54,23 +55,38 @@ namespace MiniEditor
         }
 
         string mFilePath = "";
+        
+        private void MenuItem_open(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.InitialDirectory = System.AppDomain.CurrentDomain.SetupInformation.ApplicationBase;
+            openFileDialog.Filter = "xml files (*.xml)|*.xml";
+            if (openFileDialog.ShowDialog() == true)
+            {
+                mFilePath = openFileDialog.FileName;
+                exports.load(mFilePath);
+            }
+        }
+
         private void MenuItem_save(object sender, RoutedEventArgs e)
         {
-            if(string.IsNullOrEmpty(mFilePath))
-            {
-                mFilePath = System.AppDomain.CurrentDomain.SetupInformation.ApplicationBase;
-            }
-
+            exports.save(mFilePath);
         }
 
         private void MenuItem_load(object sender, RoutedEventArgs e)
         {
-
+            exports.load(mFilePath);
         }
 
         private void MenuItem_save_as(object sender, RoutedEventArgs e)
         {
-
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.InitialDirectory = System.AppDomain.CurrentDomain.SetupInformation.ApplicationBase;
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                mFilePath = saveFileDialog.FileName;
+                exports.save(mFilePath);
+            }
         }
     }
 }

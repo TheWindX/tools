@@ -63,6 +63,7 @@ namespace MiniEditor
 
         public static void load(string path)
         {
+            clear();
             if(string.IsNullOrEmpty(path))
             {
                 path = System.AppDomain.CurrentDomain.SetupInformation.ApplicationBase + "root.xml";
