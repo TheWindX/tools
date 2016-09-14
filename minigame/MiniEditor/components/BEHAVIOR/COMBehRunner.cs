@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ns_MiniGame
+namespace MiniEditor
 {
-    public interface MModule
+    /*
+     *  触发同一个物体上的COMBeh
+     */
+    class COMBehRunner : MComponent
     {
-        void onInit();
-        void onUpdate();
-        void onExit();
     }
 }

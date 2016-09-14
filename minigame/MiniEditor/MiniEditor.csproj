@@ -96,6 +96,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="components\BEHAVIOR\COMBehRunner.cs" />
+    <Compile Include="components\BEHAVIOR\ser\COMBeh.cs" />
+    <Compile Include="components\BEHAVIOR\ser\COMBehCond.cs" />
+    <Compile Include="components\BEHAVIOR\ser\COMBehCondRand.cs" />
+    <Compile Include="components\BEHAVIOR\ser\COMBehSeq.cs" />
+    <Compile Include="components\BEHAVIOR\ser\COMBehSel.cs" />
+    <Compile Include="components\BEHAVIOR\ser\COMBehTime.cs" />
+    <Compile Include="components\BEHAVIOR\par\COMBehCondLoopPar.cs" />
+    <Compile Include="components\BEHAVIOR\par\COMBehSelPar.cs" />
+    <Compile Include="components\BEHAVIOR\par\COMBehSeqPar.cs" />
+    <Compile Include="components\BEHAVIOR\par\COMBehTimeLoopPar.cs" />
     <Compile Include="components\COMEditorObject.cs" />
     <Compile Include="components\RVO\COMAgentManager.cs" />
     <Compile Include="components\RVO\COMObstacleManager.cs" />
@@ -294,6 +305,7 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
