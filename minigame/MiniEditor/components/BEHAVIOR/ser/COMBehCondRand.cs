@@ -9,7 +9,13 @@ namespace MiniEditor
     /*
     随机开启分支任务，返回分支任务是否成功
     */
+    [CustomComponent(path = "BEHAVIOR", name = "random condition")]
     class COMBehCondRand : COMBehCond
     {
+        public override void behInit()
+        {
+            base.behInit();
+            mCondition = MRandom.randBool();;
+        }
     }
 }

@@ -111,6 +111,21 @@ namespace MiniEditor
                             panel.Children.Add(v);
                             if (editorProp != null)
                                 v.IsEnabled = false;
+
+                            Action act = () =>
+                            {
+                                var checkValue = (bool)p.GetValue(com);
+                                if (checkValue != v.Val)
+                                {
+                                    v.Val = checkValue;
+                                }
+                            };
+
+                            com.evtUpdate += act;
+                            com.evtRemove += () =>
+                            {
+                                com.evtUpdate -= act;
+                            };
                         }
                         else if (p.PropertyType == typeof(double))
                         {
@@ -159,6 +174,21 @@ namespace MiniEditor
                                 panel.Children.Add(v);
                                 if (editorProp != null)
                                     v.IsEnabled = false;
+
+                                Action act = () =>
+                                {
+                                    var checkValue = (string)p.GetValue(com);
+                                    if (checkValue != v.Val)
+                                    {
+                                        v.Val = checkValue;
+                                    }
+                                };
+
+                                com.evtUpdate += act;
+                                com.evtRemove += () =>
+                                {
+                                    com.evtUpdate -= act;
+                                };
                             }
                         }
                         else if(p.PropertyType == typeof(System.Action))

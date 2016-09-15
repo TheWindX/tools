@@ -97,16 +97,19 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="components\BEHAVIOR\COMBehRunner.cs" />
-    <Compile Include="components\BEHAVIOR\ser\COMBeh.cs" />
+    <Compile Include="components\BEHAVIOR\COMBeh.cs" />
     <Compile Include="components\BEHAVIOR\ser\COMBehCond.cs" />
     <Compile Include="components\BEHAVIOR\ser\COMBehCondRand.cs" />
+    <Compile Include="components\BEHAVIOR\ser\COMBehLog.cs" />
+    <Compile Include="components\BEHAVIOR\ser\COMBehLoop.cs" />
+    <Compile Include="components\BEHAVIOR\ser\COMBehReverse.cs" />
     <Compile Include="components\BEHAVIOR\ser\COMBehSeq.cs" />
     <Compile Include="components\BEHAVIOR\ser\COMBehSel.cs" />
-    <Compile Include="components\BEHAVIOR\ser\COMBehTime.cs" />
-    <Compile Include="components\BEHAVIOR\par\COMBehCondLoopPar.cs" />
+    <Compile Include="components\BEHAVIOR\ser\COMBehConstant.cs" />
+    <Compile Include="components\BEHAVIOR\ser\COMBehTimeOut.cs" />
+    <Compile Include="components\BEHAVIOR\ser\COMBehCondSwith.cs" />
     <Compile Include="components\BEHAVIOR\par\COMBehSelPar.cs" />
     <Compile Include="components\BEHAVIOR\par\COMBehSeqPar.cs" />
-    <Compile Include="components\BEHAVIOR\par\COMBehTimeLoopPar.cs" />
     <Compile Include="components\COMEditorObject.cs" />
     <Compile Include="components\RVO\COMAgentManager.cs" />
     <Compile Include="components\RVO\COMObstacleManager.cs" />
@@ -119,6 +122,7 @@
     <Compile Include="components\RVO\COMRVORunner.cs" />
     <Compile Include="components\RVO\COMRVOScenario.cs" />
     <Compile Include="core\core_extend\MComponentExtender.cs" />
+    <Compile Include="core\MRandom.cs" />
     <Compile Include="editorCore\CSRepl.cs" />
     <Compile Include="core\MComponent.cs" />
     <Compile Include="core\MDriver.cs" />
