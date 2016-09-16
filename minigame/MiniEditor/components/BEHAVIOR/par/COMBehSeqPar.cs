@@ -62,8 +62,9 @@ namespace MiniEditor.components.BEHAVIOR.par
         public override bool behExit()
         {
             base.behExit();
+            var r = mExitValue;
             reset();
-            return mExitValue;
+            return r;
         }
 
         public override void behInterrupt()

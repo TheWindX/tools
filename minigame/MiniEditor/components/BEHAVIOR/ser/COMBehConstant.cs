@@ -12,16 +12,16 @@ namespace MiniEditor
     [CustomComponent(path = "BEHAVIOR", name = "常量")]
     class COMBehConstant : COMBeh
     {
-        private bool mExitValue = true;
+        private bool mConstant = true;
         public bool exitValue
         {
             get
             {
-                return mExitValue;
+                return mConstant;
             }
             set
             {
-                mExitValue = value;
+                mConstant = value;
             }
         }
 
@@ -48,7 +48,7 @@ namespace MiniEditor
         {
             base.behExit();
             reset();
-            return mExitValue;
+            return mConstant;
         }
 
         public override void behInterrupt()

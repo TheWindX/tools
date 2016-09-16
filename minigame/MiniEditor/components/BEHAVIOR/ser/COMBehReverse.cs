@@ -34,13 +34,15 @@ namespace MiniEditor
         private void reset()
         {
             mChild = null;
+            mExitValue = false;
         }
 
         public override bool behExit()
         {
             base.behExit();
+            var r = mExitValue;
             reset();
-            return !mExitValue;
+            return r;
         }
 
         public override void behInterrupt()
