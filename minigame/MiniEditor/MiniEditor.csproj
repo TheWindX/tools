@@ -111,6 +111,7 @@
     <Compile Include="components\BEHAVIOR\par\COMBehSelPar.cs" />
     <Compile Include="components\BEHAVIOR\par\COMBehSeqPar.cs" />
     <Compile Include="components\COMEditorObject.cs" />
+    <Compile Include="components\COMMapObjectPicker.cs" />
     <Compile Include="components\RVO\COMAgentManager.cs" />
     <Compile Include="components\RVO\COMObstacleManager.cs" />
     <Compile Include="components\RVO\COMRVOObstacle.cs" />

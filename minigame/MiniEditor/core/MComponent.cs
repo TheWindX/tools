@@ -86,21 +86,23 @@ namespace MiniEditor
                     return coms;
                 }
             }
+            
+
+            var dps = MComponent.getDependcy(t);
+            foreach (var d in dps)
+            {
+                coms.AddRange(addComponent(d.com));
+            }
+
             var c = (MComponent)Activator.CreateInstance(t);
             c.eo = this;
             try
             {
                 c.editorAwake(); //todo, 是否加到队列
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MLogger.error(ex.ToString());
-            }
-
-            var dps = MComponent.getDependcy(t);
-            foreach (var d in dps)
-            {
-                coms.AddRange(addComponent(d.com));
             }
             this.mComponents.Add(c);
             coms.Add(c);

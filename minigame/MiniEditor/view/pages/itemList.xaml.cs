@@ -44,11 +44,14 @@ namespace MiniEditor
             }
             else
             {
-                //item.parent = currentItem.editObject.parent;
-                addItemAfter(item.parent.getComponent<COMEditorObject>().getMenuItem(), item.getComponent<COMEditorObject>().getMenuItem());
+                item.parent = currentItem.editObject;
+                //reflushEditorObject();
+                //addItemAfter(item.parent.getComponent<COMEditorObject>().getMenuItem(), item.getComponent<COMEditorObject>().getMenuItem());
                 //addItemAfter(getLast(currentItem.editObject).getComponent<COMEditorObject>().getMenuItem(),
                 //        item.getComponent<COMEditorObject>().getMenuItem());
             }
+
+            reflushEditorObject();
         }
 
         public void addItem(listItem item)
@@ -196,21 +199,11 @@ namespace MiniEditor
             if(currentItem != null)
             {
                 currentItem.isPick = false;
-                var uimapObject = currentItem.editObject.getComponent<COMMapObject>();
-                if (uimapObject != null)
-                {
-                    uimapObject.getMapUIItem().isPicked = false;
-                }
             }
             item.isPick = true;
             currentItem = item;
 
             EditorFuncs.getComponentPage().reflush();
-            var uimapObject1 = currentItem.editObject.getComponent<COMMapObject>();
-            if(uimapObject1 != null)
-            {
-                uimapObject1.getMapUIItem().isPicked = true;
-            }
         }
 
         public void pickEditObject(EditorObject obj)
@@ -279,6 +272,7 @@ namespace MiniEditor
             m_object_list.Children.Clear();
             var obj = EditorWorld.getRootEditorObject();
             addEditorItem(obj);
+            EditorFuncs.getComponentPage().reflush();
         }
     }
 }

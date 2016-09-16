@@ -100,10 +100,10 @@ namespace MiniEditor
             }
         }
 
-        private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            EditorFuncs.getItemListPage().pickEditObject(editorObject);
-        }
+        //private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        //{
+        //    EditorFuncs.getItemListPage().pickEditObject(editorObject);
+        //}
 
     }
 }

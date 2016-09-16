@@ -8,8 +8,9 @@
              Width="30"
              Height="30"
              d:DesignHeight="300" d:DesignWidth="300">
-    <Grid MouseLeftButtonDown="Grid_MouseLeftButtonDown">
-        <Grid.ColumnDefinitions>
+    <!--Grid MouseLeftButtonDown="Grid_MouseLeftButtonDown"-->
+    <Grid>
+            <Grid.ColumnDefinitions>
             <ColumnDefinition Width="4*"></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
