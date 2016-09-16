@@ -99,7 +99,6 @@
     <Compile Include="components\BEHAVIOR\COMBehRunner.cs" />
     <Compile Include="components\BEHAVIOR\COMBeh.cs" />
     <Compile Include="components\BEHAVIOR\ser\COMBehCond.cs" />
-    <Compile Include="components\BEHAVIOR\ser\COMBehCondRand.cs" />
     <Compile Include="components\BEHAVIOR\ser\COMBehLog.cs" />
     <Compile Include="components\BEHAVIOR\ser\COMBehLoop.cs" />
     <Compile Include="components\BEHAVIOR\ser\COMBehReverse.cs" />
@@ -107,7 +106,6 @@
     <Compile Include="components\BEHAVIOR\ser\COMBehSel.cs" />
     <Compile Include="components\BEHAVIOR\ser\COMBehConstant.cs" />
     <Compile Include="components\BEHAVIOR\ser\COMBehTimeOut.cs" />
-    <Compile Include="components\BEHAVIOR\ser\COMBehCondSwith.cs" />
     <Compile Include="components\BEHAVIOR\par\COMBehSelPar.cs" />
     <Compile Include="components\BEHAVIOR\par\COMBehSeqPar.cs" />
     <Compile Include="components\COMEditorObject.cs" />

@@ -12,7 +12,7 @@ namespace MiniEditor
     [CustomComponent(path = "BEHAVIOR", name = "循环")]
     class COMBehLoop : COMBeh
     {
-        private int mTimes = 1;
+        private int mTimes = -1;
         private int mTimeCount = 0;
         public int times
         {
@@ -24,6 +24,11 @@ namespace MiniEditor
             {
                 mTimes = value;
             }
+        }
+
+        public bool always
+        {
+            get; set;
         }
 
         COMBeh mChild = null;
@@ -41,14 +46,14 @@ namespace MiniEditor
             if(resUpdate)
             {
                 mExitValue = mChild.behExit(); 
-                if(mExitValue)
+                if(!always && mExitValue)
                 {
                     return true;
                 }
                 else
                 {
                     mTimeCount++;
-                    if (mTimeCount >= mTimes)
+                    if (mTimes >= 0 && mTimeCount >= mTimes)
                     {
                         return true;
                     }

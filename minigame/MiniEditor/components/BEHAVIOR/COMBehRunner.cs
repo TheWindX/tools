@@ -18,6 +18,19 @@ namespace MiniEditor
             return mBeh.behUpdate();
         }
 
+        bool mExitValue = false;
+        public bool result
+        {
+            get
+            {
+                return mExitValue;
+            }
+            set
+            {
+                mExitValue = value;
+            }
+        }
+
         //add component或enable时回调
         public override void editorAwake()
         {
@@ -48,6 +61,7 @@ namespace MiniEditor
             {   
                 if(update())
                 {
+                    mExitValue = mBeh.behExit();
                     run = false;
                 }
             }
