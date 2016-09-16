@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MiniEditor
 {
-    [RequireCom(typeof(COMMapObject))]
+    [RequireCom(typeof(COMMapObjectPicker))]
     [CustomComponent(path ="DEMO/RVO", name ="agent物体", removable=false)]
     class COMAgent : MComponent
     {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,7 +13,7 @@ namespace MiniEditor
         public virtual bool check()
         {
             //TODO
-            throw new NotImplementedException();
+            return true;
         }
 
         //初始化，参数apply
@@ -91,6 +92,14 @@ namespace MiniEditor
         public ESTATE getState()
         {
             return mState;
+        }
+
+        //////overrides
+        //add component或enable时回调
+        public override void editorAwake()
+        {
+            var attr = GetType().GetCustomAttribute<CustomComponentAttribute>();
+            getComponent<COMEditorObject>().name = attr.name;
         }
 
     }

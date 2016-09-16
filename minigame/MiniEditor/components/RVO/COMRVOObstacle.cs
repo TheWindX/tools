@@ -24,6 +24,8 @@ namespace MiniEditor
                 mInEdit = value;
                 if(mInEdit)
                 {
+                    EditorFuncs.evtLeftMouseUp -= EditorFuncs_evtMouseUp;
+                    EditorFuncs.evtKey -= EditorFuncs_evtKey;
                     EditorFuncs.evtLeftMouseUp += EditorFuncs_evtMouseUp;
                     EditorFuncs.evtKey += EditorFuncs_evtKey;
                 }
@@ -48,6 +50,7 @@ namespace MiniEditor
                 mPickable = value;
                 if (mPickable)
                 {
+                    EditorFuncs.evtLeftMouseDrag -= EditorFuncs_evtLeftMouseDrag;
                     EditorFuncs.evtLeftMouseDrag += EditorFuncs_evtLeftMouseDrag;
                 }
                 else
