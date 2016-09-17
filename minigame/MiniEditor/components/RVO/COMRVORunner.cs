@@ -1,4 +1,9 @@
-﻿using RVO;
+﻿/*
+ * author: xiaofeng.li
+ * mail: 453588006@qq.com
+ * desc: 
+ * */
+using RVO;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,4 +1,8 @@
-﻿
+﻿/*
+ * author: xiaofeng.li
+ * mail: 453588006@qq.com
+ * desc: 
+ * */
 namespace MiniEditor
 {
     [CustomComponent(path = "TEST", name = "test1")]

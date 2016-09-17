@@ -1,4 +1,9 @@
-﻿using System;
+﻿/*
+ * author: xiaofeng.li
+ * mail: 453588006@qq.com
+ * desc: 
+ * */
+using System;
 
 
 namespace MiniEditor
