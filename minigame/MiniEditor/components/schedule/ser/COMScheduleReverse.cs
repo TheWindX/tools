@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 namespace MiniEditor
 {
     /*
-     * 循环重试子任务，直到成功
+     * 对子任务的运行结果取反
      */
-    [CustomComponent(path = "schedule", name = "取反")]
+    [CustomComponent(path = "SCHEDULE/COMBINE", name = "取反(!)")]
     class COMScheduleReverse : COMSchedule
     {
         COMSchedule mChild = null;

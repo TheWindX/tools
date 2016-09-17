@@ -96,6 +96,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="components\schedule\par\COMScheduleThread.cs" />
     <Compile Include="components\schedule\ser\COMSchedule.cs" />
     <Compile Include="components\schedule\COMScheduleRunner.cs" />
     <Compile Include="components\COMEditorObject.cs" />
@@ -106,7 +107,7 @@
     <Compile Include="components\schedule\par\COMScheduleSelPar.cs" />
     <Compile Include="components\schedule\par\COMScheduleSeqPar.cs" />
     <Compile Include="components\schedule\ser\COMScheduleCond.cs" />
-    <Compile Include="components\schedule\ser\COMScheduleConstant.cs" />
+    <Compile Include="components\schedule\ser\COMScheduleTrue.cs" />
     <Compile Include="components\schedule\Actions\COMScheduleLog.cs" />
     <Compile Include="components\schedule\ser\COMScheduleLoop.cs" />
     <Compile Include="components\schedule\ser\COMScheduleReverse.cs" />

@@ -9,7 +9,7 @@ namespace MiniEditor
     /*
      * 循环(times)重试子任务，直到成功，次数结束，还未成功，返回失败
      */
-    [CustomComponent(path = "schedule", name = "循环")]
+    [CustomComponent(path = "SCHEDULE/COMBINE", name = "循环(LOOP)")]
     class COMScheduleLoop : COMSchedule
     {
         private int mTimes = -1;

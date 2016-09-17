@@ -9,7 +9,7 @@ namespace MiniEditor
     /*
      * 依次执行，有一项成功，退出成功，全失败退出失败，
      */
-    [CustomComponent(path = "schedule", name = "选择")]
+    [CustomComponent(path = "SCHEDULE/COMBINE", name = "合取(ANY)")]
     class COMScheduleSel : COMSchedule
     {
         public override void scheduleInit()

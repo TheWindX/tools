@@ -9,14 +9,25 @@ namespace MiniEditor
     /*
     condition: 三个子任务，根据第一个任务是否成功，执行返回第二个任务或第三个任务
     */
-    [CustomComponent(path = "schedule", name = "条件")]
+    [CustomComponent(path = "SCHEDULE/COMBINE", name = "条件(IF)")]
     class COMScheduleCond : COMSchedule
     {
+        [Description]
+        public string description
+        {
+            get
+            {
+                return "三个子任务，根据第一个任务是否成功，执行返回第二个任务或第三个任务";
+            }
+        }
+
+
         COMSchedule mConditionSchedule = null;
         COMSchedule mTrueSchedule = null;
         COMSchedule mFalseSchedule = null;
         public override void scheduleInit()
         {
+            base.scheduleInit();
             //子类中实现条件的判断
             //mCondition = true;
             var childrenIter = scheduleGetChildren().GetEnumerator();
@@ -26,6 +37,7 @@ namespace MiniEditor
             mTrueSchedule = childrenIter.Current;
             childrenIter.MoveNext();
             mFalseSchedule = childrenIter.Current;
+            mConditionSchedule.editorInit();
         }
 
         bool mConditionState = true;
@@ -46,6 +58,8 @@ namespace MiniEditor
             {
                 if(mCondition)
                 {
+                    if(mTrueSchedule.getState() == ESTATE.e_uninit)
+                        mTrueSchedule.editorInit();
                     bool resUpdate = mTrueSchedule.scheduleUpdate();
                     if (resUpdate)
                     {
@@ -55,6 +69,8 @@ namespace MiniEditor
                 }
                 else
                 {
+                    if (mFalseSchedule.getState() == ESTATE.e_uninit)
+                        mFalseSchedule.editorInit();
                     bool resUpdate = mFalseSchedule.scheduleUpdate();
                     if (resUpdate)
                     {

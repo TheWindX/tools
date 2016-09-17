@@ -9,6 +9,7 @@ namespace MiniEditor.components.BEHAVIOR.par
     /* 
      * 同时执行，有一项成功，退出成功(同时打断所有进程)，全失败退出失败，
      */
+    [CustomComponent(path = "SCHEDULE/COMBINE", name = "同时析取(ANY)")]
     class COMScheduleSelPar : COMSchedule
     {
         public override void scheduleInit()

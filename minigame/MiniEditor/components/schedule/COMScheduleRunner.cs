@@ -9,7 +9,7 @@ namespace MiniEditor
     /*
      *  触发同一个物体上的COMSchedule
      */
-    [CustomComponent(path = "schedule", name = "【测试】")]
+    [CustomComponent(path = "SCHEDULE/UTIL", name = "Schedule测试")]
     class COMScheduleRunner : MComponent
     {
         COMSchedule mSchedule = null;

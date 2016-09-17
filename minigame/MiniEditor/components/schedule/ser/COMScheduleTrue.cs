@@ -7,24 +7,11 @@ using System.Threading.Tasks;
 namespace MiniEditor
 {
     /*
-    执行子任务，但总是返回成功或失败
+    执行子任务，总是返回成功
     */
-    [CustomComponent(path = "schedule", name = "返回常量")]
-    class COMScheduleConstant : COMSchedule
+    [CustomComponent(path = "SCHEDULE/COMBINE", name = "永真(TRUE)")]
+    class COMScheduleTrue : COMSchedule
     {
-        private bool mConstant = true;
-        public bool exitValue
-        {
-            get
-            {
-                return mConstant;
-            }
-            set
-            {
-                mConstant = value;
-            }
-        }
-
         COMSchedule mChild = null;
         public override void scheduleInit()
         {
@@ -48,7 +35,7 @@ namespace MiniEditor
         {
             base.scheduleExit();
             reset();
-            return mConstant;
+            return true;
         }
 
         public override void scheduleInterrupt()
