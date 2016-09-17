@@ -9,8 +9,8 @@ namespace MiniEditor
     /*
      * 过一段时间自动成功退出
      */
-    [CustomComponent(path = "BEHAVIOR", name = "持续时间")]
-    class COMScheduleTimeOut : COMSchedule
+    [CustomComponent(path = "schedule", name = "等待")]
+    class COMScheduleWait : COMSchedule
     {
         private int mTimeOut = 0;
         public int time

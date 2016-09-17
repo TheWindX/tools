@@ -9,7 +9,7 @@ namespace MiniEditor
     /*
      * 依次执行，有一项失败，退出失败，全成功退出成功，
      */
-    [CustomComponent(path = "BEHAVIOR", name = "序列")]
+    [CustomComponent(path = "schedule", name = "顺序")]
     class COMScheduleSeq : COMSchedule
     {
         public override void scheduleInit()

@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 namespace MiniEditor
 {
     /*
-    三个子任务，根据第一个任务是否成功，执行返回第二个任务或第三个任务
+    condition: 三个子任务，根据第一个任务是否成功，执行返回第二个任务或第三个任务
     */
+    [CustomComponent(path = "schedule", name = "条件")]
     class COMScheduleCond : COMSchedule
     {
         COMSchedule mConditionSchedule = null;

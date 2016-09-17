@@ -9,7 +9,7 @@ namespace MiniEditor
     /*
     执行子任务，但总是返回成功或失败
     */
-    [CustomComponent(path = "BEHAVIOR", name = "常量")]
+    [CustomComponent(path = "schedule", name = "返回常量")]
     class COMScheduleConstant : COMSchedule
     {
         private bool mConstant = true;

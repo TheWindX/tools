@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MiniEditor
 {
-    [CustomComponent(path = "BEHAVIOR", name = "调试")]
+    [CustomComponent(path = "schedule", name = "打印")]
     class COMScheduleDebug : COMSchedule
     {
         public string mContent = "debug here";
