@@ -9,35 +9,35 @@ namespace MiniEditor
     /*
     三个子任务，根据第一个任务是否成功，执行返回第二个任务或第三个任务
     */
-    class COMBehCond : COMBeh
+    class COMScheduleCond : COMSchedule
     {
-        COMBeh mConditionBeh = null;
-        COMBeh mTrueBeh = null;
-        COMBeh mFalseBeh = null;
-        public override void behInit()
+        COMSchedule mConditionSchedule = null;
+        COMSchedule mTrueSchedule = null;
+        COMSchedule mFalseSchedule = null;
+        public override void scheduleInit()
         {
             //子类中实现条件的判断
             //mCondition = true;
-            var childrenIter = behGetChildren().GetEnumerator();
+            var childrenIter = scheduleGetChildren().GetEnumerator();
             childrenIter.MoveNext();
-            mConditionBeh = childrenIter.Current;
+            mConditionSchedule = childrenIter.Current;
             childrenIter.MoveNext();
-            mTrueBeh = childrenIter.Current;
+            mTrueSchedule = childrenIter.Current;
             childrenIter.MoveNext();
-            mFalseBeh = childrenIter.Current;
+            mFalseSchedule = childrenIter.Current;
         }
 
         bool mConditionState = true;
         bool mCondition = true;
         bool mExitValue = false;
-        public override bool behUpdate()
+        public override bool scheduleUpdate()
         {
             if(mConditionState)
             {
-                bool resUpdate = mConditionBeh.behUpdate();
+                bool resUpdate = mConditionSchedule.scheduleUpdate();
                 if(resUpdate)
                 {
-                    mCondition = mConditionBeh.behExit();
+                    mCondition = mConditionSchedule.scheduleExit();
                     mConditionState = false;
                 }
             }
@@ -45,19 +45,19 @@ namespace MiniEditor
             {
                 if(mCondition)
                 {
-                    bool resUpdate = mTrueBeh.behUpdate();
+                    bool resUpdate = mTrueSchedule.scheduleUpdate();
                     if (resUpdate)
                     {
-                        mExitValue = mTrueBeh.behExit();
+                        mExitValue = mTrueSchedule.scheduleExit();
                         return true;
                     }
                 }
                 else
                 {
-                    bool resUpdate = mFalseBeh.behUpdate();
+                    bool resUpdate = mFalseSchedule.scheduleUpdate();
                     if (resUpdate)
                     {
-                        mExitValue = mFalseBeh.behExit();
+                        mExitValue = mFalseSchedule.scheduleExit();
                         return true;
                     }
                 }
@@ -68,25 +68,25 @@ namespace MiniEditor
 
         private void reset()
         {
-            mConditionBeh = null;
-            mTrueBeh = null;
-            mFalseBeh = null;
+            mConditionSchedule = null;
+            mTrueSchedule = null;
+            mFalseSchedule = null;
             mConditionState = true;
             mCondition = true;
             mExitValue = false;
         }
 
-        public override bool behExit()
+        public override bool scheduleExit()
         {
-            base.behExit();
+            base.scheduleExit();
             var r = mExitValue;
             reset();
             return r;
         }
 
-        public override void behInterrupt()
+        public override void scheduleInterrupt()
         {
-            base.behInterrupt();
+            base.scheduleInterrupt();
             
 
             reset();

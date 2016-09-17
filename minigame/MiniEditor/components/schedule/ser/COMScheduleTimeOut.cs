@@ -10,7 +10,7 @@ namespace MiniEditor
      * 过一段时间自动成功退出
      */
     [CustomComponent(path = "BEHAVIOR", name = "持续时间")]
-    class COMBehTimeOut : COMBeh
+    class COMScheduleTimeOut : COMSchedule
     {
         private int mTimeOut = 0;
         public int time
@@ -26,13 +26,13 @@ namespace MiniEditor
         }
 
         private int mTimeCount = 0;
-        public override void behInit()
+        public override void scheduleInit()
         {
-            base.behInit();
+            base.scheduleInit();
             mTimeCount = 0;
         }
 
-        public override bool behUpdate()
+        public override bool scheduleUpdate()
         {
             mTimeCount += MRuntime.getDeltaTime();
             if(mTimeCount > mTimeOut)
@@ -47,16 +47,16 @@ namespace MiniEditor
             mTimeCount = 0;
         }
 
-        public override bool behExit()
+        public override bool scheduleExit()
         {
-            base.behExit();
+            base.scheduleExit();
             reset();
             return true;
         }
 
-        public override void behInterrupt()
+        public override void scheduleInterrupt()
         {
-            base.behInterrupt();
+            base.scheduleInterrupt();
             reset();
         }
     }

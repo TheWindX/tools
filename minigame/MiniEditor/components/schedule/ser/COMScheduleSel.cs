@@ -10,26 +10,26 @@ namespace MiniEditor
      * 依次执行，有一项成功，退出成功，全失败退出失败，
      */
     [CustomComponent(path = "BEHAVIOR", name = "选择")]
-    class COMBehSel : COMBeh
+    class COMScheduleSel : COMSchedule
     {
-        public override void behInit()
+        public override void scheduleInit()
         {
-            base.behInit();
-            mCurrent = behGetChildren().GetEnumerator();
+            base.scheduleInit();
+            mCurrent = scheduleGetChildren().GetEnumerator();
             mCurrent.MoveNext();
         }
 
-        IEnumerator<COMBeh> mCurrent = null;
+        IEnumerator<COMSchedule> mCurrent = null;
         bool mExitValue = false;
-        public override bool behUpdate()
+        public override bool scheduleUpdate()
         {
             if (mCurrent == null) return true;
             var beh = mCurrent.Current;
-            if (beh.getState() == ESTATE.e_uninit) beh.behInit();
-            var resUpdate = beh.behUpdate();
+            if (beh.getState() == ESTATE.e_uninit) beh.scheduleInit();
+            var resUpdate = beh.scheduleUpdate();
             if (resUpdate)//当前子任务执行完成
             {
-                mExitValue = beh.behExit();
+                mExitValue = beh.scheduleExit();
                 if (mExitValue) return true;//有一执行成功
                 if (!mCurrent.MoveNext())
                 {
@@ -46,20 +46,20 @@ namespace MiniEditor
             mExitValue = false;
         }
 
-        public override bool behExit()
+        public override bool scheduleExit()
         {
-            base.behExit();
+            base.scheduleExit();
             var r = mExitValue;
             reset();
             return r;
         }
 
-        public override void behInterrupt()
+        public override void scheduleInterrupt()
         {
-            base.behInterrupt();
+            base.scheduleInterrupt();
             if (mCurrent.Current != null)
             {
-                mCurrent.Current.behInterrupt();
+                mCurrent.Current.scheduleInterrupt();
             }
             reset();
         }

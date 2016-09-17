@@ -7,15 +7,15 @@ using System.Threading.Tasks;
 namespace MiniEditor
 {
     /*
-     *  触发同一个物体上的COMBeh
+     *  触发同一个物体上的COMSchedule
      */
     [CustomComponent(path = "BEHAVIOR", name = "【运行】")]
-    class COMBehRunner : MComponent
+    class COMScheduleRunner : MComponent
     {
-        COMBeh mBeh = null;
+        COMSchedule mSchedule = null;
         public bool update()
         {
-            return mBeh.behUpdate();
+            return mSchedule.scheduleUpdate();
         }
 
         bool mExitValue = false;
@@ -61,7 +61,7 @@ namespace MiniEditor
             {   
                 if(update())
                 {
-                    mExitValue = mBeh.behExit();
+                    mExitValue = mSchedule.scheduleExit();
                     run = false;
                 }
             }
@@ -76,23 +76,23 @@ namespace MiniEditor
             }
             set
             {
-                mBeh = getComponent<COMBeh>();
+                mSchedule = getComponent<COMSchedule>();
                 if (mRun == value) return;
                 mRun = value;
                 if(mRun)
                 {   
-                    if(mBeh != null)
+                    if(mSchedule != null)
                     {
-                        mBeh.behInit();
+                        mSchedule.scheduleInit();
                     }
                 }
                 else
                 {
-                    if (mBeh != null)
+                    if (mSchedule != null)
                     {
-                        if(mBeh.getState() == COMBeh.ESTATE.e_inited)
+                        if(mSchedule.getState() == COMSchedule.ESTATE.e_inited)
                         {
-                            mBeh.behInterrupt();
+                            mSchedule.scheduleInterrupt();
                         }
                     }
                 }

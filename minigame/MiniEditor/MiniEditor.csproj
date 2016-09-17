@@ -96,23 +96,23 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="components\BEHAVIOR\COMBehRunner.cs" />
-    <Compile Include="components\BEHAVIOR\COMBeh.cs" />
-    <Compile Include="components\BEHAVIOR\ser\COMBehCond.cs" />
-    <Compile Include="components\BEHAVIOR\ser\COMBehLog.cs" />
-    <Compile Include="components\BEHAVIOR\ser\COMBehLoop.cs" />
-    <Compile Include="components\BEHAVIOR\ser\COMBehReverse.cs" />
-    <Compile Include="components\BEHAVIOR\ser\COMBehSeq.cs" />
-    <Compile Include="components\BEHAVIOR\ser\COMBehSel.cs" />
-    <Compile Include="components\BEHAVIOR\ser\COMBehConstant.cs" />
-    <Compile Include="components\BEHAVIOR\ser\COMBehTimeOut.cs" />
-    <Compile Include="components\BEHAVIOR\par\COMBehSelPar.cs" />
-    <Compile Include="components\BEHAVIOR\par\COMBehSeqPar.cs" />
+    <Compile Include="components\schedule\COMSchedule.cs" />
+    <Compile Include="components\schedule\COMScheduleRunner.cs" />
     <Compile Include="components\COMEditorObject.cs" />
     <Compile Include="components\COMMapObjectPicker.cs" />
     <Compile Include="components\RVO\COMAgentManager.cs" />
     <Compile Include="components\RVO\COMObstacleManager.cs" />
     <Compile Include="components\RVO\COMRVOObstacle.cs" />
+    <Compile Include="components\schedule\par\COMScheduleSelPar.cs" />
+    <Compile Include="components\schedule\par\COMScheduleSeqPar.cs" />
+    <Compile Include="components\schedule\ser\COMScheduleCond.cs" />
+    <Compile Include="components\schedule\ser\COMScheduleConstant.cs" />
+    <Compile Include="components\schedule\ser\COMScheduleLog.cs" />
+    <Compile Include="components\schedule\ser\COMScheduleLoop.cs" />
+    <Compile Include="components\schedule\ser\COMScheduleReverse.cs" />
+    <Compile Include="components\schedule\ser\COMScheduleSel.cs" />
+    <Compile Include="components\schedule\ser\COMScheduleSeq.cs" />
+    <Compile Include="components\schedule\ser\COMScheduleTimeOut.cs" />
     <Compile Include="components\TEST\COMTest1.cs" />
     <Compile Include="components\TEST\COMTest2.cs" />
     <Compile Include="core\ComponentRepository.cs" />

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace MiniEditor
 {
     [CustomComponent(path = "BEHAVIOR", name = "调试")]
-    class COMBehDebug : COMBeh
+    class COMScheduleDebug : COMSchedule
     {
         public string mContent = "debug here";
         public string content
@@ -21,7 +21,7 @@ namespace MiniEditor
                 mContent = value;
             }
         }
-        public override bool behUpdate()
+        public override bool scheduleUpdate()
         {
             MLogger.info(content);
             return true;

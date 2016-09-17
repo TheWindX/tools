@@ -9,34 +9,34 @@ namespace MiniEditor.components.BEHAVIOR.par
     /*
      * 同时执行，有一项失败，退出失败(同时打断所有进程)，全成功退出成功，
      */
-    class COMBehSeqPar : COMBeh
+    class COMScheduleSeqPar : COMSchedule
     {
-        public override void behInit()
+        public override void scheduleInit()
         {
-            base.behInit();
-            mChildren = behGetChildren().ToList();
-            foreach (COMBeh beh in mChildren)
+            base.scheduleInit();
+            mChildren = scheduleGetChildren().ToList();
+            foreach (COMSchedule beh in mChildren)
             {
-                beh.behInit();
+                beh.scheduleInit();
             }
         }
 
-        List<COMBeh> mChildren = null;
+        List<COMSchedule> mChildren = null;
         bool mExitValue = false;
-        public override bool behUpdate()
+        public override bool scheduleUpdate()
         {
-            foreach(COMBeh beh in mChildren.ToArray())
+            foreach(COMSchedule beh in mChildren.ToArray())
             {
-                bool resUpdate = beh.behUpdate();
+                bool resUpdate = beh.scheduleUpdate();
                 if(resUpdate)
                 {
-                    mExitValue = beh.behExit();
+                    mExitValue = beh.scheduleExit();
                     mChildren.Remove(beh);
                     if (!mExitValue)
                     {
-                        foreach(COMBeh beh1 in mChildren)
+                        foreach(COMSchedule beh1 in mChildren)
                         {
-                            beh1.behInterrupt();
+                            beh1.scheduleInterrupt();
                         }
                         return true;
                     }
@@ -59,20 +59,20 @@ namespace MiniEditor.components.BEHAVIOR.par
             mExitValue = false;
         }
 
-        public override bool behExit()
+        public override bool scheduleExit()
         {
-            base.behExit();
+            base.scheduleExit();
             var r = mExitValue;
             reset();
             return r;
         }
 
-        public override void behInterrupt()
+        public override void scheduleInterrupt()
         {
-            base.behInterrupt();
-            foreach(COMBeh beh in mChildren)
+            base.scheduleInterrupt();
+            foreach(COMSchedule beh in mChildren)
             {
-                beh.behInterrupt();
+                beh.scheduleInterrupt();
             }
             reset();
         }

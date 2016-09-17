@@ -10,23 +10,23 @@ namespace MiniEditor
      * 循环重试子任务，直到成功
      */
     [CustomComponent(path = "BEHAVIOR", name = "取反")]
-    class COMBehReverse : COMBeh
+    class COMScheduleReverse : COMSchedule
     {
-        COMBeh mChild = null;
-        public override void behInit()
+        COMSchedule mChild = null;
+        public override void scheduleInit()
         {
-            base.behInit();
-            mChild = behGetChildren().First();
-            mChild.behInit();
+            base.scheduleInit();
+            mChild = scheduleGetChildren().First();
+            mChild.scheduleInit();
         }
 
         bool mExitValue = false;
-        public override bool behUpdate()
+        public override bool scheduleUpdate()
         {
-            var resUpdate = mChild.behUpdate();
+            var resUpdate = mChild.scheduleUpdate();
             if (resUpdate)
             {
-                mExitValue = mChild.behExit();
+                mExitValue = mChild.scheduleExit();
             }
             return resUpdate;
         }
@@ -37,18 +37,18 @@ namespace MiniEditor
             mExitValue = false;
         }
 
-        public override bool behExit()
+        public override bool scheduleExit()
         {
-            base.behExit();
+            base.scheduleExit();
             var r = mExitValue;
             reset();
             return r;
         }
 
-        public override void behInterrupt()
+        public override void scheduleInterrupt()
         {
-            base.behInterrupt();
-            mChild.behInterrupt();
+            base.scheduleInterrupt();
+            mChild.scheduleInterrupt();
             reset();
         }
     }

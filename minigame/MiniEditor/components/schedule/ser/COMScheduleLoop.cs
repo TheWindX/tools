@@ -10,7 +10,7 @@ namespace MiniEditor
      * 循环(times)重试子任务，直到成功，次数结束，还未成功，返回失败
      */
     [CustomComponent(path = "BEHAVIOR", name = "循环")]
-    class COMBehLoop : COMBeh
+    class COMScheduleLoop : COMSchedule
     {
         private int mTimes = -1;
         private int mTimeCount = 0;
@@ -31,21 +31,21 @@ namespace MiniEditor
             get; set;
         }
 
-        COMBeh mChild = null;
-        public override void behInit()
+        COMSchedule mChild = null;
+        public override void scheduleInit()
         {
-            base.behInit();
-            mChild = behGetChildren().First();
-            mChild.behInit();
+            base.scheduleInit();
+            mChild = scheduleGetChildren().First();
+            mChild.scheduleInit();
         }
 
         bool mExitValue = false;
-        public override bool behUpdate()
+        public override bool scheduleUpdate()
         {
-            var resUpdate = mChild.behUpdate();
+            var resUpdate = mChild.scheduleUpdate();
             if(resUpdate)
             {
-                mExitValue = mChild.behExit(); 
+                mExitValue = mChild.scheduleExit(); 
                 if(!always && mExitValue)
                 {
                     return true;
@@ -57,7 +57,7 @@ namespace MiniEditor
                     {
                         return true;
                     }
-                    mChild.behInit();
+                    mChild.scheduleInit();
                 }
             }
             return false;
@@ -69,18 +69,18 @@ namespace MiniEditor
             mTimeCount = 0;
         }
 
-        public override bool behExit()
+        public override bool scheduleExit()
         {
-            base.behExit();
+            base.scheduleExit();
             var r = mExitValue;
             reset();
             return r;
         }
 
-        public override void behInterrupt()
+        public override void scheduleInterrupt()
         {
-            base.behInterrupt();
-            mChild.behInterrupt();
+            base.scheduleInterrupt();
+            mChild.scheduleInterrupt();
             reset();
         }
     }

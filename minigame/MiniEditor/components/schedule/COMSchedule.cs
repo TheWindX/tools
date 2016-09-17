@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MiniEditor
 {
-    class COMBeh : MComponent
+    class COMSchedule : MComponent
     {
         //实现树正确结构的检查
         public virtual bool check()
@@ -17,38 +17,38 @@ namespace MiniEditor
         }
 
         //初始化，参数apply
-        public virtual void behInit()
+        public virtual void scheduleInit()
         {
             mState = ESTATE.e_inited;
         }
 
         
         //未完成update返回false， 完成返回true
-        public virtual bool behUpdate()
+        public virtual bool scheduleUpdate()
         {
             return true;
         }
 
         
         //返回执行是否成功, 此调用完成后必须保证reset 状态
-        public virtual bool behExit()
+        public virtual bool scheduleExit()
         {
             mState = ESTATE.e_uninit;
             return true;
         }
 
         //无条件中止， 此调用完成后必须保证reset 状态
-        public virtual void behInterrupt()
+        public virtual void scheduleInterrupt()
         {
             if (mState == ESTATE.e_uninit) return;
             mState = ESTATE.e_uninit;
-            //foreach(COMBeh beh in behGetChildren() )
+            //foreach(COMSchedule beh in scheduleGetChildren() )
             //{
             //    try
             //    {
             //        if(beh.getState() == ESTATE.e_inited)
             //        {
-            //            beh.behInterrupt();
+            //            beh.scheduleInterrupt();
             //        }
             //    }
             //    catch(Exception ex)
@@ -59,10 +59,10 @@ namespace MiniEditor
         }
 
         //子任务
-        public IEnumerable<COMBeh> behGetChildren()
+        public IEnumerable<COMSchedule> scheduleGetChildren()
         {
-            var behs = getEditorObject().children.Select(obj => obj.getComponent<COMBeh>());
-            foreach (COMBeh beh in behs)
+            var behs = getEditorObject().children.Select(obj => obj.getComponent<COMSchedule>());
+            foreach (COMSchedule beh in behs)
             {
                 if (beh != null)
                 {
@@ -72,11 +72,11 @@ namespace MiniEditor
         }
 
         //父任务
-        public COMBeh behGetParent()
+        public COMSchedule scheduleGetParent()
         {
             var pobj = getEditorObject().parent;
             if (pobj == null) return null;
-            return pobj.getComponent<COMBeh>();
+            return pobj.getComponent<COMSchedule>();
         }
 
         public enum ESTATE

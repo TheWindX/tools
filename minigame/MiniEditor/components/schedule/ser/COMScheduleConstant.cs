@@ -10,7 +10,7 @@ namespace MiniEditor
     执行子任务，但总是返回成功或失败
     */
     [CustomComponent(path = "BEHAVIOR", name = "常量")]
-    class COMBehConstant : COMBeh
+    class COMScheduleConstant : COMSchedule
     {
         private bool mConstant = true;
         public bool exitValue
@@ -25,17 +25,17 @@ namespace MiniEditor
             }
         }
 
-        COMBeh mChild = null;
-        public override void behInit()
+        COMSchedule mChild = null;
+        public override void scheduleInit()
         {
-            base.behInit();
-            mChild = behGetChildren().First();
-            mChild.behInit();
+            base.scheduleInit();
+            mChild = scheduleGetChildren().First();
+            mChild.scheduleInit();
         }
         
-        public override bool behUpdate()
+        public override bool scheduleUpdate()
         {
-            var resUpdate = mChild.behUpdate();
+            var resUpdate = mChild.scheduleUpdate();
             return resUpdate;
         }
 
@@ -44,17 +44,17 @@ namespace MiniEditor
             mChild = null;
         }
 
-        public override bool behExit()
+        public override bool scheduleExit()
         {
-            base.behExit();
+            base.scheduleExit();
             reset();
             return mConstant;
         }
 
-        public override void behInterrupt()
+        public override void scheduleInterrupt()
         {
-            base.behInterrupt();
-            mChild.behInterrupt();
+            base.scheduleInterrupt();
+            mChild.scheduleInterrupt();
             reset();
         }
     }
