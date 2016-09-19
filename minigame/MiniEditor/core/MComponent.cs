@@ -50,6 +50,47 @@ namespace MiniEditor
             }
         }
 
+        public void upper()
+        {
+            if (parent == null) return;
+            var idx = mParent.mChildren.IndexOf(this);
+            var p = parent;
+            parent = null;
+            idx--;
+            if (idx < 0) idx = p.mChildren.Count;
+            if (idx < 0) idx = 0;
+            p.mChildren.Insert(idx, this);
+            mParent = p;
+        }
+
+        public void lower()
+        {
+            if (parent == null) return;
+            var idx = mParent.mChildren.IndexOf(this);
+            var p = parent;
+            parent = null;
+            idx++;
+            if (idx == p.mChildren.Count) idx = 0;
+            p.mChildren.Insert(idx, this);
+            mParent = p;
+        }
+
+        public void levelUp()
+        {
+            var p = parent;
+            if (p == null) return;
+            p = p.parent;
+            if (p == null) return;
+            parent = p;
+        }
+
+        public void levelDown()
+        {
+            var n = next;
+            if (n == this) return;
+            this.parent = n;
+        }
+        
         public EditorObject preview
         {
             get

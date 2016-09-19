@@ -54,6 +54,36 @@ namespace MiniEditor
             reflushEditorObject();
         }
 
+        public void removeEditorObject(EditorObject item)
+        {
+            item.parent = null;
+            reflushEditorObject();
+        }
+
+        public void upperEditorObject(EditorObject item)
+        {
+            item.upper();
+            reflushEditorObject();
+        }
+
+        public void lowerEditorObject(EditorObject item)
+        {
+            item.lower();
+            reflushEditorObject();
+        }
+
+        public void levelUpEditorObject(EditorObject item)
+        {
+            item.levelUp();
+            reflushEditorObject();
+        }
+
+        public void levelDownEditorObject(EditorObject item)
+        {
+            item.levelDown();
+            reflushEditorObject();
+        }
+
         public void addItem(listItem item)
         {
             if (item == null) return;
@@ -62,11 +92,11 @@ namespace MiniEditor
             item.evtOnExpand = isExpand => expand(item, isExpand);
         }
         
-        public void removeEditorObject(EditorObject obj)
-        {
-            var uiItem = obj.getComponent<COMEditorObject>().getMenuItem();
-            removeItem(uiItem);
-        }
+        //public void removeEditorObject(EditorObject obj)
+        //{
+        //    var uiItem = obj.getComponent<COMEditorObject>().getMenuItem();
+        //    removeItem(uiItem);
+        //}
 
         public void removeEditorObjectChildren(EditorObject obj)
         {
@@ -230,32 +260,77 @@ namespace MiniEditor
 
         private void ItemList_KeyDown(object sender, KeyEventArgs e)
         {
-            if(e.Key == Key.Up)
+            if (e.Key == Key.Delete)
             {
-                var obj = getCurrentObj();
-                if (obj == null) return;
-                pickEditObject(obj.next);
+                if (EditorFuncs.isLeftControlPressed())
+                {
+                    var obj = getCurrentObj();
+                    removeEditorObject(obj);
+                }
+            }
+            else if (e.Key == Key.Up)
+            {
+                if(EditorFuncs.isLeftControlPressed())
+                {
+                    var obj = getCurrentObj();
+                    if (obj == null) return;
+                    upperEditorObject(obj);
+                }
+                else
+                {
+                    var obj = getCurrentObj();
+                    if (obj == null) return;
+                    pickEditObject(obj.next);
+                }
+                
             }
             else if(e.Key == Key.Down)
             {
-                var obj = getCurrentObj();
-                if (obj == null) return;
-                pickEditObject(obj.preview);
+                if (EditorFuncs.isLeftControlPressed())
+                {
+                    var obj = getCurrentObj();
+                    if (obj == null) return;
+                    lowerEditorObject(obj);
+                }
+                else
+                {
+                    var obj = getCurrentObj();
+                    if (obj == null) return;
+                    pickEditObject(obj.preview);
+                }
             }
             else if (e.Key == Key.Left)
             {
-                var obj = getCurrentObj();
-                if (obj == null) return;
-                if (obj.parent == null) return;
-                pickEditObject(obj.parent);
+                if (EditorFuncs.isLeftControlPressed())
+                {
+                    var obj = getCurrentObj();
+                    if (obj == null) return;
+                    levelUpEditorObject(obj);
+                }
+                else
+                {
+                    var obj = getCurrentObj();
+                    if (obj == null) return;
+                    if (obj.parent == null) return;
+                    pickEditObject(obj.parent);
+                }
             }
             else if (e.Key == Key.Right)
             {
-                var obj = getCurrentObj();
-                if (obj == null) return;
-                foreach (var c in obj.children)
+                if (EditorFuncs.isLeftControlPressed())
                 {
-                    pickEditObject(c);
+                    var obj = getCurrentObj();
+                    if (obj == null) return;
+                    levelDownEditorObject(obj);
+                }
+                else
+                {
+                    var obj = getCurrentObj();
+                    if (obj == null) return;
+                    foreach (var c in obj.children)
+                    {
+                        pickEditObject(c);
+                    }
                 }
             }
         }
