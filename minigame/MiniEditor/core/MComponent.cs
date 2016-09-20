@@ -70,7 +70,7 @@ namespace MiniEditor
             var p = parent;
             parent = null;
             idx++;
-            if (idx == p.mChildren.Count) idx = 0;
+            if (idx > p.mChildren.Count) idx = 0;
             p.mChildren.Insert(idx, this);
             mParent = p;
         }

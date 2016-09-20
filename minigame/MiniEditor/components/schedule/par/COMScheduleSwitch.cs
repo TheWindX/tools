@@ -91,8 +91,7 @@ namespace MiniEditor
             {
                 if(mCondition)
                 {
-                    if (mFalseSchedule.getState() == ESTATE.e_entered)
-                        mFalseSchedule.scheduleInterrupt();
+                    mFalseSchedule.scheduleInterrupt();
                     if (mTrueSchedule.getState() == ESTATE.e_exited)
                         mTrueSchedule.scheduleEnter();
                     bool resUpdate = mTrueSchedule.scheduleUpdate();
@@ -104,8 +103,7 @@ namespace MiniEditor
                 }
                 else
                 {
-                    if (mTrueSchedule.getState() == ESTATE.e_entered)
-                        mTrueSchedule.scheduleInterrupt();
+                    mTrueSchedule.scheduleInterrupt();
                     if (mFalseSchedule.getState() == ESTATE.e_exited)
                         mFalseSchedule.scheduleEnter();
                     bool resUpdate = mFalseSchedule.scheduleUpdate();
@@ -122,9 +120,9 @@ namespace MiniEditor
 
         private void reset()
         {
-            mConditionSchedule = null;
-            mTrueSchedule = null;
-            mFalseSchedule = null;
+            //mConditionSchedule = null;
+            //mTrueSchedule = null;
+            //mFalseSchedule = null;
             mConditionState = true;
             mCondition = true;
             mExitValue = false;

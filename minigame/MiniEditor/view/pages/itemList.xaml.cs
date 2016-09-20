@@ -3,6 +3,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Xml;
 
 namespace MiniEditor
 {
@@ -258,21 +259,55 @@ namespace MiniEditor
             PreviewKeyDown += ItemList_KeyDown;
         }
 
+        public static string xmlData = null;
         private void ItemList_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Delete)
+            if (e.Key == Key.C)
             {
                 if (EditorFuncs.isLeftControlPressed())
                 {
                     var obj = getCurrentObj();
+                    xmlData = obj.toString();
+                }
+            }
+            else if (e.Key == Key.V)
+            {
+                if (EditorFuncs.isLeftControlPressed())
+                {
+                    if (xmlData == null) return;
+                    XmlDocument doc = new XmlDocument();
+                    doc.LoadXml(xmlData);
+                    var eo = MComponentExtender.editorObjectFromXML(getCurrentObj(), doc.DocumentElement);
+                    EditorFuncs.getItemListPage().reflushEditorObject();
+                }
+            }
+            else if (e.Key == Key.X)
+            {
+                if (EditorFuncs.isLeftControlPressed())
+                {
+                    var obj = getCurrentObj();
+                    if (EditorWorld.getRootEditorObject() == obj) return;
+                    xmlData = obj.toString();
+                    getCurrentObj().parent = null;
+                    pickEditObject(EditorWorld.getRootEditorObject());
+                    EditorFuncs.getItemListPage().reflushEditorObject();
+                }
+            }
+            else if (e.Key == Key.Delete)
+            {
+                if (EditorFuncs.isLeftControlPressed())
+                {
+                    var obj = getCurrentObj();
+                    if (EditorWorld.getRootEditorObject() == obj) return;
                     removeEditorObject(obj);
                 }
             }
             else if (e.Key == Key.Up)
             {
-                if(EditorFuncs.isLeftControlPressed())
+                if (EditorFuncs.isLeftControlPressed())
                 {
                     var obj = getCurrentObj();
+                    if (EditorWorld.getRootEditorObject() == obj) return;
                     if (obj == null) return;
                     upperEditorObject(obj);
                 }
@@ -282,13 +317,14 @@ namespace MiniEditor
                     if (obj == null) return;
                     pickEditObject(obj.next);
                 }
-                
+
             }
-            else if(e.Key == Key.Down)
+            else if (e.Key == Key.Down)
             {
                 if (EditorFuncs.isLeftControlPressed())
                 {
                     var obj = getCurrentObj();
+                    if (EditorWorld.getRootEditorObject() == obj) return;
                     if (obj == null) return;
                     lowerEditorObject(obj);
                 }
@@ -304,6 +340,7 @@ namespace MiniEditor
                 if (EditorFuncs.isLeftControlPressed())
                 {
                     var obj = getCurrentObj();
+                    if (EditorWorld.getRootEditorObject() == obj) return;
                     if (obj == null) return;
                     levelUpEditorObject(obj);
                 }
@@ -320,6 +357,7 @@ namespace MiniEditor
                 if (EditorFuncs.isLeftControlPressed())
                 {
                     var obj = getCurrentObj();
+                    if (EditorWorld.getRootEditorObject() == obj) return;
                     if (obj == null) return;
                     levelDownEditorObject(obj);
                 }
