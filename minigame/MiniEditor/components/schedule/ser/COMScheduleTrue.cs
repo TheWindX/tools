@@ -17,12 +17,22 @@ namespace MiniEditor
     [CustomComponent(path = "SCHEDULE/COMBINE", name = "永真(TRUE)")]
     class COMScheduleTrue : COMSchedule
     {
-        COMSchedule mChild = null;
-        public override void scheduleInit()
+        public override bool scheduleInit()
         {
-            base.scheduleInit();
-            mChild = scheduleGetChildren().First();
-            mChild.scheduleInit();
+            var children = scheduleGetChildren().ToArray();
+            if (children.Count() != 1)
+            {
+                return false;
+            }
+            mChild = children[0];
+            return mChild.scheduleInit();
+        }
+
+        COMSchedule mChild = null;
+        public override void scheduleEnter()
+        {
+            base.scheduleEnter();
+            mChild.scheduleEnter();
         }
         
         public override bool scheduleUpdate()

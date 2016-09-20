@@ -17,11 +17,30 @@ namespace MiniEditor
     [CustomComponent(path = "SCHEDULE/COMBINE", name = "合取(ANY)")]
     class COMScheduleSel : COMSchedule
     {
-        public override void scheduleInit()
+        public override bool scheduleInit()
         {
-            base.scheduleInit();
+            var children = scheduleGetChildren().ToList();
+            if (children.Count() == 0)
+            {
+                return false;
+            }
+            bool res = false;
+            foreach(var c in children)
+            {
+                res = c.scheduleInit();
+                if (!res)
+                {
+                    return false;
+                }
+            }
             mCurrent = scheduleGetChildren().GetEnumerator();
             mCurrent.MoveNext();
+            return true;
+        }
+
+        public override void scheduleEnter()
+        {
+            base.scheduleEnter();
         }
 
         IEnumerator<COMSchedule> mCurrent = null;
@@ -30,7 +49,7 @@ namespace MiniEditor
         {
             if (mCurrent == null) return true;
             var beh = mCurrent.Current;
-            if (beh.getState() == ESTATE.e_uninit) beh.scheduleInit();
+            if (beh.getState() == ESTATE.e_exited) beh.scheduleEnter();
             var resUpdate = beh.scheduleUpdate();
             if (resUpdate)//当前子任务执行完成
             {

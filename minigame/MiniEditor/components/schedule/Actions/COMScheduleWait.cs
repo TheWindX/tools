@@ -31,9 +31,9 @@ namespace MiniEditor
         }
 
         private int mTimeCount = 0;
-        public override void scheduleInit()
+        public override void scheduleEnter()
         {
-            base.scheduleInit();
+            base.scheduleEnter();
             mTimeCount = 0;
         }
 

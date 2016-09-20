@@ -107,7 +107,6 @@
     <Compile Include="components\RVO\COMRVOObstacle.cs" />
     <Compile Include="components\schedule\par\COMScheduleSelPar.cs" />
     <Compile Include="components\schedule\par\COMScheduleSeqPar.cs" />
-    <Compile Include="components\schedule\ser\COMScheduleCond.cs" />
     <Compile Include="components\schedule\ser\COMScheduleTrue.cs" />
     <Compile Include="components\schedule\Actions\COMScheduleLog.cs" />
     <Compile Include="components\schedule\ser\COMScheduleLoop.cs" />

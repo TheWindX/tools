@@ -88,14 +88,14 @@ namespace MiniEditor
                 {   
                     if(mSchedule != null)
                     {
-                        mSchedule.scheduleInit();
+                        mSchedule.scheduleEnter();
                     }
                 }
                 else
                 {
                     if (mSchedule != null)
                     {
-                        if(mSchedule.getState() == COMSchedule.ESTATE.e_inited)
+                        if(mSchedule.getState() == COMSchedule.ESTATE.e_entered)
                         {
                             mSchedule.scheduleInterrupt();
                         }

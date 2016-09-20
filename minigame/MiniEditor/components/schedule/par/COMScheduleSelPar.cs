@@ -17,13 +17,33 @@ namespace MiniEditor.components.BEHAVIOR.par
     [CustomComponent(path = "SCHEDULE/COMBINE", name = "同时析取(ANY)")]
     class COMScheduleSelPar : COMSchedule
     {
-        public override void scheduleInit()
+        public override bool scheduleInit()
         {
-            base.scheduleInit();
+            var children = scheduleGetChildren().ToList();
+            if (children.Count() == 0)
+            {
+                return false;
+            }
+            bool res = false;
+            foreach (var c in children)
+            {
+                res = c.scheduleInit();
+                if (!res)
+                {
+                    return false;
+                }
+            }
+            mChildren = children;
+            return true;
+        }
+
+        public override void scheduleEnter()
+        {
+            base.scheduleEnter();
             mChildren = scheduleGetChildren().ToList();
             foreach (COMSchedule beh in mChildren)
             {
-                beh.scheduleInit();
+                beh.scheduleEnter();
             }
         }
 
