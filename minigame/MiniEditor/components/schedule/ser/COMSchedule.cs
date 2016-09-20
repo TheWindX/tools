@@ -15,7 +15,7 @@ namespace MiniEditor
     class COMSchedule : MComponent
     {
         //实现树初始化和检查
-        public virtual bool scheduleInit()
+        public virtual bool scheduleBuild()
         {
             //TODO
             return true;

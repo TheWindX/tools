@@ -46,15 +46,22 @@ namespace MiniEditor
             return mChild;
         }
 
-        public override bool scheduleInit()
+        public override bool scheduleBuild()
         {
             var children = scheduleGetChildren().ToList();
             if (children.Count() != 1)
             {
+                MLogger.error("{0} is not build properly", getEditorObject().name);
                 return false;
             }
             mChild = children[0];
-            return mChild.scheduleInit();
+            var res = mChild.scheduleBuild();
+            if (!res)
+            {
+                MLogger.error("{0} is not build properly", getEditorObject().name);
+                return false;
+            }
+            return true;
         }
         
         public override void scheduleEnter()
@@ -77,7 +84,7 @@ namespace MiniEditor
             if(resUpdate)//不管是否成功
             {
                 MRuntime.mEvtUpdate -= childUpdate;
-                mChild.editorExit();
+                mChild.scheduleExit();
             }
         }
 

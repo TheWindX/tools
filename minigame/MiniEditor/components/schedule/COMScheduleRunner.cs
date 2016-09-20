@@ -88,6 +88,12 @@ namespace MiniEditor
                 {   
                     if(mSchedule != null)
                     {
+                        if(!mSchedule.scheduleBuild() )
+                        {
+                            MLogger.error("{0} is not build properly", getEditorObject().name);
+                            mRun = false;
+                            return;
+                        }
                         mSchedule.scheduleEnter();
                     }
                 }

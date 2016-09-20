@@ -17,15 +17,22 @@ namespace MiniEditor
     [CustomComponent(path = "SCHEDULE/COMBINE", name = "取反(!)")]
     class COMScheduleReverse : COMSchedule
     {
-        public override bool scheduleInit()
+        public override bool scheduleBuild()
         {
             var children = scheduleGetChildren().ToList();
             if (children.Count() != 1)
             {
+                MLogger.error("{0} is not build properly", getEditorObject().name);
                 return false;
             }
             mChild = children[0];
-            return mChild.scheduleInit();
+            var res = mChild.scheduleBuild();
+            if (!res)
+            {
+                MLogger.error("{0} is not build properly", getEditorObject().name);
+                return false;
+            }
+            return true;
         }
 
         COMSchedule mChild = null;
@@ -48,14 +55,13 @@ namespace MiniEditor
 
         private void reset()
         {
-            mChild = null;
             mExitValue = false;
         }
 
         public override bool scheduleExit()
         {
             base.scheduleExit();
-            var r = mExitValue;
+            var r = !mExitValue;
             reset();
             return r;
         }

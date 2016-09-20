@@ -17,24 +17,26 @@ namespace MiniEditor
     [CustomComponent(path = "SCHEDULE/COMBINE", name = "合取(ALL)")]
     class COMScheduleSeq : COMSchedule
     {
-        public override bool scheduleInit()
+        public override bool scheduleBuild()
         {
             var children = scheduleGetChildren().ToList();
             if (children.Count() == 0)
             {
+                MLogger.error("{0} is not build properly", getEditorObject().name);
                 return false;
             }
             bool res = false;
             foreach (var c in children)
             {
-                res = c.scheduleInit();
+                res = c.scheduleBuild();
                 if (!res)
                 {
+                    MLogger.error("{0} is not build properly", getEditorObject().name);
                     return false;
                 }
             }
-            mCurrent = scheduleGetChildren().GetEnumerator();
-            mCurrent.MoveNext();
+            mCurrent = scheduleGetChildren().ToList();
+            idx = 0;
             return true;
         }
 
@@ -43,20 +45,21 @@ namespace MiniEditor
             base.scheduleEnter();
         }
 
-
-        IEnumerator<COMSchedule> mCurrent = null;
+        List<COMSchedule> mCurrent = null;
+        int idx = 0;
         bool mExitValue = false;
         public override bool scheduleUpdate()
         {
             if (mCurrent == null) return true;
-            var beh = mCurrent.Current;
+            var beh = mCurrent[idx];
             if (beh.getState() == ESTATE.e_exited) beh.scheduleEnter();
             var resUpdate = beh.scheduleUpdate();
             if(resUpdate)//当前子任务执行完成
             {
                 mExitValue = beh.scheduleExit();
                 if (!mExitValue) return true;//有一执行失败
-                if (!mCurrent.MoveNext())
+                idx++;
+                if (idx == mCurrent.Count)
                 {
                     mExitValue = true;//全部执行成功
                     return true;
@@ -67,7 +70,7 @@ namespace MiniEditor
 
         private void reset()
         {
-            mCurrent = null;
+            idx = 0;
             mExitValue = false;
         }
 
@@ -82,11 +85,8 @@ namespace MiniEditor
         public override void scheduleInterrupt()
         {
             base.scheduleInterrupt();
-            if (mCurrent.Current != null)
-            {
-                mCurrent.Current.scheduleInterrupt();
-            }
-            reset();
+            var beh = mCurrent[idx];
+            beh.scheduleInterrupt();
         }
     }
 }

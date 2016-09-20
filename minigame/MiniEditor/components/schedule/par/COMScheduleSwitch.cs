@@ -26,30 +26,40 @@ namespace MiniEditor
             }
         }
 
-        public override bool scheduleInit()
+        public override bool scheduleBuild()
         {
             var children = scheduleGetChildren().ToList();
             if (children.Count() != 3)
             {
+                MLogger.error("{0} is not build properly", getEditorObject().name);
                 return false;
             }
             mConditionSchedule = children[0];
-            if(!mConditionSchedule.scheduleInit())
+            if(!mConditionSchedule.scheduleBuild())
             {
+                MLogger.error("{0} is not build properly", getEditorObject().name);
                 return false;
             }
             mTrueSchedule = children[1] as COMScheduleThread;
             mFalseSchedule = children[2] as COMScheduleThread;
             if (mTrueSchedule == null)
-                return false;
-            if (!mTrueSchedule.scheduleInit())
             {
+                MLogger.error("{0} is not build properly", getEditorObject().name);
+                return false;
+            }   
+            if (!mTrueSchedule.scheduleBuild())
+            {
+                MLogger.error("{0} is not build properly", getEditorObject().name);
                 return false;
             }
             if (mFalseSchedule == null)
-                return false;
-            if (!mFalseSchedule.scheduleInit())
             {
+                MLogger.error("{0} is not build properly", getEditorObject().name);
+                return false;
+            }   
+            if (!mFalseSchedule.scheduleBuild())
+            {
+                MLogger.error("{0} is not build properly", getEditorObject().name);
                 return false;
             }
             return true;

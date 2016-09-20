@@ -97,6 +97,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="components\schedule\Actions\COMScheduleRandPred.cs" />
+    <Compile Include="components\schedule\par\COMScheduleSwitch.cs" />
     <Compile Include="components\schedule\par\COMScheduleThread.cs" />
     <Compile Include="components\schedule\ser\COMSchedule.cs" />
     <Compile Include="components\schedule\COMScheduleRunner.cs" />

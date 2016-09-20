@@ -17,19 +17,21 @@ namespace MiniEditor.components.BEHAVIOR.par
     [CustomComponent(path = "SCHEDULE/COMBINE", name = "同时合取(ALL)")]
     class COMScheduleSeqPar : COMSchedule
     {
-        public override bool scheduleInit()
+        public override bool scheduleBuild()
         {
             var children = scheduleGetChildren().ToList();
             if (children.Count() == 0)
             {
+                MLogger.error("{0} is not build properly", getEditorObject().name);
                 return false;
             }
             bool res = false;
             foreach (var c in children)
             {
-                res = c.scheduleInit();
+                res = c.scheduleBuild();
                 if (!res)
                 {
+                    MLogger.error("{0} is not build properly", getEditorObject().name);
                     return false;
                 }
             }
