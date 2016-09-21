@@ -127,7 +127,6 @@ namespace MiniEditor
                     return coms;
                 }
             }
-            
 
             var dps = MComponent.getDependcy(t);
             foreach (var d in dps)

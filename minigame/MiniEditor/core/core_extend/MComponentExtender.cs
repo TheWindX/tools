@@ -17,6 +17,41 @@ namespace MiniEditor
 {
     static class MComponentExtender
     {
+        public static void copyFromCOM(this MComponent component, MComponent from)
+        {
+            var t = component.GetType();
+            var props = t.GetProperties();
+            foreach (var prop in props)
+            {
+                var v = prop.GetValue(from);
+                prop.SetValue(component, v);
+            }
+        }
+
+        public static EditorObject copyObject(this EditorObject eo)
+        {
+            var t = eo.GetType();
+            EditorObject instance = (EditorObject)Activator.CreateInstance(t);
+            var props = t.GetProperties();
+            //foreach (var prop in props)
+            //{
+            //    var v = prop.GetValue(eo);
+            //    prop.SetValue(instance, v);
+            //}
+            foreach(var com in eo.components)
+            {
+                var comType = com.GetType();
+                var comCopy = instance.addComponent(comType).Last();
+                comCopy.copyFromCOM(com);
+            }
+            foreach(EditorObject child in eo.children)
+            {
+                var childCopy = child.copyObject();
+                childCopy.parent = instance;
+            }
+            return instance;
+        }
+
         public static XmlElement toXML(this MComponent component, XmlDocument doc)
         {
             var comType = component.GetType();

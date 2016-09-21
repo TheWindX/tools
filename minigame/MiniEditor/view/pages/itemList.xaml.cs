@@ -259,7 +259,7 @@ namespace MiniEditor
             PreviewKeyDown += ItemList_KeyDown;
         }
 
-        public static string xmlData = null;
+        public static EditorObject clipBoard = null;
         private void ItemList_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.C)
@@ -267,17 +267,19 @@ namespace MiniEditor
                 if (EditorFuncs.isLeftControlPressed())
                 {
                     var obj = getCurrentObj();
-                    xmlData = obj.toString();
+                    clipBoard = obj.copyObject();
                 }
             }
             else if (e.Key == Key.V)
             {
                 if (EditorFuncs.isLeftControlPressed())
                 {
-                    if (xmlData == null) return;
-                    XmlDocument doc = new XmlDocument();
-                    doc.LoadXml(xmlData);
-                    var eo = MComponentExtender.editorObjectFromXML(getCurrentObj(), doc.DocumentElement);
+                    if (clipBoard == null) return;
+                    //XmlDocument doc = new XmlDocument();
+                    //doc.LoadXml(xmlData);
+                    //var eo = MComponentExtender.editorObjectFromXML(getCurrentObj(), doc.DocumentElement);
+                    var obj = clipBoard.copyObject();
+                    obj.parent = getCurrentObj();
                     EditorFuncs.getItemListPage().reflushEditorObject();
                 }
             }
@@ -286,9 +288,8 @@ namespace MiniEditor
                 if (EditorFuncs.isLeftControlPressed())
                 {
                     var obj = getCurrentObj();
+                    clipBoard = obj.copyObject();
                     if (EditorWorld.getRootEditorObject() == obj) return;
-                    xmlData = obj.toString();
-                    getCurrentObj().parent = null;
                     pickEditObject(EditorWorld.getRootEditorObject());
                     EditorFuncs.getItemListPage().reflushEditorObject();
                 }
