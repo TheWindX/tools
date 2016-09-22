@@ -77,7 +77,7 @@ namespace MiniEditor
                     var fs = t.GetProperties();
                     foreach (var p in fs)
                     {
-                        var editorProp = p.GetCustomAttribute<EditorPropertyAttribute>();
+                        var editorProp = p.GetCustomAttribute<PropertyDisableAttribute>();
                         if (p.PropertyType == typeof(int))
                         {
                             var v = new intField();

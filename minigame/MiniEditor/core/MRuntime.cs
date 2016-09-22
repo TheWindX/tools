@@ -194,7 +194,7 @@ namespace MiniEditor
     }
     
     [System.AttributeUsage(System.AttributeTargets.Property)]
-    public class EditorPropertyAttribute : System.Attribute
+    public class PropertyDisableAttribute : System.Attribute
     {
     }
 

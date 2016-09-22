@@ -44,11 +44,11 @@ namespace MiniEditor
         {
             get
             {
-                return m_label.Text;
+                return (string)m_value.Content;
             }
             set
             {
-                m_label.Text = value;
+                m_value.Content = value;
             }
         }
     }

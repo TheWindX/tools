@@ -110,5 +110,17 @@ namespace MiniEditor
             }
         }//run
 
+        public System.Action interrupt
+        {
+            get
+            {
+                return () =>
+                {
+                    mSchedule = getComponent<COMSchedule>();
+                    mSchedule.scheduleInterrupt();
+                    run = false;
+                };
+            }
+        }
     }
 }

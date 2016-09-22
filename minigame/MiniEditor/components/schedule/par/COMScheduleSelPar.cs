@@ -82,7 +82,6 @@ namespace MiniEditor.components.BEHAVIOR.par
 
         private void reset()
         {
-            mChildren = null;
             mExitValue = false;
         }
 

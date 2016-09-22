@@ -22,7 +22,23 @@ namespace MiniEditor
         {
             get
             {
-                return "三个子任务，根据第一个任务是否成功，切换第二个任务或第三个任务";
+                return 
+@"三个子任务，根据第一个任务是否成功，
+切换第二个或第三个任务, 
+永远执行，除非取消";
+            }
+        }
+
+        public bool mRestart = false;
+        public bool restart
+        {
+            get
+            {
+                return mRestart;
+            }
+            set
+            {
+                mRestart = value;
             }
         }
 
@@ -40,8 +56,8 @@ namespace MiniEditor
                 MLogger.error("{0} is not build properly", getEditorObject().name);
                 return false;
             }
-            mTrueSchedule = children[1] as COMScheduleThread;
-            mFalseSchedule = children[2] as COMScheduleThread;
+            mTrueSchedule = children[1];
+            mFalseSchedule = children[2];
             if (mTrueSchedule == null)
             {
                 MLogger.error("{0} is not build properly", getEditorObject().name);
@@ -66,55 +82,65 @@ namespace MiniEditor
         }
 
         COMSchedule mConditionSchedule = null;
-        COMScheduleThread mTrueSchedule = null;
-        COMScheduleThread mFalseSchedule = null;
+        COMSchedule mTrueSchedule = null;
+        COMSchedule mFalseSchedule = null;
         public override void scheduleEnter()
         {
             base.scheduleEnter();
         }
 
-        bool mConditionState = true;
-        bool mCondition = true;
-        bool mExitValue = false;
+        bool? mCondition = false;
         public override bool scheduleUpdate()
         {
-            if(mConditionState)
+            if (mConditionSchedule.getState() == ESTATE.e_exited)
+                mConditionSchedule.scheduleEnter();
+            var resUpdateCond = mConditionSchedule.scheduleUpdate();
+            if (resUpdateCond)
             {
-                bool resUpdate = mConditionSchedule.scheduleUpdate();
-                if(resUpdate)
+                var resExit = mConditionSchedule.scheduleExit();
+                COMSchedule runSchedule = null;
+                COMSchedule stopSchedule = null;
+                if (mCondition == null) mCondition = !resExit;
+                mCondition = resExit;
+
+                if (resExit)
                 {
-                    mCondition = mConditionSchedule.scheduleExit();
-                    mConditionState = false;
+                    runSchedule = mTrueSchedule;
+                    stopSchedule = mFalseSchedule;
                 }
-            }
-            else
-            {
-                if(mCondition)
+                else
                 {
-                    mFalseSchedule.scheduleInterrupt();
-                    if (mTrueSchedule.getState() == ESTATE.e_exited)
-                        mTrueSchedule.scheduleEnter();
-                    bool resUpdate = mTrueSchedule.scheduleUpdate();
-                    if (resUpdate)
+                    runSchedule = mFalseSchedule;
+                    stopSchedule = mTrueSchedule;
+                }
+
+                if(stopSchedule.getState() == ESTATE.e_entered)
+                {
+                    //MLogger.info("interrupt "+ stopSchedule.getEditorObject().name);
+                    stopSchedule.scheduleInterrupt();
+                }
+                if(runSchedule.getState() == ESTATE.e_entered)
+                {
+                    if (mRestart)
                     {
-                        mExitValue = mTrueSchedule.scheduleExit();
-                        return true;
+                        //MLogger.info("restart " + runSchedule.getEditorObject().name);
+                        runSchedule.scheduleInterrupt();
+                        runSchedule.scheduleEnter();
                     }
                 }
                 else
                 {
-                    mTrueSchedule.scheduleInterrupt();
-                    if (mFalseSchedule.getState() == ESTATE.e_exited)
-                        mFalseSchedule.scheduleEnter();
-                    bool resUpdate = mFalseSchedule.scheduleUpdate();
-                    if (resUpdate)
-                    {
-                        mExitValue = mFalseSchedule.scheduleExit();
-                        return true;
-                    }
+                    //MLogger.info("start " + runSchedule.getEditorObject().name);
+                    runSchedule.scheduleEnter();
                 }
             }
 
+            if (mCondition != null)
+            {
+                if (mCondition.Value) mTrueSchedule.scheduleUpdate();
+                else mFalseSchedule.scheduleUpdate();
+                return false;
+            }
             return false;
         }
 
@@ -123,25 +149,16 @@ namespace MiniEditor
             //mConditionSchedule = null;
             //mTrueSchedule = null;
             //mFalseSchedule = null;
-            mConditionState = true;
-            mCondition = true;
-            mExitValue = false;
-        }
-
-        public override bool scheduleExit()
-        {
-            base.scheduleExit();
-            var r = mExitValue;
-            reset();
-            return r;
+            mCondition = null;
         }
 
         public override void scheduleInterrupt()
         {
             base.scheduleInterrupt();
-            
-
             reset();
+            if (mConditionSchedule.getState() == ESTATE.e_entered) mConditionSchedule.scheduleInterrupt();
+            if (mTrueSchedule.getState() == ESTATE.e_entered) mTrueSchedule.scheduleInterrupt();
+            if (mFalseSchedule.getState() == ESTATE.e_entered) mFalseSchedule.scheduleInterrupt();
         }
     }
 }

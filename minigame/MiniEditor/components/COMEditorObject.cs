@@ -15,7 +15,7 @@ namespace MiniEditor
     [CustomComponent(path = "CORE", name = "编辑器物体", removable = false)]
     class COMEditorObject : MComponent
     {
-        listItem mItem = null;
+        listItem mItem = null;//TODO, 放入一个隐藏层
         int getLevel()
         {
             if (getEditorObject().parent == null) return 0;
@@ -51,15 +51,15 @@ namespace MiniEditor
             }
         }
 
-        static int idCount = 0;
-        static int genID()
+        //static int idCount = 0;
+        static string genID()
         {
-            return idCount++;
+            return MRandom.randString(12);
         }
 
-        int? mID = null;
+        string mID = null;
 
-        [EditorProperty]
+        //[PropertyDisable]
         public string ID
         {
             get
@@ -68,7 +68,7 @@ namespace MiniEditor
                 {
                     mID = genID();
                 }
-                return mID.Value.ToString();
+                return mID;
             }
             set
             {

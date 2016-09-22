@@ -24,6 +24,24 @@ namespace MiniEditor
             return mRandGen.Next();
         }
 
+        static StringBuilder mSb = new StringBuilder();
+        public static string randString(int len)
+        {
+            init();
+            mSb.Clear();
+            mSb.Append(DateTime.Now.ToString("ddHHmmss"));
+            for (int i = 0; i<len; ++i)
+            {
+                var ir = randRange(0, 25);
+                var br = randBool();
+                if(br)
+                    mSb.Append((char)('A' + ir));
+                else
+                    mSb.Append((char)('a' + ir));
+            }
+            return mSb.ToString();
+        }
+
         public static int randRange(int min, int max)
         {
             init();

@@ -72,7 +72,7 @@ namespace MiniEditor
                 mRunner.processObstacles();
             }
         }
-
+        
         public static IEnumerable<T> getChildrenCom<T>(EditorObject obj) where T:MComponent
         {
             foreach(var o in obj.children)
