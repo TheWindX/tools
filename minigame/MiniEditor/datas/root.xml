@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<node>
+	<EditorObject name="root" ID="0" />
+	<children>
+		<node>
+			<EditorObject name="item_11" ID="17" />
+			<children>
+				<node>
+					<EditorObject name="循环(LOOP)" ID="32" />
+					<ScheduleLoop times="10" always="False" />
+					<children>
+						<node>
+							<EditorObject name="合取(ALL)" ID="30" />
+							<ScheduleSeq />
+							<children>
+								<node>
+									<EditorObject name="等待" ID="33" />
+									<ScheduleWait time="555" />
+								</node>
+								<node>
+									<EditorObject name="条件切换(switch)" ID="34" />
+									<ScheduleSwitch description="三个子任务，根据第一个任务是否成功，切换第二个任务或第三个任务" />
+									<children>
+										<node>
+											<EditorObject name="随机返回" ID="35" />
+											<ScheduleRandPred />
+										</node>
+										<node>
+											<EditorObject name="线程(&quot;THREAD&quot;)" ID="36" />
+											<ScheduleThread />
+											<children>
+												<node>
+													<EditorObject name="循环(LOOP)" ID="37" />
+													<ScheduleLoop times="10" always="False" />
+													<children>
+														<node>
+															<EditorObject name="合取(ALL)" ID="38" />
+															<ScheduleSeq />
+															<children>
+																<node>
+																	<EditorObject name="等待" ID="39" />
+																	<ScheduleWait time="555" />
+																</node>
+																<node>
+																	<EditorObject name="打印" ID="40" />
+																	<ScheduleDebug content="A" />
+																</node>
+															</children>
+														</node>
+													</children>
+												</node>
+											</children>
+										</node>
+										<node>
+											<EditorObject name="线程(&quot;THREAD&quot;)" ID="41" />
+											<ScheduleThread />
+											<children>
+												<node>
+													<EditorObject name="循环(LOOP)" ID="42" />
+													<ScheduleLoop times="10" always="False" />
+													<children>
+														<node>
+															<EditorObject name="合取(ALL)" ID="43" />
+															<ScheduleSeq />
+															<children>
+																<node>
+																	<EditorObject name="等待" ID="44" />
+																	<ScheduleWait time="555" />
+																</node>
+																<node>
+																	<EditorObject name="打印" ID="45" />
+																	<ScheduleDebug content="B" />
+																</node>
+															</children>
+														</node>
+													</children>
+												</node>
+											</children>
+										</node>
+									</children>
+								</node>
+							</children>
+						</node>
+					</children>
+				</node>
+			</children>
+		</node>
+	</children>
+</node>

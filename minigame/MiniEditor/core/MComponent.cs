@@ -182,13 +182,13 @@ namespace MiniEditor
         //add component或enable时回调
         public virtual void editorAwake()
         {
-            MLogger.info("editorAwake: {0}", GetType().Name);   
+            //MLogger.info("editorAwake: {0}", GetType().Name);   
         }
 
         //remove component或disable时回调
         public virtual void editorSleep()
         {
-            MLogger.info("editorSleep: {0}", GetType().Name);
+            //MLogger.info("editorSleep: {0}", GetType().Name);
         }
 
         //进入editor object时回调
