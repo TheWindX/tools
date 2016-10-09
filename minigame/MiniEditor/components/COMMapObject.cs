@@ -80,7 +80,7 @@ namespace MiniEditor
             if(uiObj == null)
             {
                 uiObj = new UIMapObj() { x=0, y=0, radius = 15};
-                uiObj.editorObject = getEditorObject();
+                uiObj.editorObject = getObject();
             }
             return uiObj;
         }

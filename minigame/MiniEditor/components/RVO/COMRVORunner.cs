@@ -17,11 +17,11 @@ namespace MiniEditor
             {
                 return () =>
                 {
-                    var obj = EditorWorld.createObject(getEditorObject(), "obstacleM");
+                    var obj = EditorWorld.createObject(getObject(), "obstacleM");
                     obj.addComponent<COMObstacleManager>();
                     EditorFuncs.getItemListPage().insertEditorObject(obj);
 
-                    var obj1 = EditorWorld.createObject(getEditorObject(), "agentM");
+                    var obj1 = EditorWorld.createObject(getObject(), "agentM");
                     obj1.addComponent<COMAgentManager>();
                     EditorFuncs.getItemListPage().insertEditorObject(obj1);
                 };
@@ -49,8 +49,8 @@ namespace MiniEditor
                     (float)scenario.maxSpeed,
                     new Vector2(0.0f, 0.0f));
 
-                var agents = getChildrenCom<COMAgent>(getEditorObject() );
-                var obstacles = getChildrenCom<COMRVOObstacle>(getEditorObject());
+                var agents = getChildrenCom<COMAgent>(getObject() );
+                var obstacles = getChildrenCom<COMRVOObstacle>(getObject());
 
                 foreach (var agent in agents)
                 {
@@ -68,7 +68,7 @@ namespace MiniEditor
             }
         }
 
-        public static IEnumerable<T> getChildrenCom<T>(EditorObject obj) where T:MComponent
+        public static IEnumerable<T> getChildrenCom<T>(MObject obj) where T:MComponent
         {
             foreach(var o in obj.children)
             {
@@ -104,7 +104,7 @@ namespace MiniEditor
                 //update agent pos
                 Console.WriteLine(mRunner.getGlobalTime());
 
-                var agents = getChildrenCom<COMAgent>(getEditorObject());
+                var agents = getChildrenCom<COMAgent>(getObject());
                 foreach (var agent in agents)
                 {
                     var agentMapObj = agent.getComponent<COMMapObject>();

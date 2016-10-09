@@ -9,11 +9,11 @@ using System.Linq;
 
 namespace MiniEditor
 {
-    public class EditorObject
+    public class MObject
     {
         List<MComponent> mComponents = new List<MComponent>();
-        List<EditorObject> mChildren = new List<EditorObject>();
-        EditorObject mParent = null;
+        List<MObject> mChildren = new List<MObject>();
+        MObject mParent = null;
 
         public string name
         {
@@ -21,7 +21,7 @@ namespace MiniEditor
             set;
         }
 
-        public IEnumerable<EditorObject> children
+        public IEnumerable<MObject> children
         {
             get
             {
@@ -29,7 +29,7 @@ namespace MiniEditor
             }
         }
 
-        public EditorObject parent
+        public MObject parent
         {
             get
             {
@@ -50,7 +50,7 @@ namespace MiniEditor
             }
         }
 
-        public EditorObject preview
+        public MObject preview
         {
             get
             {
@@ -62,7 +62,7 @@ namespace MiniEditor
             }
         }
 
-        public EditorObject next
+        public MObject next
         {
             get
             {
@@ -177,10 +177,7 @@ namespace MiniEditor
 
     public class MComponent
     {
-        internal EditorObject eo = null;
-        internal Action evtInit = null;
-        internal Action evtUpdate = null;
-        internal Action evtRemove = null;
+        internal MObject eo = null;
 
         //add component或enable时回调
         public virtual void editorAwake()
@@ -212,7 +209,7 @@ namespace MiniEditor
             //MLogger.info("editorExit: {0}", GetType().Name);
         }
 
-        public EditorObject getEditorObject()
+        public MObject getObject()
         {
             return eo;
         }

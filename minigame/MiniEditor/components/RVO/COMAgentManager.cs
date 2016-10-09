@@ -15,7 +15,7 @@ namespace MiniEditor
             {
                 return () =>
                 {
-                    var obj = EditorWorld.createObject(getEditorObject(), "agent");
+                    var obj = EditorWorld.createObject(getObject(), "agent");
                     obj.addComponent<COMEditagent>();
                     EditorFuncs.getItemListPage().insertEditorObject(obj);
                 };

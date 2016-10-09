@@ -13,17 +13,17 @@ namespace MiniEditor
 {
     public class MWorld
     {
-        static List<EditorObject> mObjects = new List<EditorObject>();
-        public static EditorObject createObject(EditorObject parent, string name)
+        static List<MObject> mObjects = new List<MObject>();
+        public static MObject createObject(MObject parent, string name)
         {
-            EditorObject obj = new EditorObject();
+            MObject obj = new MObject();
             obj.parent = parent;
             obj.name = name;
             mObjects.Insert(0, obj);
             return obj;
         }
 
-        public static void removeObject(EditorObject obj)
+        public static void removeObject(MObject obj)
         {
             obj.parent = null;
             mObjects.Remove(obj);

@@ -51,13 +51,15 @@ namespace MiniEditor
         //    return attr;
         //}
 
+        Action mUpdator = null;
         void reflush()
         {
+            mUpdator = null;
             var attr = mCom.getAttr();// getAttr();
             if(attr!=null)
             {
                 mName.Content = attr.name;
-                EditorWorld.addTypeControl(mCom, this);
+                EditorWorld.addTypeControl(mCom, this, ref mUpdator);
                 if(!attr.removable)
                 {
                     mHead.IsEnabled = false;
@@ -86,6 +88,11 @@ namespace MiniEditor
                 EditorFuncs.getComponentPage().reflush();
             });
             mContextMenu.IsOpen = true;
+        }
+
+        internal void update()
+        {
+            mUpdator?.Invoke();
         }
     }
 }

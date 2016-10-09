@@ -15,7 +15,7 @@ namespace MiniEditor
             {
                 return () =>
                 {
-                    var obj = EditorWorld.createObject(getEditorObject(), "obstacle");
+                    var obj = EditorWorld.createObject(getObject(), "obstacle");
                     obj.addComponent<COMRVOObstacle>();
                     EditorFuncs.getItemListPage().insertEditorObject(obj);
                 };

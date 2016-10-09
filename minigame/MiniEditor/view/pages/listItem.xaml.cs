@@ -41,7 +41,7 @@ namespace MiniEditor
         public System.Action<bool> evtOnExpand;
         public System.Action evtOnPick;
 
-        public EditorObject editObject
+        public MObject mObject
         {
             get;
             set;
@@ -109,7 +109,7 @@ namespace MiniEditor
                 {
                     if(value)
                     {
-                        foreach (var com in editObject.components)
+                        foreach (var com in mObject.components)
                         {
                             try
                             {
@@ -127,7 +127,7 @@ namespace MiniEditor
                 {
                     if(!value)
                     {
-                        foreach (var com in editObject.components)
+                        foreach (var com in mObject.components)
                         {
                             try
                             {
@@ -147,21 +147,7 @@ namespace MiniEditor
 
         private void MRuntime_evtFrame()
         {
-            foreach (var com in editObject.components)
-            {
-                try
-                {
-                    if (com.evtUpdate != null)
-                    {
-                        com.evtUpdate();
-                    }
-                    com.editorUpdate();
-                }
-                catch (Exception ex)
-                {
-                    MLogger.error(ex.ToString());
-                }
-            }
+            EditorFuncs.getComponentPage().update();
         }
     }
 }

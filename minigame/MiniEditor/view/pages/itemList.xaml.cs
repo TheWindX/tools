@@ -17,7 +17,7 @@ namespace MiniEditor
         }
 
         //增加到最后
-        private void addEditorItem(EditorObject item)
+        private void addEditorItem(MObject item)
         {
             addItem(item.getComponent<COMEditorObject>().getMenuItem());
             foreach(var sub in item.children)
@@ -26,7 +26,7 @@ namespace MiniEditor
             }
         }
 
-        private EditorObject getLast(EditorObject item)
+        private MObject getLast(MObject item)
         {
             var items = item.children.ToArray();
             if(items.Count() == 0)
@@ -36,7 +36,7 @@ namespace MiniEditor
             return getLast(items.Last());
         }
 
-        public void insertEditorObject(EditorObject item)
+        public void insertEditorObject(MObject item)
         {
             if(currentItem == null)
             {
@@ -44,9 +44,9 @@ namespace MiniEditor
             }
             else
             {
-                //item.parent = currentItem.editObject.parent;
+                //item.parent = currentItem.mObject.parent;
                 addItemAfter(item.parent.getComponent<COMEditorObject>().getMenuItem(), item.getComponent<COMEditorObject>().getMenuItem());
-                //addItemAfter(getLast(currentItem.editObject).getComponent<COMEditorObject>().getMenuItem(),
+                //addItemAfter(getLast(currentItem.mObject).getComponent<COMEditorObject>().getMenuItem(),
                 //        item.getComponent<COMEditorObject>().getMenuItem());
             }
         }
@@ -59,13 +59,13 @@ namespace MiniEditor
             item.evtOnExpand = isExpand => expand(item, isExpand);
         }
         
-        public void removeEditorObject(EditorObject obj)
+        public void removeEditorObject(MObject obj)
         {
             var uiItem = obj.getComponent<COMEditorObject>().getMenuItem();
             removeItem(uiItem);
         }
 
-        public void removeEditorObjectChildren(EditorObject obj)
+        public void removeEditorObjectChildren(MObject obj)
         {
             var uiItem = obj.getComponent<COMEditorObject>().getMenuItem();
             removeChildren(uiItem);
@@ -81,7 +81,7 @@ namespace MiniEditor
             //删除所有component
             try
             {
-                var eo = item.editObject;
+                var eo = item.mObject;
                 eo.parent = null;
                 EditorWorld.removeObject(eo);
                 foreach (var com in eo.components.ToArray())
@@ -100,7 +100,7 @@ namespace MiniEditor
         
         public void removeChildren(listItem item)
         {
-            var eo = item.editObject;
+            var eo = item.mObject;
             foreach (var sub in eo.children.ToArray())
             {
                 var subUI = sub.getComponent<COMEditorObject>().getMenuItem();
@@ -110,7 +110,7 @@ namespace MiniEditor
 
         public void showItem(listItem itemToShow, bool isShow)
         {
-            var eo = itemToShow.editObject;
+            var eo = itemToShow.mObject;
             var ui = eo.getComponent<COMEditorObject>().getMenuItem();
             if (isShow)
             {
@@ -143,7 +143,7 @@ namespace MiniEditor
         {
             itemToExpand.expand = isExpand;
 
-            var eo = itemToExpand.editObject;
+            var eo = itemToExpand.mObject;
             
             foreach (var sub in eo.children)
             {
@@ -196,7 +196,7 @@ namespace MiniEditor
             if(currentItem != null)
             {
                 currentItem.isPick = false;
-                var uimapObject = currentItem.editObject.getComponent<COMMapObject>();
+                var uimapObject = currentItem.mObject.getComponent<COMMapObject>();
                 if (uimapObject != null)
                 {
                     uimapObject.getMapUIItem().isPicked = false;
@@ -206,28 +206,28 @@ namespace MiniEditor
             currentItem = item;
 
             EditorFuncs.getComponentPage().reflush();
-            var uimapObject1 = currentItem.editObject.getComponent<COMMapObject>();
+            var uimapObject1 = currentItem.mObject.getComponent<COMMapObject>();
             if(uimapObject1 != null)
             {
                 uimapObject1.getMapUIItem().isPicked = true;
             }
         }
 
-        public void pickEditObject(EditorObject obj)
+        public void pickEditObject(MObject obj)
         {
             var item = obj.getComponent<COMEditorObject>().getMenuItem();
             pickUI(item);
         }
 
         //todo, no in UI
-        public EditorObject getCurrentObj()
+        public MObject getCurrentObj()
         {
             if(currentItem == null)
             {
                 return null;
             }
 
-            return currentItem.editObject;
+            return currentItem.mObject;
         }
 
         private void ScrollViewer_Loaded(object sender, RoutedEventArgs e)

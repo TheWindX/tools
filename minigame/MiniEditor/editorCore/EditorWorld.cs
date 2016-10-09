@@ -6,30 +6,30 @@ namespace MiniEditor
 {
     class EditorWorld
     {
-        static EditorObject mRootObject = createObject(null, "root");
-        public static EditorObject getRootEditorObject()
+        static MObject mRootObject = createObject(null, "root");
+        public static MObject getRootEditorObject()
         {
             return mRootObject;
         }
 
-        public static EditorObject getCurrentObj()
+        public static MObject getCurrentObj()
         {
             return EditorFuncs.getItemListPage().getCurrentObj();
         }
 
-        public static EditorObject createObject(EditorObject parent, string name)
+        public static MObject createObject(MObject parent, string name)
         {
             var eo = MWorld.createObject(parent, name);
             eo.addComponent<COMEditorObject>();
             return eo;
         }
 
-        public static void removeObject(EditorObject obj)
+        public static void removeObject(MObject obj)
         {
             MWorld.removeObject(obj);
         }
 
-        public static void addTypeControl(MComponent com, ComponentPanel comPanel)
+        public static void addTypeControl(MComponent com, ComponentPanel comPanel, ref Action updateEvent)
         {
             var panel = comPanel.mProps;
             panel.Children.Clear();
@@ -94,11 +94,12 @@ namespace MiniEditor
                                 }
                             };
 
-                            com.evtUpdate += act;
-                            com.evtRemove += () =>
-                            {
-                                com.evtUpdate -= act;
-                            };
+                            updateEvent += act;
+                            //com.evtUpdate += act;
+                            //com.evtRemove += () =>
+                            //{
+                            //    com.evtUpdate -= act;
+                            //};
                         }
                         else if (p.PropertyType == typeof(bool))
                         {
@@ -132,12 +133,12 @@ namespace MiniEditor
                                     v.Val = checkValue;
                                 }
                             };
-
-                            com.evtUpdate += act;
-                            com.evtRemove += () =>
-                            {
-                                com.evtUpdate -= act;
-                            };
+                            updateEvent += act;
+                            //com.evtUpdate += act;
+                            //com.evtRemove += () =>
+                            //{
+                            //    com.evtUpdate -= act;
+                            //};
                         }
                         else if (p.PropertyType == typeof(string))
                         {

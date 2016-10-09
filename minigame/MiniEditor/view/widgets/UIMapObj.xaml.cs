@@ -74,7 +74,7 @@ namespace MiniEditor
             }
         }
 
-        public EditorObject editorObject
+        public MObject editorObject
         {
             get;set;
         }

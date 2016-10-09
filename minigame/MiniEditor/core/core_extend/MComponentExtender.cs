@@ -33,7 +33,7 @@ namespace MiniEditor
             return r;
         }
 
-        public static MComponent componentFromXML(EditorObject obj, XmlElement elem)
+        public static MComponent componentFromXML(MObject obj, XmlElement elem)
         {
             var name = elem.Name;
             var leaf = ComponentRepository.getComponentByName(name);
@@ -77,9 +77,9 @@ namespace MiniEditor
             return component.GetType().GetCustomAttribute<CustomComponentAttribute>();
         }
 
-        public static EditorObject editorObjectFromXML(EditorObject parent, XmlElement elem)
+        public static MObject editorObjectFromXML(MObject parent, XmlElement elem)
         {
-            EditorObject obj = null;
+            MObject obj = null;
             if (parent == null)
             {
                 obj = EditorWorld.getRootEditorObject();
@@ -109,7 +109,7 @@ namespace MiniEditor
             return obj;
         }
 
-        public static XmlElement toXML(this EditorObject obj, XmlDocument doc)
+        public static XmlElement toXML(this MObject obj, XmlDocument doc)
         {
             var coms = obj.components;
             var r = doc.CreateElement("node");
@@ -165,7 +165,7 @@ namespace MiniEditor
             //return r;
         }
 
-        public static string toString(this EditorObject obj)
+        public static string toString(this MObject obj)
         {
             XmlDocument doc = new XmlDocument();
             XmlDeclaration xmlDeclaration = doc.CreateXmlDeclaration("1.0", "UTF-8", null);
@@ -185,7 +185,7 @@ namespace MiniEditor
             }
         }
 
-        public static void printOBJ(this EditorObject obj)
+        public static void printOBJ(this MObject obj)
         {
             MLogger.info(obj.toString());
         }

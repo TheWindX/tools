@@ -210,12 +210,12 @@ namespace MiniEditor
             return Keyboard.IsKeyDown(Key.RightShift);
         }
 
-        public static EditorObject getRootEditorObject()
+        public static MObject getRootEditorObject()
         {
             return EditorWorld.getRootEditorObject();
         }
 
-        public static EditorObject getCurrentEditorObject()
+        public static MObject getCurrentEditorObject()
         {
             return getItemListPage().getCurrentObj();
         }

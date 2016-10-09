@@ -13,16 +13,16 @@ namespace MiniEditor
         listItem mItem = null;
         int getLevel()
         {
-            if (getEditorObject().parent == null) return 0;
-            else return getEditorObject().parent.getComponent<COMEditorObject>().getLevel() + 1;
+            if (getObject().parent == null) return 0;
+            else return getObject().parent.getComponent<COMEditorObject>().getLevel() + 1;
         }
 
         public virtual listItem getMenuItem()
         {
             if (mItem == null)
             {
-                mItem = new listItem() { expand = true, isPick = false, level = getLevel(), name = getEditorObject().name };
-                mItem.editObject = getEditorObject();
+                mItem = new listItem() { expand = true, isPick = false, level = getLevel(), name = getObject().name };
+                mItem.mObject = getObject();
             }
             mItem.level = getLevel();
             return mItem;
@@ -41,7 +41,7 @@ namespace MiniEditor
             }
             set
             {
-                getEditorObject().name = value;
+                getObject().name = value;
                 getMenuItem().name = value;
             }
         }

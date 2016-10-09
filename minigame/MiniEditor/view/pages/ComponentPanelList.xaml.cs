@@ -22,7 +22,7 @@ namespace MiniEditor
     public partial class ComponentPanelList : UserControl
     {
         #region props
-        public EditorObject editObject
+        public MObject editObject
         {
             get
             {
@@ -115,17 +115,18 @@ namespace MiniEditor
         }
 
         //这里刷新prop显示
+        List<ComponentPanel> mPanels = new List<ComponentPanel>();
         public void reflush()
         {
             if (editObject == null) return;
+            mPanels.Clear();
             mComponents.Children.Clear();
             mObjectName.Text = editObject.name;
-            List<ComponentPanel> panels = new List<ComponentPanel>();
             //ComponentPanel mainPanel = null;
             foreach (var com in editObject.components)
             {
                 var comP = new ComponentPanel() { component = com };
-                panels.Add(comP);
+                mPanels.Add(comP);
                 //var comP = new ComponentPanel() { component = com };
                 //if(com.getAttr().isMain)
                 //{
@@ -140,9 +141,17 @@ namespace MiniEditor
             //{
             //    mComponents.Children.Add(mainPanel);
             //}
-            foreach (var p in panels)
+            foreach (var p in mPanels)
             {
                 mComponents.Children.Add(p);
+            }
+        }
+
+        internal void update()
+        {
+            foreach(var p in mPanels)
+            {
+                p.update();
             }
         }
     }
