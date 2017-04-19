@@ -114,6 +114,11 @@ namespace copyDir
         {
             try
             {
+                if(args.Length != 2)
+                {
+                    Console.WriteLine("usage: <exe> <reg.txt> <src_folder>");
+                    return;
+                }
                 var strRegFile = args[0];
                 var strSrcPath = args[1];
                 var strRegs = File.ReadLines(strRegFile);
