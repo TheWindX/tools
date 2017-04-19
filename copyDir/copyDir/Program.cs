@@ -69,7 +69,7 @@ namespace copyDir
                 isInDir.RemoveAt(isInDir.Count - 1);
             }
         }
-        static void Main(string[] args)
+        static void Main1(string[] args)
         {
             if (args.Length < 2)
             {
